@@ -5,23 +5,18 @@ const footerLinks = {
     'Vedic Astrology',
     'Numerology',
     'Vastu Shastra',
-    'Love & Marriage',
-    'Business & Career',
-    'Health Reading',
   ],
   Explore: [
-    'About Manish',
+    'About VedicSaar',
     'Testimonials',
-    'Blog & Insights',
-    'Free Resources',
     'Upcoming Events',
   ],
   Connect: [
     'Book a Session',
     'Contact Us',
     'WhatsApp Consult',
-    'Instagram',
-    'YouTube',
+    'Instagram'
+    
   ],
 };
 
@@ -49,10 +44,7 @@ export default function Footer() {
       </div>
 
       {/* Dark overlay so text is readable */}
-      <div
-        className="absolute inset-0 z-[1] pointer-events-none"
-       
-      />
+      <div className="absolute inset-0 z-[1] pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-8 md:px-16 pt-20 pb-10">
@@ -62,19 +54,18 @@ export default function Footer() {
 
           {/* Brand column */}
           <div className="md:col-span-1">
-            {/* Logo / name */}
+            {/* Logo */}
             <p
               className="mb-1"
               style={{
-                fontFamily: "'Cormorant Garamond', serif",
+                fontFamily: "'Lathusca', sans-serif",
                 fontSize: 34,
                 fontWeight: 400,
-                color: '#f5ede0',
                 letterSpacing: '-0.01em',
                 lineHeight: 1,
               }}
             >
-              Vedic<em className="text-[#b8860b]">Saar</em>
+              <span style={{ color: '#f5ede0' }}>Vedic</span><span style={{ color: '#c9a96e' }}>Saar</span>
             </p>
             <p
               className="mb-6"
@@ -99,28 +90,6 @@ export default function Footer() {
             >
               Guiding souls through the timeless science of Vedic astrology, numerology, and Vastu.
             </p>
-
-            {/* Social icons row */}
-            <div className="flex items-center gap-4 mt-6">
-              {['IG', 'YT', 'WA', 'FB'].map((s) => (
-                <button
-                  key={s}
-                  className="flex items-center justify-center rounded-full transition-all duration-300 hover:border-[#b8860b] hover:text-[#b8860b]"
-                  style={{
-                    width: 36, height: 36,
-                    border: '1px solid rgba(201,169,110,0.3)',
-                    background: 'rgba(201,169,110,0.06)',
-                    fontFamily: "'Jost', sans-serif",
-                    fontSize: 10,
-                    letterSpacing: '0.05em',
-                    color: '#9a8060',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* Link columns */}
@@ -160,7 +129,7 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Newsletter strip */}
+        {/* Prediction email strip */}
         <div
           className="flex flex-col md:flex-row items-center justify-between gap-6 py-8 mb-10"
           style={{ borderTop: '1px solid rgba(201,169,110,0.15)', borderBottom: '1px solid rgba(201,169,110,0.15)' }}
@@ -174,7 +143,7 @@ export default function Footer() {
                 fontWeight: 400,
               }}
             >
-              Receive your <em className="text-[#b8860b]">cosmic insights</em> monthly
+              Receive your <em style={{ color: '#b8860b' }}>cosmic prediction</em> through email
             </p>
             <p
               style={{
@@ -185,25 +154,11 @@ export default function Footer() {
                 marginTop: 4,
               }}
             >
-              Horoscopes, Vedic tips & exclusive offers — straight to your inbox.
+              Enter your email and get a personalised Vedic prediction delivered to you.
             </p>
           </div>
           <div className="flex items-stretch gap-0 flex-shrink-0">
-            <input
-              type="email"
-              placeholder="your@email.com"
-              style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(201,169,110,0.3)',
-                borderRight: 'none',
-                padding: '12px 20px',
-                fontFamily: "'Jost', sans-serif",
-                fontSize: 12,
-                color: '#f5ede0',
-                outline: 'none',
-                width: 240,
-              }}
-            />
+         
             <button
               style={{
                 background: '#b8860b',
@@ -218,7 +173,7 @@ export default function Footer() {
                 fontWeight: 500,
               }}
             >
-              Subscribe
+              Get Prediction
             </button>
           </div>
         </div>
@@ -252,26 +207,6 @@ export default function Footer() {
               </a>
             ))}
           </div>
-        </div>
-
-        {/* Big watermark text */}
-        <div
-          className="absolute bottom-0 left-0 right-0 flex items-end justify-center pointer-events-none select-none overflow-hidden"
-          style={{ height: 120 }}
-        >
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(80px, 14vw, 160px)',
-              fontWeight: 300,
-              color: 'rgba(184,134,11,0.04)',
-              lineHeight: 0.85,
-              letterSpacing: '-0.04em',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            VedicSaar
-          </p>
         </div>
 
       </div>

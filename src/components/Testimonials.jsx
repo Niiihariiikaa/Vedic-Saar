@@ -3,37 +3,30 @@ import Stack from './Stack'
 
 const testimonials = [
   {
-    name: "Priya Sharma",
-    location: "Mumbai, India",
+    name: "Aneesha Verma",
+    
     rating: 5,
-    text: "Mary's Vedic astrology reading was incredibly accurate. She predicted a major career shift three months before it happened. I'm now in my dream job!",
-    service: "Vedic Astrology",
-    initial: "P",
-  },
-  {
-    name: "Ananya Iyer",
-    location: "Bangalore, India",
-    rating: 5,
-    text: "The numerology session gave me clarity I never expected. Understanding my life path number changed how I approach relationships entirely.",
-    service: "Numerology",
+    text: "It was a very positive experience to meet Mr. Manish. He takes his work rather seriously and spends due time on preparing and interpreting the astrological chart. His descriptions of personality, behavior, thoughts etc are highly accurate. He makes predictions but also explains the rationale behind them so they seem more believable to the listener. He provides a detailed and comprehensive view of the astrological chart and answers all questions patiently.",
+    
     initial: "A",
   },
   {
-    name: "Rohit Malhotra",
-    location: "Delhi, India",
+    name: "Harpreet Kaur",
+
     rating: 5,
-    text: "After the Vastu consultation, we rearranged our home and the energy shifted completely. Business has been booming ever since!",
-    service: "Vastu Shastra",
-    initial: "R",
+    text: "I had a wonderful experience consulting with Mr. Manish Malhotra. His predictions were remarkably accurate, and the way he explained everything made it easy to understand and follow. He is extremely kind, patient, and genuinely cares about guiding people in the right direction. His calm nature and insightful approach bring a lot of clarity and comfort. I truly appreciate his expertise and highly recommend him to anyone looking for reliable and compassionate astrological guidance.",
+  
+    initial: "H",
   },
   {
-    name: "Sneha Kapoor",
-    location: "Pune, India",
+    name: "Veer Anand",
+
     rating: 5,
-    text: "The birth chart reading was deeply personal and spot on. I finally understand why certain patterns keep repeating in my life.",
-    service: "Vedic Astrology",
-    initial: "S",
+    text: "I had a wonderful experience with Astrologer Manish ji. Their analysis was thorough, accurate, and delivered with compassion. They helped me understand both the practical and emotional aspects of my chart. Highly professional and genuinely gifted.",
+
+    initial: "V",
   },
+
 ];
 
 const StarRating = ({ count }) => (
@@ -138,9 +131,8 @@ const Testimonials = () => {
           {/* stat row */}
           <div className="flex gap-10 justify-center md:justify-start mb-10">
             {[
-              { num: '2,400+', label: 'Readings Done' },
-              { num: '98%',    label: 'Satisfaction' },
-              { num: '12 yrs', label: 'Experience' },
+              { num: '100+', label: 'Readings Done' },
+              { num: '20+ yrs', label: 'Experience' },
             ].map(({ num, label }) => (
               <div key={label}>
                 <p

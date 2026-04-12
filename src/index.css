@@ -78,3 +78,10 @@ html { scroll-behavior: smooth; }
 .glow-pulse {
   animation: goldPulse 2s ease-in-out infinite;
 }
+
+@font-face {
+  font-family: 'Lathusca';
+  src: url('/assets/fonts/Awesome Lathusca.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

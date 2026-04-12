@@ -159,7 +159,7 @@ export default function Homepage() {
               Let our experienced astrologer guide you through the stars, revealing insights tailored just for you.
             </p>
             <button
-              className="border border-[#1a1206] bg-transparent text-[#1a1206] px-6 py-2.5 text-sm tracking-widest hover:bg-[#1a1206] hover:text-[#f5f0e8] transition-all duration-300"
+              className="border border-[#1a1206] bg-[#1a1206] text-[#f5f0e8] px-6 py-2.5 text-sm tracking-widest hover:bg-[#1a1206] hover:text-[#f5f0e8] transition-all duration-300"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
               Request a Consultation
@@ -239,7 +239,7 @@ export default function Homepage() {
                   <span className="flip-wrap-big">
                     <span className="flip-big">
                       <span>with Stars</span>
-                      <span>with Cards</span>
+                      <span>with Numbers</span>
                     </span>
                   </span>
                 </em>
@@ -254,7 +254,7 @@ export default function Homepage() {
                 Unveil Your Future{' '}
                 <span className="flip-wrap-sm">
                   <span className="flip-sm">
-                    <span>with Cards</span>
+                    <span>with Numbers</span>
                     <span>with Stars</span>
                   </span>
                 </span>
@@ -331,8 +331,8 @@ export default function Homepage() {
             {/* Mini stats */}
             <div className="mt-10 grid grid-cols-2 gap-6">
               {[
-                { num: '346 +', label: 'Tarot Readings' },
-                { num: '750 +', label: 'Reading the Future' },
+                { num: '1000 +', label: ' Readings' },
+                { num: '20 +', label: 'Years of Experience' },
               ].map((s, i) => (
                 <div key={i}>
                   <div

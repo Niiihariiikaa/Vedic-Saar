@@ -105,7 +105,23 @@ export default function KnowYourAstrologer() {
     isLong: i % 2 === 0,
   }));
 
-  const marqueeWords = ['Destiny', '·', 'Future', '·', 'Wisdom', '·', 'Karma', '·', 'Cosmos', '·', 'Dharma', '·', 'Destiny', '·', 'Future', '·', 'Wisdom', '·', 'Karma', '·', 'Cosmos', '·', 'Dharma', '·'];
+  const marqueeWords = ['Destiny', '·', 'Future', '·', 'Wisdom', '·', 'Destiny', '·', 'Future', '·', 'Wisdom', '·', 'Karma', '·', 'Cosmos', '·', 'Dharma', '·'];
+
+  // Proper Unicode zodiac symbols (not emoji — plain text codepoints)
+  const zodiacSymbols = [
+    { sym: '♈', name: 'ARIES' },
+    { sym: '♉', name: 'TAURUS' },
+    { sym: '♊', name: 'GEMINI' },
+    { sym: '♋', name: 'CANCER' },
+    { sym: '♌', name: 'LEO' },
+    { sym: '♍', name: 'VIRGO' },
+    { sym: '♎', name: 'LIBRA' },
+    { sym: '♏', name: 'SCORPIO' },
+    { sym: '♐', name: 'SAGITTARIUS' },
+    { sym: '♑', name: 'CAPRICORN' },
+    { sym: '♒', name: 'AQUARIUS' },
+    { sym: '♓', name: 'PISCES' },
+  ];
 
   return (
     <section
@@ -187,17 +203,27 @@ export default function KnowYourAstrologer() {
                 x2={360 + 320 * Math.cos(a)} y2={360 + 320 * Math.sin(a)}
                 stroke="#5a4020" strokeWidth="0.7" />;
             })}
-            {['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'].map((s, i) => {
+            {zodiacSymbols.map(({ sym }, i) => {
               const a = (i * 30 - 75) * Math.PI / 180;
-              return <text key={i} x={360 + 290 * Math.cos(a)} y={360 + 290 * Math.sin(a)}
-                textAnchor="middle" dominantBaseline="middle" fontSize="20"
-                fill="#5a4020" fontFamily="serif">{s}</text>;
+              return (
+                <text
+                  key={i}
+                  x={360 + 290 * Math.cos(a)}
+                  y={360 + 290 * Math.sin(a)}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fontSize="20"
+                  fill="#5a4020"
+                  fontFamily="serif"
+                  // Variation selector \uFE0E forces text presentation (no emoji color rendering)
+                >{sym}&#xFE0E;</text>
+              );
             })}
-            {['ARIES','TAURUS','GEMINI','CANCER','LEO','VIRGO','LIBRA','SCORPIO','SAGITTARIUS','CAPRICORN','AQUARIUS','PISCES'].map((s, i) => {
+            {zodiacSymbols.map(({ name }, i) => {
               const a = (i * 30 - 60) * Math.PI / 180;
               return <text key={i} x={360 + 340 * Math.cos(a)} y={360 + 340 * Math.sin(a)}
                 textAnchor="middle" dominantBaseline="middle" fontSize="9"
-                fill="#5a4020" fontFamily="sans-serif" letterSpacing="1">{s}</text>;
+                fill="#5a4020" fontFamily="sans-serif" letterSpacing="1">{name}</text>;
             })}
           </svg>
         </div>
@@ -208,7 +234,7 @@ export default function KnowYourAstrologer() {
           className="relative flex-shrink-0 flex items-center justify-center"
           style={{ width: '48%', minWidth: 420, height: '85vh' }}
         >
-          {/* Sunburst */}
+          {/* Sunburst — warm golden/beige rays */}
           <div
             ref={sunburstRef}
             className="absolute flex items-center justify-center pointer-events-none"
@@ -227,14 +253,15 @@ export default function KnowYourAstrologer() {
                 const y2 = 290 + outerR * Math.sin(rad);
                 return (
                   <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
-                    stroke={isLong ? '#b0b8c4' : '#c5cdd6'}
+                    // Long rays: rich gold; short rays: soft warm beige
+                    stroke={isLong ? '#c9a96e' : '#e2d0a8'}
                     strokeWidth={w}
                     strokeLinecap="round"
                     opacity={isLong ? 0.9 : 0.65}
                   />
                 );
               })}
-              <circle cx="290" cy="290" r="152" fill="none" stroke="#c0c8d0" strokeWidth="1.2" opacity="0.5"/>
+              <circle cx="290" cy="290" r="152" fill="none" stroke="#c9a96e" strokeWidth="1.2" opacity="0.5"/>
             </svg>
           </div>
 
@@ -314,13 +341,49 @@ export default function KnowYourAstrologer() {
           {/* Tags */}
           <div className="flex items-center gap-7 mb-8 flex-wrap">
             {[
-              { icon: '🖐', label: 'Palmistry' },
-              { icon: '✳', label: 'Numerology' },
-              { icon: '☽', label: 'Spiritual Growth' },
+              {
+                icon: (
+                  // Sun / Vedic Astrology
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b8860b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="4"/>
+                    <line x1="12" y1="2" x2="12" y2="5"/>
+                    <line x1="12" y1="19" x2="12" y2="22"/>
+                    <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/>
+                    <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+                    <line x1="2" y1="12" x2="5" y2="12"/>
+                    <line x1="19" y1="12" x2="22" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
+                    <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
+                  </svg>
+                ),
+                label: 'Vedic Astrology'
+              },
+              {
+                icon: (
+                  // Hash / Numerology
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b8860b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="4" y1="9" x2="20" y2="9"/>
+                    <line x1="4" y1="15" x2="20" y2="15"/>
+                    <line x1="10" y1="3" x2="8" y2="21"/>
+                    <line x1="16" y1="3" x2="14" y2="21"/>
+                  </svg>
+                ),
+                label: 'Numerology'
+              },
+              {
+                icon: (
+                  // House / Vastu
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b8860b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+                    <polyline points="9 21 9 12 15 12 15 21"/>
+                  </svg>
+                ),
+                label: 'Vastu'
+              },
             ].map(({ icon, label }) => (
               <span key={label} className="flex items-center gap-2 text-[#6b5a40]"
                 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15 }}>
-                <span style={{ color: '#b8860b' }}>{icon}</span> {label}
+                {icon} {label}
               </span>
             ))}
           </div>

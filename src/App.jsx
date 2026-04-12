@@ -34,7 +34,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MainLayout />} />
         <Route path="/gemstones" element={<GemstonesPage />} />
-        <Route path="/remedies/mantra" element={<MantrasPage />} />
+        <Route path="/mantra" element={<MantrasPage />} />
       </Routes>
     </BrowserRouter>
   )
