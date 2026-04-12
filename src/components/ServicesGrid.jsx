@@ -119,10 +119,10 @@ function ServiceCard({ icon, title, body, img }) {
         </div>
 
         <h3
-          className="font-normal leading-snug mb-2.5 text-[#1a1206] group-hover:text-[#f5ede0] transition-colors duration-250"
+          className="font-semibold leading-snug mb-2.5 text-[#1a1206] group-hover:text-[#f5ede0] transition-colors duration-250"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(17px, 1.5vw, 21px)',
+            fontSize: 'clamp(27px, 1.5vw, 21px)',
           }}
         >
           {title}
