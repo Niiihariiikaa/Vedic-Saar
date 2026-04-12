@@ -43,7 +43,7 @@ export default function MysticalServices() {
 
   return (
     <section
-  className=" px-10 relative z-10 -mt-10"
+  className=" px-10 relative z-10 -mt-20"
   style={{
     backgroundImage: "url('/assets/Services-bg.png')",
     backgroundSize: 'cover',
@@ -52,7 +52,7 @@ export default function MysticalServices() {
 >
       {/* Heading */}
       <h2
-        className="text-center font-light text-[clamp(28px,4vw,46px)] text-[#1a1a1a] mb-14 tracking-tight"
+        className="text-center font-light text-[clamp(28px,4vw,46px)] text-[#1a1a1a] mb-14 tracking-tight mt-20"
         style={{ fontFamily: "'Cormorant Garamond', serif" }}
       >
         Our Mystical Services
