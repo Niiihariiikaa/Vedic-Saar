@@ -105,7 +105,7 @@ export default function KnowYourAstrologer() {
     isLong: i % 2 === 0,
   }));
 
-  const marqueeWords = ['Destiny', '·', 'Future', '·', 'Wisdom', '·', 'Destiny', '·', 'Future', '·', 'Wisdom', '·', 'Karma', '·', 'Cosmos', '·', 'Dharma', '·'];
+  const marqueeWords = ['Destiny', '·', 'Future', '·', 'Wisdom', '·', 'Destiny', '·', 'Future', '·', 'Wisdom', '·', 'Cosmos', '·'];
 
   // Proper Unicode zodiac symbols (not emoji — plain text codepoints)
   const zodiacSymbols = [
