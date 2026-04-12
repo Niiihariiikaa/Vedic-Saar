@@ -106,7 +106,7 @@ export default function Homepage() {
      
 
       <div
-        className="relative z-0 bg-cover bg-center bg-no-repeat"
+        className="relative z-20 bg-cover bg-center bg-no-repeat"
         style={{
           fontFamily: "'Cormorant Garamond', serif",
           backgroundImage: "url('/assets/bg.png')",
@@ -374,23 +374,7 @@ export default function Homepage() {
           </div>
 
           {/* Purchase Now button */}
-          <button
-            className={`absolute bottom-8 left-2 bg-[#1a1206] text-[#f5f0e8] px-7 py-3.5 text-sm tracking-widest 
-              hover:bg-[#b8860b] transition-all duration-700
-              ${glowing ? 'glow-pulse' : ''}`}
-            style={{ fontFamily: "'Cormorant Garamond', serif" }}
-          >
-            Purchase Now
-          </button>
 
-          <button
-            className={`absolute bottom-8 right-4 bg-[#1a1206] text-[#f5f0e8] px-7 py-3.5 text-sm tracking-widest 
-              hover:bg-[#b8860b] transition-all duration-700
-              ${glowing ? 'glow-pulse' : ''}`}
-            style={{ fontFamily: "'Cormorant Garamond', serif" }}
-          >
-            Birth Time Rectification
-          </button>
         </section>
 
       </div>

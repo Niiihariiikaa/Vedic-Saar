@@ -176,7 +176,7 @@ export default function ServicesGrid() {
             <span className="block w-8 h-px bg-[#b8860b]" />
           </p>
           <h2
-            className="text-[clamp(30px,4.5vw,52px)] font-light text-[#1a1206] leading-tight"
+            className="text-[clamp(30px,4.5vw,52px)] font-semibold text-[#1a1206] leading-tight"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             Our <span className="italic text-[#b8860b]">Cosmic</span> Services

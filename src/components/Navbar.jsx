@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const dropdowns = {
   Predictions:      ['Vedic Astrology', 'K P Astrology', 'Numerology', 'Prashna', 'Yearly Prediction'],
-  'Life Solutions': ['Love & Marriage', 'Career', 'Finance', 'Health', 'Foreign Travel'],
-  Remedies:         ['Pooja', 'Lal Kitab', 'Gemstone', 'Mantra'],
+  'Life Solutions': ['Love & Marriage', 'Career', 'Finance', 'Health', 'Foreign Travel','Child & Progeny', 'Education', 'House & Property', 'Court & Litigation'],
+  Remedies:         ['Pooja', 'Lal Kitab'],
 }
 
 // Map nav items to their routes
@@ -38,6 +38,10 @@ const subRoutes = {
   'Finance':            '/life-solutions/finance',
   'Health':             '/life-solutions/health',
   'Foreign Travel':     '/life-solutions/foreign-travel',
+  'Child & Progeny':       '/life-solutions/child-progeny',
+  'Education':            '/life-solutions/education',
+  'House & Property':     '/life-solutions/house-property',
+   'Court & Litigation':     '/life-solutions/court-litigation',
   // Remedies
   'Pooja':              '/remedies/pooja',
   'Lal Kitab':          '/remedies/lal-kitab',
@@ -76,11 +80,11 @@ export default function Navbar() {
       </div>
 
       {/* ── NAV LINKS ── */}
-     <nav className="bg-white border-b border-[#e8e0d0] px-6 py-3 flex items-center justify-between">
+     <nav className="bg-white border-b border-[#e8e0d0] h-16 px-6 py-3 flex items-center justify-between">
 
   {/* LEFT: Logo */}
   <div className="flex items-center">
-<span className="text-xl tracking-wide">
+<span className="text-4xl font-semibold tracking-wide">
  <span style={{ color: 'black', fontFamily: 'Lathusca' }}>Vedic</span><span style={{ color: '#c9a96e', fontFamily: 'Lathusca' }}>Saar</span>
 </span>
   </div>
@@ -97,7 +101,7 @@ export default function Navbar() {
         >
           <Link
             to={navRoutes[item] || '/'}
-            className="block px-2 py-2 text-[11.5px] text-[#3a2e1e] tracking-wide whitespace-nowrap hover:text-[#b8860b] transition-colors"
+            className="block px-2 py-2 text-[15px] text-[#3a2e1e] tracking-wide whitespace-nowrap hover:text-[#b8860b] transition-colors"
           >
             {item}
             {dropdowns[item] && (
@@ -125,7 +129,7 @@ export default function Navbar() {
 
     {/* CTA */}
     <Link to="/consultation">
-      <button className="ml-2 border border-[#b8860b] text-[#b8860b] px-4 py-2 text-xs tracking-widest whitespace-nowrap hover:bg-[#b8860b] hover:text-white transition-all duration-200">
+      <button className="ml-2 border bg-black border-[#b8860b] text-white px-4 py-2 text-xs tracking-widest whitespace-nowrap hover:bg-[#b8860b] hover:text-white transition-all duration-200">
         Book Reading
       </button>
     </Link>

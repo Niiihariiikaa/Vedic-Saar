@@ -42,21 +42,22 @@ export default function MysticalServices() {
   }, []);
 
   return (
-    <section
-  className=" px-10 relative z-10 -mt-20"
+<section
+  className="px-10 relative z-10 -mt-[400px] pt-[240px]"
   style={{
     backgroundImage: "url('/assets/Services-bg.png')",
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   }}
 >
-      {/* Heading */}
-      <h2
-        className="text-center font-light text-[clamp(28px,4vw,46px)] text-[#1a1a1a] mb-14 tracking-tight mt-20"
-        style={{ fontFamily: "'Cormorant Garamond', serif" }}
-      >
-        Our Mystical Services
-      </h2>
+  {/* Heading */}
+  <h2
+    className="text-center text-[60px] font-semibold text-[clamp(28px,4vw,46px)] text-[#1a1a1a] mb-10 tracking-tight pt-[100px]"
+    style={{ fontFamily: "'Cormorant Garamond', serif" }}
+  >
+    Our Mystical Services
+  </h2>
+
 
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto -mt-10">
