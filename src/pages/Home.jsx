@@ -110,7 +110,7 @@ export default function Homepage() {
         style={{
           fontFamily: "'Cormorant Garamond', serif",
           backgroundImage: "url('/assets/bg.png')",
-          backgroundAttachment: 'fixed',
+          
         }}
       >
 
