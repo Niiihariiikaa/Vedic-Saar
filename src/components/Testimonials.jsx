@@ -131,7 +131,7 @@ const Testimonials = () => {
           {/* stat row */}
           <div className="flex gap-10 justify-center md:justify-start mb-10">
             {[
-              { num: '100+', label: 'Readings Done' },
+              { num: '10000+', label: 'Readings Done' },
               { num: '20+ yrs', label: 'Experience' },
             ].map(({ num, label }) => (
               <div key={label}>

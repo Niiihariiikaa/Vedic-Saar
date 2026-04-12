@@ -380,6 +380,20 @@ export default function KnowYourAstrologer() {
                 ),
                 label: 'Vastu'
               },
+              {
+                icon: (
+                  // Lotus / Spiritual Guidance
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b8860b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22V12"/>
+                    <path d="M12 12C12 12 7 10 5 6c2 0 5 1 7 6z"/>
+                    <path d="M12 12C12 12 17 10 19 6c-2 0-5 1-7 6z"/>
+                    <path d="M12 12C12 12 9 7 12 3c3 4 0 9 0 9z"/>
+                    <path d="M5 14c1.5 2 4 3.5 7 4"/>
+                    <path d="M19 14c-1.5 2-4 3.5-7 4"/>
+                  </svg>
+                ),
+                label: 'Spiritual Guidance'
+              },
             ].map(({ icon, label }) => (
               <span key={label} className="flex items-center gap-2 text-[#6b5a40]"
                 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15 }}>

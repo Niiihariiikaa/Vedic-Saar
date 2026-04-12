@@ -246,7 +246,7 @@ export default function Homepage() {
               </div>
             </div>
             <div className="mt-6">
-              <span className="italic text-sm text-[#8a7a5a] tracking-wide">Tarot Readings</span>
+             
               <div
                 className="mt-1 text-[#1a1206]"
                 style={{ fontFamily: "'Playfair Display', serif", fontSize: '28px' }}
@@ -331,7 +331,7 @@ export default function Homepage() {
             {/* Mini stats */}
             <div className="mt-10 grid grid-cols-2 gap-6">
               {[
-                { num: '1000 +', label: ' Readings' },
+                { num: '10000 +', label: ' Readings' },
                 { num: '20 +', label: 'Years of Experience' },
               ].map((s, i) => (
                 <div key={i}>

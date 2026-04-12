@@ -12,7 +12,8 @@ const services = [
   {
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+        <rect x="2" y="7" width="20" height="14" rx="2"/>
+        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
       </svg>
     ),
     title: "Business & Career",
@@ -22,7 +23,8 @@ const services = [
   {
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="8"/><path d="M12 6v6l4 2"/><path d="M2 12h2M20 12h2M12 2v2M12 20v2"/>
+        <line x1="12" y1="1" x2="12" y2="23"/>
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
       </svg>
     ),
     title: "Wealth & Finance",
@@ -82,8 +84,11 @@ const services = [
   {
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
-        <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/>
+        <line x1="12" y1="3" x2="12" y2="21"/>
+        <path d="M6 21h12"/>
+        <path d="M3 6l9-3 9 3"/>
+        <path d="M3 6l3 6c0 1.657-1.343 3-3 3s-3-1.343-3-3l3-6z"/>
+        <path d="M21 6l3 6c0 1.657-1.343 3-3 3s-3-1.343-3-3l3-6z"/>
       </svg>
     ),
     title: "Court & Litigation",
@@ -109,7 +114,6 @@ function ServiceCard({ icon, title, body, img }) {
 
       {/* Content */}
       <div className="relative z-20 flex flex-col p-6 h-full">
-        {/* Icon */}
         <div className="text-[#b8860b] mb-3 group-hover:text-[#c9a96e] transition-colors duration-250">
           {icon}
         </div>

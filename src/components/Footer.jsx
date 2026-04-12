@@ -9,7 +9,7 @@ const footerLinks = {
   Explore: [
     'About VedicSaar',
     'Testimonials',
-    'Upcoming Events',
+    
   ],
   Connect: [
     'Book a Session',
