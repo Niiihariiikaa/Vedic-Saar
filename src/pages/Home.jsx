@@ -280,7 +280,7 @@ export default function Homepage() {
           <div className="relative">
             <div
               className="overflow-hidden bg-[#c8bfaa]"
-              style={{ width: '480px', height: '480px', borderRadius: '0px 300px 300px 0px' }}
+              style={{ width: '500px', height: '480px', borderRadius: '0px 300px 300px 0px' }}
             >
               <img src="/assets/sec1.png" alt="Tarot reading" className="w-full h-full object-cover" />
             </div>
@@ -353,7 +353,7 @@ export default function Homepage() {
           <div className="relative flex justify-end">
             <div
               className="overflow-hidden bg-[#c8bfaa]"
-              style={{ width: '500px', height: '700px', borderRadius: '300px 0px 0px 0px' }}
+              style={{ width: '580px', height: '700px', borderRadius: '300px 0px 0px 0px' }}
             >
               <img src="/assets/sec2.png" alt="Crystal ball" className="w-full h-full object-cover" />
             </div>
