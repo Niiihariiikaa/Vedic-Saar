@@ -157,7 +157,7 @@ const mantras = [
     planet: 'Ketu',
     color: '#2e4a30',
     accent: '#70b878',
-    image: '/assets/mantras/mantra-img/Rahu.png',
+    image: '/assets/mantras/mantra-img/Ketu.png',
     beejMantra: 'ॐ स्रां स्रीं स्रौं सः केतवे नमः',
     sanskrit: 'ॐ कें केतवे नमः। ॐ स्रां स्रीं स्रौं सः केतवे नमः',
     transliteration: 'Om Kem Ketave Namah | Om Sraam Sreem Sraum Sah Ketave Namah',
@@ -218,23 +218,7 @@ const mantras = [
     bestTime: 'Friday evening',
     audio: '/assets/mantras/Maha Laxmi Mantra _ Om Shreem Mahalakshmiyei Namaha _ 108 Times _ Fast.mp3',
   },
-  {
-    id: 'navagraha',
-    name: 'Navagraha Mantra',
-    deity: 'Nine Planets',
-    planet: 'All',
-    color: '#2c5f8a',
-    accent: '#5ab0f0',
-    image: '/assets/mantras/mantra-img/Om.png',
-    beejMantra: 'ॐ नवग्रहाय सर्वदोषनिवारणाय नमः',
-    sanskrit: 'ॐ ब्रह्मा मुरारिस्त्रिपुरान्तकारी भानुः शशी भूमिसुतो बुधश्च। गुरुश्च शुक्रः शनिराहुकेतवः कुर्वन्तु सर्वे मम सुप्रभातम्॥',
-    transliteration: 'Om Brahma Muraris Tripurantakari | Bhanuh Shashi Bhumisuto Budhascha | Gurush cha Shukrah Shani Rahu Ketavah | Kurvanto Sarve Mama Suprabhatam',
-    meaning: 'May Brahma, Vishnu, Shiva, Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu and Ketu bestow upon me an auspicious dawn.',
-    benefits: ['Harmonizes all planets', 'Balances birth chart', 'All-round protection', 'Cosmic alignment'],
-    chantCount: '27× or 108×',
-    bestTime: 'Sunday sunrise',
-    audio: '/assets/mantras/Gayatri-Mantra.mp3',
-  },
+
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
