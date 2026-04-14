@@ -125,7 +125,7 @@ const mantras = [
     accent: '#7870d0',
     image: '/assets/mantras/mantra-img/Shani.png',
     beejMantra: 'ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः',
-    sanskrit: ' ॐ प्राम् प्रीम् प्रौम् सः शनैश्चराय नमः',
+    sanskrit: ' ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः',
     transliteration: 'Om Sham Shanaischaraya Namah ',
     meaning: 'Salutations to Shani, the slow-moving one. O Saturn, lord of karma and discipline, please remove all obstacles from my path.',
     benefits: ['Saturn sade sati relief', 'Karma purification', 'Discipline & focus', 'Removes delays'],

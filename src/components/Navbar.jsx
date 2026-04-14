@@ -85,7 +85,7 @@ export default function Navbar() {
   {/* LEFT: Logo */}
   <div className="flex items-center">
 <span className="text-4xl font-semibold tracking-wide">
- <span style={{ color: 'black', fontFamily: 'Lathusca' }}>Vedic</span><span style={{ color: '#c9a96e', fontFamily: 'Lathusca' }}>Saar</span>
+ <span style={{ color: 'black', fontFamily: 'Lathusca' }}>VEDIC</span><span style={{ color: '#c9a96e', fontFamily: 'Lathusca' }}>SAAR</span>
 </span>
   </div>
 
