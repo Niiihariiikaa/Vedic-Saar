@@ -160,7 +160,7 @@ const mantras = [
     image: '/assets/mantras/mantra-img/Ketu.png',
     beejMantra: 'ॐ स्रां स्रीं स्रौं सः केतवे नमः',
     sanskrit: ' ॐ स्रां स्रीं स्रौं सः केतवे नमः',
-    transliteration: 'Om Kem Ketave Namah | Om Sraam Sreem Sraum Sah Ketave Namah',
+    transliteration: ' Om Sraam Sreem Sraum Sah Ketave Namah',
     meaning: 'Salutations to Ketu, the descending lunar node. O shadow planet of moksha and liberation, guide me toward spiritual awakening and freedom from ancestral karma.',
     benefits: ['Ketu dosha relief', 'Spiritual liberation', 'Ancestral karma', 'Psychic intuition'],
     chantCount: '108×',
