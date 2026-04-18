@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import CountUp from 'react-countup'
 import { useInView } from "react-intersection-observer";
+import { useBooking } from "../components/BookingContext";
 
 const slides = [
   { src: '/assets/numerology.webp', alt: 'Numerology' },
@@ -19,6 +20,7 @@ export default function Homepage() {
   const moonRef       = useRef(null)
 
   const sectionRef    = useRef(null)
+  const  {openBooking}  = useBooking();
 
 
 
@@ -181,7 +183,12 @@ const Stat = ({ num, suffix, label }) => {
               Step into the mystical world of astrology and uncover the secrets the cosmos holds.
               Let our experienced astrologer guide you through the stars, revealing insights tailored just for you.
             </p>
-            <button
+            <button 
+                onClick={() => {
+    console.log("CLICKED");
+    openBooking();
+  }}
+
               className="ml-6 border border-dashed border-[#f8f8f8] bg-[#1a1206] text-[#f5f0e8] px-6 py-2.5 text-sm tracking-widest hover:bg-[#1a1206] hover:text-[#f5f0e8] transition-all duration-300"
               style={{ fontFamily: "'Glacial Indifference', serif" }}
             >
@@ -324,7 +331,14 @@ const Stat = ({ num, suffix, label }) => {
 
           {/* Centre text */}
           <div className="px-4">
-            <span className=" text-base text-center  text-[#8a7a5a] block mb-3" style={{ fontFamily: "'Glacial Indifference', serif" }}>who we are</span>
+            <p
+  className="text-[#b8860b] text-[11px] tracking-[0.25em] uppercase mb-4 flex items-center gap-3 justify-center text-center"
+            style={{ fontFamily: "'Glacial Indifference', sans-serif" }}
+          >
+            <span className="block w-8 h-px bg-[#b8860b]" />
+            WHO WE ARE
+            <span className="block w-8 h-px bg-[#b8860b]" />
+          </p>
             <h2
               className="font-normal text-center text-[#1a1206] leading-[1.2] mb-5"
               style={{
