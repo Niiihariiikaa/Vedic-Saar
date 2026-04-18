@@ -49,14 +49,14 @@ const TestimonialCard = ({ name, location, rating, text, service, initial }) => 
     style={{
       background: 'linear-gradient(145deg, #fdf8f0 0%, #f5ede0 100%)',
       border: '1px solid rgba(184,134,11,0.25)',
-      fontFamily: "'Cormorant Garamond', serif",
+      fontFamily: "'Glacial Indifference', serif",
       boxShadow: '0 8px 40px rgba(0,0,0,0.18)',
     }}
   >
     <div>
-      <div className="text-[#b8860b] text-6xl leading-none mb-2" style={{ fontFamily: 'Georgia, serif' }}>"</div>
+      <div className="text-[#b8860b] text-6xl leading-none mb-2" style={{ fontFamily: "'Glacial Indifference', serif" }}>"</div>
       <StarRating count={rating} />
-      <p className="text-[#3a2e1e] text-[17px] leading-relaxed italic">{text}</p>
+      <p className="text-[#3a2e1e] text-[17px] leading-relaxed ">{text}</p>
     </div>
     <div className="mt-5 flex items-center justify-between">
       <div className="flex items-center gap-3">
@@ -73,7 +73,7 @@ const TestimonialCard = ({ name, location, rating, text, service, initial }) => 
       </div>
       <span
         className="text-[10px] tracking-widest uppercase text-[#b8860b] border border-[#b8860b]/40 px-2.5 py-1 rounded-sm"
-        style={{ fontFamily: "'Jost', sans-serif" }}
+        style={{ fontFamily: "'Glacial Indifference', sans-serif" }}
       >
         {service}
       </span>
@@ -83,14 +83,16 @@ const TestimonialCard = ({ name, location, rating, text, service, initial }) => 
 
 const Testimonials = () => {
   return (
-    <section
-      className="relative w-full overflow-hidden py-24 px-6 md:px-16 z-10"
-      style={{
-        backgroundImage: "url('/assets/Testimonialsbg.png')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
+<section
+  className="relative w-full overflow-hidden -mt-8 py-24 md:px-16 z-10"
+  style={{
+    backgroundImage: "url('/assets/Testimonialsbg.png')",
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'top center', 
+    marginTop: -38, // 👈 KEY LINE
+  }}
+>
       {/* dark overlay so text stays readable */}
       <div className="absolute inset-0" />
 
@@ -102,7 +104,7 @@ const Testimonials = () => {
           {/* eyebrow */}
           <p
             className="text-[#b8860b] text-[11px] tracking-[0.25em] uppercase mb-4 flex items-center gap-3 justify-center md:justify-start"
-            style={{ fontFamily: "'Jost', sans-serif" }}
+            style={{ fontFamily: "'Glacial Indifference', sans-serif" }}
           >
             <span className="block w-8 h-px bg-[#b8860b]" />
             What They Say
@@ -112,16 +114,16 @@ const Testimonials = () => {
           {/* heading */}
           <h2
             className="text-[clamp(34px,5vw,58px)] font-light leading-[1.1] text-black mb-6"
-            style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            style={{ fontFamily: "'Ibarra Real Nova', serif" }}
           >
             Voices of the<br />
-            <span className="italic text-[#b8860b]">Cosmos</span>
+            <span className=" text-[#b8860b]">Cosmos</span>
           </h2>
 
           {/* body */}
           <p
             className="text-[#c9b99a] text-[15px] leading-relaxed max-w-sm mb-8"
-            style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            style={{ fontFamily: "'Glacial Indifference', serif" }}
           >
             Thousands have walked the path of self-discovery with us.
             Each reading, each consultation — a step closer to your
@@ -137,13 +139,13 @@ const Testimonials = () => {
               <div key={label}>
                 <p
                   className="text-[#b8860b] text-[28px] font-light leading-none"
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                  style={{ fontFamily: "'Ibarra Real Nova', serif" }}
                 >
                   {num}
                 </p>
                 <p
                   className="text-[#9a8060] text-[11px] tracking-widest uppercase mt-1"
-                  style={{ fontFamily: "'Jost', sans-serif" }}
+                  style={{ fontFamily: "'Glacial Indifference', serif" }}
                 >
                   {label}
                 </p>
@@ -153,8 +155,8 @@ const Testimonials = () => {
 
           {/* CTA */}
           <button
-            className="border border-[#b8860b]/60 text-[#b8860b] px-8 py-3 text-[11px] tracking-[0.2em] uppercase hover:bg-[#b8860b] hover:text-[#0e0a04] transition-all duration-300"
-            style={{ fontFamily: "'Jost', sans-serif" }}
+            className="border border-dashed  border-[#b8860b]/60 text-[#b8860b] px-8 py-3 text-[11px] tracking-[0.2em] uppercase hover:bg-[#b8860b] hover:text-[#0e0a04] transition-all duration-300"
+            style={{ fontFamily: "'Glacial Indifference', sans-serif" }}
           >
             Read All Reviews
           </button>

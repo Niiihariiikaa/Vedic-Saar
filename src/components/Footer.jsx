@@ -65,12 +65,12 @@ export default function Footer() {
                 lineHeight: 1,
               }}
             >
-              <span style={{ color: '#f5ede0' }}>Vedic</span><span style={{ color: '#c9a96e' }}>Saar</span>
+              <span style={{ color: '#f5ede0' }}>VEDIC</span><span style={{ color: '#c9a96e' }}>SAAR</span>
             </p>
             <p
               className="mb-6"
               style={{
-                fontFamily: "'Jost', sans-serif",
+                fontFamily: "'Glacial Indifference', sans-serif",
                 fontSize: 10,
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
@@ -82,7 +82,7 @@ export default function Footer() {
 
             <p
               style={{
-                fontFamily: "'Cormorant Garamond', serif",
+                fontFamily: "'Glacial Indifference', serif",
                 fontSize: 15,
                 color: '#9a8060',
                 lineHeight: 1.8,
@@ -114,7 +114,7 @@ export default function Footer() {
                       href="#"
                       className="transition-colors duration-200 hover:text-[#b8860b]"
                       style={{
-                        fontFamily: "'Cormorant Garamond', serif",
+                        fontFamily: "'Glacial Indifference', serif",
                         fontSize: 15,
                         color: 'rgba(245,237,224,0.6)',
                         textDecoration: 'none',
@@ -137,7 +137,7 @@ export default function Footer() {
           <div>
             <p
               style={{
-                fontFamily: "'Cormorant Garamond', serif",
+                fontFamily: "'Ibarra Real Nova', serif",
                 fontSize: 20,
                 color: '#f5ede0',
                 fontWeight: 400,
@@ -147,7 +147,7 @@ export default function Footer() {
             </p>
             <p
               style={{
-                fontFamily: "'Jost', sans-serif",
+                fontFamily: "'Glacial Indifference', sans-serif",
                 fontSize: 11,
                 color: '#9a8060',
                 letterSpacing: '0.04em',
@@ -163,7 +163,7 @@ export default function Footer() {
               style={{
                 background: '#b8860b',
                 color: '#0e0a04',
-                fontFamily: "'Jost', sans-serif",
+                fontFamily: "'Glacial Indifference', sans-serif",
                 fontSize: 10,
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
@@ -182,7 +182,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           <p
             style={{
-              fontFamily: "'Jost', sans-serif",
+              fontFamily: "'Glacial Indifference', sans-serif",
               fontSize: 11,
               color: 'rgba(154,128,96,0.7)',
               letterSpacing: '0.04em',
@@ -196,7 +196,7 @@ export default function Footer() {
                 key={item}
                 href="#"
                 style={{
-                  fontFamily: "'Jost', sans-serif",
+                  fontFamily: "'Glacial Indifference', sans-serif",
                   fontSize: 11,
                   color: 'rgba(154,128,96,0.7)',
                   textDecoration: 'none',

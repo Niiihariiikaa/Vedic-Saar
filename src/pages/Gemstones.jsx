@@ -168,8 +168,8 @@ function PayPalModal({ gem, onClose }) {
               <span style={{ fontSize: 14 }}>💎</span>
             </div>
             <div>
-              <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: gem.color }}>{gem.planet} · {gem.sanskrit}</p>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#f5ede0', lineHeight: 1 }}>{gem.name}</p>
+              <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: gem.color }}>{gem.planet} · {gem.sanskrit}</p>
+              <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 18, color: '#f5ede0', lineHeight: 1 }}>{gem.name}</p>
             </div>
           </div>
           <button onClick={handleClose} style={{ color: '#9a8060', fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}>✕</button>
@@ -183,14 +183,14 @@ function PayPalModal({ gem, onClose }) {
                 <text x="0" y="14" fontFamily="Arial" fontWeight="bold" fontSize="14" fill="#009CDE">Pay</text>
                 <text x="28" y="14" fontFamily="Arial" fontWeight="bold" fontSize="14" fill="#012169">Pal</text>
               </svg>
-              <span style={{ fontFamily: "'Jost',sans-serif", fontSize: 9, letterSpacing: '0.1em', color: '#7ab3d4', textTransform: 'uppercase' }}>Secure Checkout</span>
+              <span style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.1em', color: '#7ab3d4', textTransform: 'uppercase' }}>Secure Checkout</span>
               <span style={{ marginLeft: 'auto', fontSize: 12 }}>🔒</span>
             </div>
 
             {/* Amount */}
             <div className="flex justify-between items-center mb-6 pb-5" style={{ borderBottom: `1px solid ${gem.color}18` }}>
-              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15, color: '#9a8060' }}>Total Amount</span>
-              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: '#f5ede0', fontWeight: 300 }}>{gem.price}</span>
+              <span style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 15, color: '#9a8060' }}>Total Amount</span>
+              <span style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 28, color: '#f5ede0', fontWeight: 300 }}>{gem.price}</span>
             </div>
 
             {[
@@ -198,13 +198,13 @@ function PayPalModal({ gem, onClose }) {
               { label: 'Card Number', val: cardNum, set: setCardNum, type: 'text', ph: '1234  5678  9012  3456', full: true },
             ].map(({ label, val, set, type, ph, full }) => (
               <div key={label} className="mb-4">
-                <label style={{ fontFamily: "'Jost',sans-serif", fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', display: 'block', marginBottom: 6 }}>{label}</label>
+                <label style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', display: 'block', marginBottom: 6 }}>{label}</label>
                 <input
                   required type={type} placeholder={ph} value={val} onChange={e => set(e.target.value)}
                   style={{
                     width: '100%', background: 'rgba(255,255,255,0.04)', border: `1px solid ${gem.color}30`,
                     borderRadius: 4, padding: '10px 14px', color: '#f5ede0',
-                    fontFamily: "'Cormorant Garamond', serif", fontSize: 15,
+                    fontFamily: "'Ibarra', serif", fontSize: 15,
                     outline: 'none', boxSizing: 'border-box',
                   }}
                 />
@@ -217,13 +217,13 @@ function PayPalModal({ gem, onClose }) {
                 { label: 'CVV', val: cvv, set: setCvv, ph: '•••' },
               ].map(({ label, val, set, ph }) => (
                 <div key={label} style={{ flex: 1 }}>
-                  <label style={{ fontFamily: "'Jost',sans-serif", fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', display: 'block', marginBottom: 6 }}>{label}</label>
+                  <label style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', display: 'block', marginBottom: 6 }}>{label}</label>
                   <input
                     required type="text" placeholder={ph} value={val} onChange={e => set(e.target.value)}
                     style={{
                       width: '100%', background: 'rgba(255,255,255,0.04)', border: `1px solid ${gem.color}30`,
                       borderRadius: 4, padding: '10px 14px', color: '#f5ede0',
-                      fontFamily: "'Cormorant Garamond', serif", fontSize: 15,
+                      fontFamily: "'Ibarra', serif", fontSize: 15,
                       outline: 'none', boxSizing: 'border-box',
                     }}
                   />
@@ -235,7 +235,7 @@ function PayPalModal({ gem, onClose }) {
               type="submit"
               style={{
                 width: '100%', background: `linear-gradient(135deg, ${gem.color}, ${gem.color}cc)`,
-                color: '#0f0d07', fontFamily: "'Jost',sans-serif", fontSize: 11,
+                color: '#0f0d07', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11,
                 letterSpacing: '0.2em', textTransform: 'uppercase', padding: '14px',
                 border: 'none', borderRadius: 4, cursor: 'pointer', fontWeight: 600,
               }}
@@ -243,7 +243,7 @@ function PayPalModal({ gem, onClose }) {
               ✦ Complete Purchase — {gem.price}
             </button>
 
-            <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 9, color: '#6b5840', textAlign: 'center', marginTop: 12, letterSpacing: '0.08em' }}>
+            <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, color: '#6b5840', textAlign: 'center', marginTop: 12, letterSpacing: '0.08em' }}>
               256-bit SSL encrypted · Powered by PayPal
             </p>
           </form>
@@ -252,8 +252,8 @@ function PayPalModal({ gem, onClose }) {
         {step === 'processing' && (
           <div className="px-7 py-14 flex flex-col items-center gap-5">
             <ProcessingSpinner color={gem.color} />
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#f5ede0' }}>Processing your order…</p>
-            <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 9, letterSpacing: '0.14em', color: '#9a8060', textTransform: 'uppercase' }}>Please wait</p>
+            <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 18, color: '#f5ede0' }}>Processing your order…</p>
+            <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.14em', color: '#9a8060', textTransform: 'uppercase' }}>Please wait</p>
           </div>
         )}
 
@@ -286,13 +286,13 @@ function SuccessState({ gem, onClose }) {
         style={{ background: `${gem.color}25`, border: `2px solid ${gem.color}60` }}>
         <span style={{ fontSize: 28 }}>✓</span>
       </div>
-      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 26, color: '#f5ede0', fontWeight: 300 }}>Order Confirmed!</p>
-      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15, color: '#9a8060', lineHeight: 1.7, maxWidth: 280 }}>
+      <p style={{ fontFamily: "'Ibarra', serif", fontSize: 26, color: '#f5ede0', fontWeight: 300 }}>Order Confirmed!</p>
+      <p style={{ fontFamily: "'Ibarra', serif", fontSize: 15, color: '#9a8060', lineHeight: 1.7, maxWidth: 280 }}>
         Your <strong style={{ color: gem.color }}>{gem.name}</strong> will be energised, cleansed, and dispatched within 3–5 days.
       </p>
       <button onClick={onClose} style={{
         marginTop: 8, background: `${gem.color}20`, color: gem.color,
-        fontFamily: "'Jost',sans-serif", fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
+        fontFamily: "'Glacial Indifference',sans-serif", fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
         padding: '11px 28px', border: `1px solid ${gem.color}50`, borderRadius: 2, cursor: 'pointer',
       }}>
         Continue Shopping
@@ -355,7 +355,7 @@ function BookConsultationFixed() {
           padding: '12px 22px 12px 16px',
           cursor: 'pointer',
           boxShadow: '0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px #b8860b15',
-          fontFamily: "'Jost',sans-serif",
+          fontFamily: "'Glacial Indifference',sans-serif",
           fontSize: 10,
           letterSpacing: '0.16em',
           textTransform: 'uppercase',
@@ -384,13 +384,13 @@ function BookConsultationFixed() {
           <div className="h-px w-full" style={{ background: 'linear-gradient(90deg, transparent, #b8860b80, transparent)' }} />
 
           <div className="px-6 pt-5 pb-2" style={{ borderBottom: '1px solid rgba(184,134,11,0.12)' }}>
-            <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#b8860b', marginBottom: 4 }}>
+            <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#b8860b', marginBottom: 4 }}>
               Vedic Astrology
             </p>
-            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#f5ede0', fontWeight: 400, lineHeight: 1.1 }}>
+            <h3 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 20, color: '#f5ede0', fontWeight: 400, lineHeight: 1.1 }}>
               Book a Personal<br />Consultation
             </h3>
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: '#9a8060', marginTop: 5, lineHeight: 1.6 }}>
+            <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 13, color: '#9a8060', marginTop: 5, lineHeight: 1.6 }}>
               Get a birth-chart reading & gem recommendation.
             </p>
           </div>
@@ -403,26 +403,26 @@ function BookConsultationFixed() {
                 { label: 'Date of Birth', val: dob, set: setDob, ph: '', type: 'date' },
               ].map(({ label, val, set, ph, type }) => (
                 <div key={label}>
-                  <label style={{ fontFamily: "'Jost',sans-serif", fontSize: 8, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', display: 'block', marginBottom: 4 }}>{label}</label>
+                  <label style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 8, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', display: 'block', marginBottom: 4 }}>{label}</label>
                   <input
                     required type={type} placeholder={ph} value={val} onChange={e => set(e.target.value)}
                     style={{
                       width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(184,134,11,0.25)',
                       borderRadius: 3, padding: '8px 12px', color: '#f5ede0',
-                      fontFamily: "'Cormorant Garamond', serif", fontSize: 14,
+                      fontFamily: "'Ibarra', serif", fontSize: 14,
                       outline: 'none', boxSizing: 'border-box',
                     }}
                   />
                 </div>
               ))}
               <div>
-                <label style={{ fontFamily: "'Jost',sans-serif", fontSize: 8, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', display: 'block', marginBottom: 4 }}>Your Concern</label>
+                <label style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 8, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', display: 'block', marginBottom: 4 }}>Your Concern</label>
                 <textarea
                   rows={2} placeholder="e.g. career, marriage, health…" value={concern} onChange={e => setConcern(e.target.value)}
                   style={{
                     width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(184,134,11,0.25)',
                     borderRadius: 3, padding: '8px 12px', color: '#f5ede0', resize: 'none',
-                    fontFamily: "'Cormorant Garamond', serif", fontSize: 14,
+                    fontFamily: "'Ibarra', serif", fontSize: 14,
                     outline: 'none', boxSizing: 'border-box',
                   }}
                 />
@@ -430,7 +430,7 @@ function BookConsultationFixed() {
               <button
                 type="submit"
                 style={{
-                  background: '#b8860b', color: '#0f0d07', fontFamily: "'Jost',sans-serif",
+                  background: '#b8860b', color: '#0f0d07', fontFamily: "'Glacial Indifference',sans-serif",
                   fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
                   padding: '11px', border: 'none', borderRadius: 3, cursor: 'pointer', fontWeight: 700, marginTop: 2,
                 }}
@@ -441,13 +441,13 @@ function BookConsultationFixed() {
           ) : (
             <div className="px-6 py-8 text-center">
               <div className="text-4xl mb-3">🌟</div>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#f5ede0', marginBottom: 6 }}>Request Received!</p>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: '#9a8060', lineHeight: 1.7 }}>
+              <p style={{ fontFamily: "'Ibarra', serif", fontSize: 18, color: '#f5ede0', marginBottom: 6 }}>Request Received!</p>
+              <p style={{ fontFamily: "'Ibarra', serif", fontSize: 13, color: '#9a8060', lineHeight: 1.7 }}>
                 Our astrologer will reach out within 24 hours on WhatsApp.
               </p>
               <button
                 onClick={() => { setSubmitted(false); setOpen(false); }}
-                style={{ marginTop: 14, color: '#b8860b', fontFamily: "'Jost',sans-serif", fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', background: 'none', border: 'none', cursor: 'pointer' }}
+                style={{ marginTop: 14, color: '#b8860b', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', background: 'none', border: 'none', cursor: 'pointer' }}
               >
                 Close ✕
               </button>
@@ -533,35 +533,28 @@ function GemHero({ gem, onBuy }) {
               position: 'relative', overflow: 'visible', zIndex: 1,
             }}
           />
-          <div
-            className="absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full"
-            style={{ background: '#1a1206', border: `1px solid ${gem.color}60`, whiteSpace: 'nowrap', zIndex: 2 }}
-          >
-            <span style={{ fontFamily: "'Jost',sans-serif", fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: gem.color }}>
-              ✦ {gem.planet}
-            </span>
-          </div>
+        
         </div>
 
         {/* Text */}
         <div ref={textRef} className="flex-1">
-          <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: gem.color, marginBottom: 6 }}>
+          <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: gem.color, marginBottom: 6 }}>
             {gem.sanskrit}
           </p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px,5vw,56px)', fontWeight: 400, color: '#1a1206', lineHeight: 1, marginBottom: 10 }}>
+          <h1 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 'clamp(36px,5vw,56px)', fontWeight: 400, color: '#1a1206', lineHeight: 1, marginBottom: 10 }}>
             {gem.name}
           </h1>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 36, fontWeight: 300, color: '#1a1206', marginBottom: 16, letterSpacing: '-0.01em' }}>
+          <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 36, fontWeight: 300, color: '#1a1206', marginBottom: 16, letterSpacing: '-0.01em' }}>
             {gem.price}
           </p>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: '#6b5a40', lineHeight: 1.85, marginBottom: 18, maxWidth: 460 }}>
+          <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 16, color: '#6b5a40', lineHeight: 1.85, marginBottom: 18, maxWidth: 460 }}>
             {gem.description}
           </p>
 
           <div ref={benefitsRef} className="flex flex-wrap gap-x-6 gap-y-1 mb-5">
             {gem.benefits.map(b => (
               <span key={b} className="flex items-center gap-1.5"
-                style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, color: '#4a3820' }}>
+                style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 14, color: '#4a3820' }}>
                 <span style={{ color: gem.color }}>✦</span> {b}
               </span>
             ))}
@@ -569,12 +562,12 @@ function GemHero({ gem, onBuy }) {
 
           <div className="flex flex-wrap gap-8 mb-6 pb-6" style={{ borderBottom: `1px solid ${gem.color}25` }}>
             <div>
-              <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', marginBottom: 3 }}>Best For</p>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, color: '#4a3820' }}>{gem.bestFor}</p>
+              <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', marginBottom: 3 }}>Best For</p>
+              <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 14, color: '#4a3820' }}>{gem.bestFor}</p>
             </div>
             <div>
-              <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', marginBottom: 3 }}>How to Wear</p>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, color: '#4a3820' }}>{gem.wearing}</p>
+              <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', marginBottom: 3 }}>How to Wear</p>
+              <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 14, color: '#4a3820' }}>{gem.wearing}</p>
             </div>
           </div>
 
@@ -584,9 +577,9 @@ function GemHero({ gem, onBuy }) {
               className="hover:opacity-90 transition-opacity duration-200"
               style={{
                 background: `linear-gradient(135deg, ${gem.color}, ${gem.color}bb)`,
-                color: '#0f0d07', fontFamily: "'Jost',sans-serif", fontSize: 11,
+                color: '#0f0d07', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11,
                 letterSpacing: '0.18em', textTransform: 'uppercase', padding: '13px 28px',
-                border: 'none', cursor: 'pointer', fontWeight: 700, borderRadius: 2,
+                border: 'none', cursor: 'pointer', fontWeight: 700, borderRadius: 2, border: `1px dashed black`,
               }}
             >
               ✦ Purchase Now
@@ -595,9 +588,9 @@ function GemHero({ gem, onBuy }) {
               onClick={() => onBuy(gem)}
               className="hover:opacity-90 transition-opacity duration-200"
               style={{
-                background: '#1a1206', color: '#f5ede0', fontFamily: "'Jost',sans-serif", fontSize: 11,
+                background: 'transparent', color: `${gem.color}`, fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11,
                 letterSpacing: '0.18em', textTransform: 'uppercase', padding: '13px 28px',
-                border: 'none', cursor: 'pointer', borderRadius: 2,
+                border: 'none', cursor: 'pointer', borderRadius: 2, border: `2px dashed ${gem.color}50` ,
               }}
             >
               ✦ Add to Cart
@@ -605,9 +598,9 @@ function GemHero({ gem, onBuy }) {
             <button
               className="transition-all duration-200 hover:opacity-80"
               style={{
-                background: 'transparent', color: gem.color, fontFamily: "'Jost',sans-serif", fontSize: 11,
+                background: 'black', color: 'white', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11,
                 letterSpacing: '0.18em', textTransform: 'uppercase', padding: '13px 28px',
-                border: `1px solid ${gem.color}60`, cursor: 'pointer', borderRadius: 2,
+                border: `1px solid ${gem.color}60`, cursor: 'pointer', borderRadius: 2, border: `1px dashed white`, boxShadow: `0 4px 16px ${gem.color}30`,
               }}
             >
               Consult Astrologer
@@ -642,7 +635,7 @@ function GemShopCard({ gem, isActive, onClick }) {
       style={{
         background: 'rgba(255,255,255,0.55)',
         backdropFilter: 'blur(8px)',
-        border: isActive ? `1.5px solid ${gem.color}60` : '1px solid rgba(200,185,160,0.3)',
+        border: isActive ? `2px solid ${gem.color}60` : '2px dashed rgba(200,185,160,0.3)',
         borderRadius: 4,
         transition: 'border 0.25s ease, box-shadow 0.25s ease',
         boxShadow: isActive ? `0 4px 24px ${gem.color}22` : '0 2px 8px rgba(0,0,0,0.04)',
@@ -651,7 +644,7 @@ function GemShopCard({ gem, isActive, onClick }) {
       <div className="relative flex items-center justify-center overflow-hidden" style={{ height: 150, background: 'transparent' }}>
         <div
           className="absolute"
-          style={{ width: 120, height: 120, borderRadius: '50%', background: `radial-gradient(circle, ${gem.color}40 0%, transparent 70%)`, filter: 'blur(14px)', opacity: isActive ? 1 : 0.5, transition: 'opacity 0.3s' }}
+          style={{ width: 120, height: 120, border: `2px dashed ${gem.color}60`, borderRadius: '50%', background: `radial-gradient(circle, ${gem.color}40 0%, transparent 70%)`, filter: 'blur(14px)', opacity: isActive ? 1 : 0.5, transition: 'opacity 0.3s' }}
         />
         <img
           src={gem.thumb}
@@ -667,15 +660,15 @@ function GemShopCard({ gem, isActive, onClick }) {
       </div>
 
       <div className="p-4" style={{ background: 'rgba(253,248,240,0.7)' }}>
-        <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: gem.color, marginBottom: 3 }}>{gem.planet}</p>
-        <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 17, fontWeight: 400, color: '#1a1206', marginBottom: 2, lineHeight: 1.2 }}>{gem.name}</h3>
-        <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 9, letterSpacing: '0.1em', color: '#9a8060', textTransform: 'uppercase', marginBottom: 10 }}>{gem.sanskrit}</p>
+        <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: gem.color, marginBottom: 3 }}>{gem.planet}</p>
+        <h3 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 17, fontWeight: 400, color: '#1a1206', marginBottom: 2, lineHeight: 1.2 }}>{gem.name}</h3>
+        <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.1em', color: '#9a8060', textTransform: 'uppercase', marginBottom: 10 }}>{gem.sanskrit}</p>
         <div className="flex items-center justify-between">
-          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#1a1206', fontWeight: 300 }}>{gem.price}</span>
+          <span style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 20, color: '#1a1206', fontWeight: 300 }}>{gem.price}</span>
           <button
             style={{
               background: isActive ? gem.color : '#1a1206', color: isActive ? '#0f0d07' : '#f5ede0',
-              fontFamily: "'Jost',sans-serif", fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase',
+              fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase',
               padding: '6px 14px', border: 'none', cursor: 'pointer', borderRadius: 2, transition: 'background 0.2s',
             }}
           >
@@ -740,15 +733,15 @@ export default function Gemstones() {
         {/* Heading */}
         <div ref={headingRef} className="text-center pt-16 pb-6">
           <p className="flex items-center justify-center gap-3 mb-3"
-            style={{ fontFamily: "'Jost',sans-serif", fontSize: 11, letterSpacing: '0.26em', textTransform: 'uppercase', color: '#b8860b' }}>
+            style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11, letterSpacing: '0.26em', textTransform: 'uppercase', color: '#b8860b' }}>
             <span style={{ display: 'block', width: 32, height: 1, background: '#b8860b' }} />
             Vedic Gemology
             <span style={{ display: 'block', width: 32, height: 1, background: '#b8860b' }} />
           </p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(28px,4vw,48px)', fontWeight: 400, color: '#1a1206', lineHeight: 1.1, marginBottom: 10 }}>
+          <h2 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 'clamp(28px,4vw,48px)', fontWeight: 400, color: '#1a1206', lineHeight: 1.1, marginBottom: 10 }}>
             Sacred <em style={{ color: '#b8860b' }}>Gemstones</em> of the Cosmos
           </h2>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15, color: '#9a7b6a', maxWidth: 420, margin: '0 auto' }}>
+          <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 15, color: '#9a7b6a', maxWidth: 420, margin: '0 auto' }}>
             Select any gemstone below to explore its cosmic significance, benefits, and how to wear it.
           </p>
         </div>
@@ -759,12 +752,12 @@ export default function Gemstones() {
         {/* Shop label */}
         <div className="max-w-5xl mx-auto px-8 md:px-16 pt-8">
           <div className="flex items-center gap-4 mb-2">
-            <p style={{ fontFamily: "'Jost',sans-serif", fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#b8860b', whiteSpace: 'nowrap' }}>
+            <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#b8860b', whiteSpace: 'nowrap' }}>
               Healing Crystals &amp; Gemstones
             </p>
             <div style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.2)' }} />
           </div>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15, color: '#9a7b6a', marginBottom: 20, maxWidth: 520 }}>
+          <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 15, color: '#9a7b6a', marginBottom: 20, maxWidth: 520 }}>
             Our shop carries all nine sacred Navaratna gems. Click any to view full details above.
           </p>
         </div>
@@ -784,12 +777,12 @@ export default function Gemstones() {
           </div>
 
           <div className="text-center mt-14">
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15, color: '#9a7b6a', marginBottom: 16 }}>
+            <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 15, color: '#9a7b6a', marginBottom: 16 }}>
               Unsure which gem is right for you? Let our astrologer recommend one based on your birth chart.
             </p>
             <button
               className="hover:bg-[#b8860b] transition-all duration-300"
-              style={{ background: '#1a1206', color: '#f5ede0', fontFamily: "'Jost',sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '14px 36px', border: 'none', cursor: 'pointer' }}
+              style={{ background: '#1a1206', color: '#f5ede0', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '14px 36px', border: 'none', cursor: 'pointer' }}
             >
               Get Gem Recommendation
             </button>

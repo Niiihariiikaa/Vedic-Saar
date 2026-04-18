@@ -56,12 +56,12 @@ export default function KnowYourAstrologer() {
       // Blue orb top-right: rotates + slight parallax down
       gsap.to(blueOrbRef.current, {
         rotation: 360,
-        y: 80,
+        y: 20,
         ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top bottom',
-          end: 'bottom top',
+          end: 'bottom left',
           scrub: 2,
         },
       });
@@ -126,12 +126,12 @@ export default function KnowYourAstrologer() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full flex flex-col"
-      style={{ background: '#f2ede4', minHeight: '100vh' }}
+      className="relative w-full flex flex-col z-40 overflow-visible"
+      style={{ background: '#faf8f5', minHeight: '100vh'}}
     >
       {/* ── MARQUEE STRIP top ── */}
       <div
-        className="relative w-full overflow-hidden py-3 z-10"
+        className="relative w-full overflow-hidden py-3 z-40"
         style={{ borderBottom: '1px solid rgba(180,160,120,0.2)' }}
       >
         <div
@@ -143,13 +143,13 @@ export default function KnowYourAstrologer() {
             <span
               key={i}
               style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 'clamp(38px, 5vw, 68px)',
+                fontFamily: "'Ibarra Real Nova', serif",
+                fontSize: 'clamp(38px, 5vw, 78px)',
                 fontWeight: 300,
                 color: word === '·' ? '#b8860b' : 'rgba(26,18,6,0.15)',
                 letterSpacing: word === '·' ? '0' : '-0.02em',
                 lineHeight: 1,
-                fontStyle: word === '·' ? 'normal' : 'italic',
+                fontStyle:  'normal',
               }}
             >
               {word}
@@ -159,11 +159,11 @@ export default function KnowYourAstrologer() {
       </div>
 
       {/* ── BLUE ORB — top right, rotates + drifts down ── */}
-      <div
-        ref={blueOrbRef}
-        className="absolute pointer-events-none z-10"
-        style={{ top: -190, right: -30, width: 190, height: 320 }}
-      >
+<div
+  ref={blueOrbRef}
+  className="absolute pointer-events-none z-[9999]"
+  style={{ top: -190, right: -30, width: 190, height: 320 }}
+>
         <img
           src="/assets/blue.png"
           alt=""
@@ -172,13 +172,13 @@ export default function KnowYourAstrologer() {
       </div>
 
       {/* ── BROWN ORB — bottom left, moves right ── */}
-      <div
-        ref={brownOrbRef}
-        className="absolute pointer-events-none z-0"
-        style={{ bottom: -60, left: -80, width: 180, height: 280 }}
-      >
+<div
+  ref={brownOrbRef}
+  className="absolute pointer-events-none z-[9999]"
+  style={{ bottom: -60, left: -80, width: 300, height: 300 }}
+>
         <img
-          src="/assets/brown.png"
+          src="/assets/beige.webp"
           alt=""
           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
         />
@@ -187,46 +187,27 @@ export default function KnowYourAstrologer() {
       {/* ── MAIN ROW ── */}
       <div className="relative z-10 flex flex-1 items-center">
 
-        {/* Faint zodiac wheel BG */}
-        <div
-          ref={chartBgRef}
-          className="absolute pointer-events-none select-none"
-          style={{ left: '-8%', top: '50%', transform: 'translateY(-50%)', width: 720, height: 720, opacity: 0.2 }}
-        >
-          <svg viewBox="0 0 720 720" xmlns="http://www.w3.org/2000/svg">
-            {[320, 260, 190, 120, 55].map((r, i) => (
-              <circle key={i} cx="360" cy="360" r={r} fill="none" stroke="#5a4020" strokeWidth={i === 0 ? 1.5 : 0.9} />
-            ))}
-            {Array.from({ length: 12 }, (_, i) => {
-              const a = (i * 30) * Math.PI / 180;
-              return <line key={i} x1={360 + 55 * Math.cos(a)} y1={360 + 55 * Math.sin(a)}
-                x2={360 + 320 * Math.cos(a)} y2={360 + 320 * Math.sin(a)}
-                stroke="#5a4020" strokeWidth="0.7" />;
-            })}
-            {zodiacSymbols.map(({ sym }, i) => {
-              const a = (i * 30 - 75) * Math.PI / 180;
-              return (
-                <text
-                  key={i}
-                  x={360 + 290 * Math.cos(a)}
-                  y={360 + 290 * Math.sin(a)}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fontSize="20"
-                  fill="#5a4020"
-                  fontFamily="serif"
-                  // Variation selector \uFE0E forces text presentation (no emoji color rendering)
-                >{sym}&#xFE0E;</text>
-              );
-            })}
-            {zodiacSymbols.map(({ name }, i) => {
-              const a = (i * 30 - 60) * Math.PI / 180;
-              return <text key={i} x={360 + 340 * Math.cos(a)} y={360 + 340 * Math.sin(a)}
-                textAnchor="middle" dominantBaseline="middle" fontSize="9"
-                fill="#5a4020" fontFamily="sans-serif" letterSpacing="1">{name}</text>;
-            })}
-          </svg>
-        </div>
+<div
+  ref={chartBgRef}
+  className="absolute pointer-events-none select-none"
+  style={{
+    left: '-8%',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    width: 820,
+    height: 980,
+    opacity: 0.1,
+  }}
+>
+  <img
+    src="/assets/wheel.png"
+    alt="zodiac wheel"
+    className="w-full h-full object-contain"
+    style={{
+      transform: 'translateZ(0)', // GPU boost
+    }}
+  />
+</div>
 
         {/* ── LEFT: sunburst + photo ── */}
         <div
@@ -238,7 +219,7 @@ export default function KnowYourAstrologer() {
           <div
             ref={sunburstRef}
             className="absolute flex items-center justify-center pointer-events-none"
-            style={{ width: 580, height: 580 }}
+            style={{ width: 680, height: 680 }}
           >
             <svg viewBox="0 0 580 580" xmlns="http://www.w3.org/2000/svg"
               style={{ width: '100%', height: '100%' }}>
@@ -269,7 +250,7 @@ export default function KnowYourAstrologer() {
           <div
             className="relative rounded-full overflow-hidden z-10"
             style={{
-              width: 290, height: 290,
+              width: 400, height: 400,
               border: '3px solid rgba(180,190,200,0.35)',
               boxShadow: '0 8px 48px rgba(0,0,0,0.12)',
               background: '#d8dce0',
@@ -293,8 +274,8 @@ export default function KnowYourAstrologer() {
               boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
             }}
           >
-            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: '#b8860b', lineHeight: 1 }}>20+</span>
-            <span style={{ fontFamily: "'Jost', sans-serif", fontSize: 9, color: '#c9a96e', letterSpacing: '0.12em', textTransform: 'uppercase', textAlign: 'center', marginTop: 3, lineHeight: 1.3 }}>Years Exp.</span>
+            <span style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 24, color: '#b8860b', lineHeight: 1 }}>20+</span>
+            <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 9, color: '#c9a96e', letterSpacing: '0.12em', textTransform: 'uppercase', textAlign: 'center', marginTop: 3, lineHeight: 1.3 }}>Years Exp.</span>
           </div>
         </div>
 
@@ -307,7 +288,7 @@ export default function KnowYourAstrologer() {
           {/* Badge */}
           <span
             className="inline-block border border-[#c9a96e]/50 text-[#9a7b3a] px-4 py-1.5 mb-7"
-            style={{ fontFamily: "'Jost', sans-serif", fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase' }}
+            style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase' }}
           >
             Know Your Astrologer
           </span>
@@ -315,10 +296,9 @@ export default function KnowYourAstrologer() {
           {/* Heading */}
           <h2
             className="text-[#1a1206] leading-[1.08] mb-5"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(34px, 4vw, 54px)', fontWeight: 400 }}
+            style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 'clamp(34px, 4vw, 54px)', fontWeight: 400 }}
           >
-            Unlocking the Mysteries of<br />
-            <em className="text-[#b8860b]">Your Life Path</em> to Fulfillment
+            Unlocking the Mysteries of Your Life Path to Fulfillment
           </h2>
 
           <div className="w-12 h-px mb-6" style={{ background: '#b8860b' }} />
@@ -326,7 +306,7 @@ export default function KnowYourAstrologer() {
           {/* Body */}
           <p
             className="text-[#6b5a40] leading-[1.85] mb-8"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16 }}
+            style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 16 }}
           >
             Manish Malhotra is an experienced Vedic astrologer dedicated to helping
             individuals gain clarity and direction through the timeless wisdom of
@@ -396,7 +376,7 @@ export default function KnowYourAstrologer() {
               },
             ].map(({ icon, label }) => (
               <span key={label} className="flex items-center gap-2 text-[#6b5a40]"
-                style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15 }}>
+                style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 15 }}>
                 {icon} {label}
               </span>
             ))}
@@ -413,10 +393,10 @@ export default function KnowYourAstrologer() {
                   className="w-full h-full object-cover" />
               </div>
               <div>
-                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#1a1206' }}>
+                <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 18, color: '#1a1206' }}>
                   Manish Malhotra
                 </p>
-                <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 11, color: '#9a8060', letterSpacing: '0.05em' }}>
+                <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, color: '#9a8060', letterSpacing: '0.05em' }}>
                   Vedic Astrologer · 20+ Years Experience
                 </p>
               </div>
@@ -427,7 +407,7 @@ export default function KnowYourAstrologer() {
               style={{
                 background: '#1a1206',
                 color: '#f5ede0',
-                fontFamily: "'Jost', sans-serif",
+                fontFamily: "'Glacial Indifference', sans-serif",
                 fontSize: 11,
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',

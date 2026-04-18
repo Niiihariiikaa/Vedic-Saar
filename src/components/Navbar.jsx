@@ -59,7 +59,7 @@ export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(null)
 
   return (
-    <div style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+    <div style={{ fontFamily: "'Glacial Indifference', serif" }}>
 
       {/* ── TOP BAR WITH VIDEO ── */}
       <div className="relative h-[32px] overflow-hidden flex items-center justify-between px-6 bg-[#0e0e0e]">
@@ -80,7 +80,7 @@ export default function Navbar() {
       </div>
 
       {/* ── NAV LINKS ── */}
-     <nav className="bg-white border-b border-[#e8e0d0] h-16 px-6 py-3 flex items-center justify-between">
+     <nav className="bg-white border-b border-[#b8870b72] border-dashed  h-24 px-6 py-3 flex items-center justify-between">
 
   {/* LEFT: Logo */}
   <div className="flex items-center">
@@ -105,7 +105,7 @@ export default function Navbar() {
           >
             {item}
             {dropdowns[item] && (
-              <span className="text-[9px] opacity-50 ml-0.5">▾</span>
+              <span className="inline-block text-[14px] opacity-100 ml-1">▾</span>
             )}
           </Link>
 
@@ -129,7 +129,7 @@ export default function Navbar() {
 
     {/* CTA */}
     <Link to="/consultation">
-      <button className="ml-2 border bg-black border-[#b8860b] text-white px-4 py-2 text-xs tracking-widest whitespace-nowrap hover:bg-[#b8860b] hover:text-white transition-all duration-200">
+      <button className="ml-2 border border-dashed bg-transparent border-[black] text-black px-4 py-2 text-xs tracking-widest whitespace-nowrap hover:bg-[#b8860b] hover:text-white transition-all duration-200">
         Book Reading
       </button>
     </Link>

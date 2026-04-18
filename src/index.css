@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,10 +10,11 @@ body {
   padding: 0;
   background: transparent;
   background-size: cover;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Ibarra Real Nova', serif;
+  overflow-x: hidden;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 /* ── FLIP TEXT ── */
 .flip-wrap,
@@ -70,7 +70,7 @@ html { scroll-behavior: smooth; }
 .stat-animate:nth-child(2) { animation-delay: 0.15s; }
 .stat-animate:nth-child(3) { animation-delay: 0.3s; }
 
-
+/* ── GLOW PULSE ── */
 @keyframes goldPulse {
   0%, 100% { box-shadow: 0 0 10px 2px rgba(184,134,11,0.5); }
   50%       { box-shadow: 0 0 22px 6px rgba(184,134,11,0.85); }
@@ -79,9 +79,40 @@ html { scroll-behavior: smooth; }
   animation: goldPulse 2s ease-in-out infinite;
 }
 
+/* ── FLOATING ANIMATIONS ──
+   moon-float  : gentle vertical bob (moon in section 2)
+   crystal-float: slightly slower, slightly larger travel
+   Both use translateY only — GPU composited, zero layout cost
+── */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-16px); }
+}
+
+@keyframes floatYCrystal {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-22px); }
+}
+
+.moon-float {
+  animation: floatY 5s ease-in-out infinite;
+}
+
+.crystal-float {
+  animation: floatYCrystal 7s ease-in-out infinite;
+}
+
+/* ── FONTS ── */
 @font-face {
   font-family: 'Lathusca';
   src: url('/assets/fonts/Awesome Lathusca.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+}
+@font-face {
+  font-family: 'Glacial Indifference';
+  src: url('/assets/fonts/glacial-indifference.regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
