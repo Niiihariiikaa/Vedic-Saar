@@ -1,108 +1,29 @@
-import { useEffect, useRef, useState } from 'react'
-
+import { useEffect, useRef, useState, useCallback, useMemo, memo } from 'react'
 import CountUp from 'react-countup'
-import { useInView } from "react-intersection-observer";
-import { useBooking } from "../components/BookingContext";
+import { useInView } from 'react-intersection-observer'
+import { useBooking } from '../components/BookingContext'
 
-const slides = [
+// ─── Constants outside component — never recreated ───────────────────────────
+const SLIDES = [
   { src: '/assets/numerology.webp', alt: 'Numerology' },
   { src: '/assets/vedic.webp',      alt: 'Vedic Astrology' },
   { src: '/assets/vastu.webp',      alt: 'Vastu' },
 ]
 
-export default function Homepage() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [glowing, setGlowing]           = useState(false)
+const SLIDER_CAPSULE_STYLE = {
+  width: '460px',
+  height: '580px',
+  borderRadius: '230px 230px 0 0',
+}
 
-  const saturnRef     = useRef(null)
-  const crystalRef    = useRef(null)
-  const crystal2Ref   = useRef(null)
-  const moonRef       = useRef(null)
+const SLIDE_INNER_STYLE = {
+  borderRadius: '180px 180px 0 0',
+  overflow: 'hidden',
+}
 
-  const sectionRef    = useRef(null)
-  const  {openBooking}  = useBooking();
-
-
-
-  // Shared RAF for parallax
-  const rafParallax = useRef(null)
-  const latestY     = useRef(0)
-
-  /* ── Parallax scroll ── */
-  useEffect(() => {
-    // Snapshot element refs at effect time so cleanup can safely access them
-    const els = [saturnRef.current, crystalRef.current, crystal2Ref.current, moonRef.current]
-    els.forEach(el => { if (el) el.style.willChange = 'transform' })
-
-    let ticking = false
-
-    const update = () => {
-      const y = latestY.current   // read from ref, never stale
-      if (saturnRef.current)
-        saturnRef.current.style.transform = `rotate(${y * 0.15}deg)`
-      if (crystalRef.current)
-        crystalRef.current.style.transform = `translateX(${y * 0.2}px) rotate(${-y * 0.1}deg)`
-      if (crystal2Ref.current)
-        crystal2Ref.current.style.transform = `translateY(${y * 0.15}px)`
-      if (moonRef.current)
-        moonRef.current.style.transform = `translateY(${y * 0.15}px)`
-      ticking = false
-    }
-
-    const onScroll = () => {
-      latestY.current = window.scrollY
-      if (!ticking) {
-        rafParallax.current = requestAnimationFrame(update)
-        ticking = true
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      if (rafParallax.current) cancelAnimationFrame(rafParallax.current)
-      // Use snapshotted els — refs may be null by cleanup time
-      els.forEach(el => { if (el) el.style.willChange = 'auto' })
-    }
-  }, [])
-
-  /* ── Auto-slide ── */
-  useEffect(() => {
-    const t = setInterval(() => setCurrentSlide(s => (s + 1) % slides.length), 4000)
-    return () => clearInterval(t)
-  }, [])
-
-  /* ── Counter animation — fully cancelable ── */
-
-
-  /* ── Single IntersectionObserver for glow + counters ── */
-  useEffect(() => {
-    const obs = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        setGlowing(true)
-        
-        obs.disconnect()
-      }
-    }, { threshold: 0.3 })
-
-    if (sectionRef.current) obs.observe(sectionRef.current)
-
-    return () => {
-      obs.disconnect()
-      
-    }
-  }, [])
-
-
-
-const Stat = ({ num, suffix, label }) => {
-  const { ref, inView } = useInView({ triggerOnce: true });
-  const [start, setStart] = useState(false);
-
-  useEffect(() => {
-    if (inView) setStart(true);
-  }, [inView]);
+// ─── Memoized Stat — never re-renders unless num/suffix/label change ──────────
+const Stat = memo(({ num, suffix, label }) => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 })
 
   return (
     <div ref={ref}>
@@ -110,288 +31,432 @@ const Stat = ({ num, suffix, label }) => {
         className="text-4xl font-normal text-[#1a1206]"
         style={{ fontFamily: "'Ibarra Real Nova', serif" }}
       >
-        {start ? (
+        {inView ? (
           <CountUp
             end={num}
             duration={2}
             suffix={` ${suffix}`}
             separator=","
-            redraw={false}
+            preserveValue
           />
         ) : (
-          0
+          <span>0</span>
         )}
       </div>
-
       <div className="text-sm text-[#8a7a5a] mt-1 pt-2 border-t border-dashed border-[#c8bfaa]">
         {label}
       </div>
     </div>
-  );
-};
+  )
+})
+Stat.displayName = 'Stat'
+
+// ─── Isolated Slider — its setInterval never causes Homepage re-renders ───────
+const HeroSlider = memo(({ saturnRef, crystalRef }) => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  useEffect(() => {
+    const t = setInterval(() => setCurrentSlide(s => (s + 1) % SLIDES.length), 4000)
+    return () => clearInterval(t)
+  }, [])
+
+  return (
+    <div
+      className="relative flex justify-center items-end overflow-visible z-[1]"
+      style={{ height: '600px' }}
+    >
+      {/* Slider capsule */}
+      <div className="relative overflow-hidden bg-[#c8bfaa]" style={SLIDER_CAPSULE_STYLE}>
+        {SLIDES.map((s, i) => {
+          // Only render current + adjacent slides — massive repaint saving
+          if (Math.abs(i - currentSlide) > 1) return null
+          return (
+            <div
+              key={i}
+              className={`slide-img ${i === currentSlide ? 'active' : ''}`}
+              style={SLIDE_INNER_STYLE}
+            >
+              <img
+                src={s.src}
+                alt={s.alt}
+                className="w-full h-full object-cover"
+                loading={i === currentSlide ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Saturn planet */}
+      <div
+        ref={saturnRef}
+        className="absolute pointer-events-none z-10"
+        style={{ width: '140px', height: '170px', top: '20px', right: '-30px' }}
+      >
+        <img
+          src="/assets/planet.webp"
+          alt="planet"
+          className="w-full h-full object-contain"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      {/* Crystal stone */}
+      <div
+        ref={crystalRef}
+        className="absolute pointer-events-none z-10"
+        style={{ width: '170px', height: '150px', bottom: '0', left: '-80px' }}
+      >
+        <img
+          src="/assets/stone.webp"
+          alt="stone"
+          className="w-full h-full object-contain"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      {/* Slide dots */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+        {SLIDES.map((_, i) => (
+          <span
+            key={i}
+            onClick={() => setCurrentSlide(i)}
+            className={`w-2 h-2 rounded-full cursor-pointer transition-colors duration-300 ${
+              i === currentSlide ? 'bg-[#1a1206]' : 'bg-[#c8bfaa]'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  )
+})
+HeroSlider.displayName = 'HeroSlider'
+
+// ─── Main component ───────────────────────────────────────────────────────────
+export default function Homepage() {
+  const saturnRef   = useRef(null)
+  const crystalRef  = useRef(null)
+  const crystal2Ref = useRef(null)
+  const moonRef     = useRef(null)
+  const sectionRef  = useRef(null)
+  const heroRef     = useRef(null)
+
+  const { openBooking } = useBooking()
+
+  const rafParallax   = useRef(null)
+  const latestY       = useRef(0)
+  const prevY         = useRef(0)
+  const isVisible     = useRef(false) // gate: only run parallax when hero/about is on screen
+
+  // ── Parallax — gated + translate3d for GPU compositing ──────────────────────
+  useEffect(() => {
+    const els = [saturnRef.current, crystalRef.current, crystal2Ref.current, moonRef.current]
+
+    // Visibility gate: IntersectionObserver on the parallax zone
+    const visObs = new IntersectionObserver(
+      ([entry]) => { isVisible.current = entry.isIntersecting },
+      { threshold: 0 }
+    )
+    if (heroRef.current) visObs.observe(heroRef.current)
+
+    let ticking = false
+
+    const update = () => {
+      const y = latestY.current
+
+      // Skip frame if movement < 2px — avoids unnecessary GPU work
+      if (Math.abs(y - prevY.current) < 2) {
+        ticking = false
+        return
+      }
+      prevY.current = y
+
+      // translate3d forces GPU layer — no layout recalc, no repaint cascade
+      if (saturnRef.current)
+        saturnRef.current.style.transform = `translate3d(0, 0, 0) rotate(${y * 0.15}deg)`
+      if (crystalRef.current)
+        crystalRef.current.style.transform = `translate3d(${y * 0.2}px, 0, 0) rotate(${-y * 0.1}deg)`
+      if (crystal2Ref.current)
+        crystal2Ref.current.style.transform = `translate3d(0, ${y * 0.15}px, 0)`
+      if (moonRef.current)
+        moonRef.current.style.transform = `translate3d(0, ${y * 0.15}px, 0)`
+
+      ticking = false
+    }
+
+    const onScroll = () => {
+      // Hard gate — don't even queue a frame if nothing is visible
+      if (!isVisible.current) return
+      latestY.current = window.scrollY
+      if (!ticking) {
+        rafParallax.current = requestAnimationFrame(update)
+        ticking = true
+      }
+    }
+
+    // Set willChange only on mount, not per-frame
+    els.forEach(el => { if (el) el.style.willChange = 'transform' })
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (rafParallax.current) cancelAnimationFrame(rafParallax.current)
+      els.forEach(el => { if (el) el.style.willChange = 'auto' })
+      visObs.disconnect()
+    }
+  }, [])
+
+  // ── Single IntersectionObserver for glow ────────────────────────────────────
+  const [glowing, setGlowing] = useState(false)
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setGlowing(true)
+          obs.disconnect()
+        }
+      },
+      { threshold: 0.3 }
+    )
+    if (sectionRef.current) obs.observe(sectionRef.current)
+    return () => obs.disconnect()
+  }, [])
+
+  // ── Stable style objects — defined once, not on every render ────────────────
+  const heroGridStyle = useMemo(() => ({ gridTemplateColumns: '1.5fr 460px 1.5fr' }), [])
+  const bgStyle       = useMemo(() => ({
+    fontFamily: "'Ibarra Real Nova', serif",
+    backgroundImage: "url('/assets/bg.png')",
+  }), [])
+  const sectionBgStyle = useMemo(() => ({
+    backgroundImage: "url('/assets/secbg.png')",
+    backgroundSize: '600px',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+  }), [])
+
+  const handleBooking = useCallback(() => openBooking(), [openBooking])
+
   return (
     <>
-      <div
-        className="relative z-20 bg-cover bg-center bg-no-repeat"
-        style={{
-          fontFamily: "'Ibarra Real Nova', serif",
-          backgroundImage: "url('/assets/bg.png')",
-        }}
-      >
+      <div className="relative z-20 bg-cover bg-center bg-no-repeat" style={bgStyle}>
 
         {/* ══════════════════════ HERO ══════════════════════ */}
-        <section
-          className="relative min-h-[600px] overflow-visible items-center grid bg-transparent"
-          style={{ gridTemplateColumns: '1.5fr 460px 1.5fr' }}
-        >
-          {/* Zodiac watermark */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              backgroundImage: "url('/assets/zodiac-ring.svg')",
-              backgroundSize: 'cover',
-              opacity: 0.07,
-            }}
-          />
-
-          {/* ── LEFT ── */}
-          <div className="relative z-10 ml-5" style={{ marginRight: '-170px' }}>
-            <span className="block  text-base text-[#8a7a5a] mb-3 tracking-wide">
-              Vedic Astrology &amp; Cosmic Guidance
-            </span>
-            <h1
-              className="overflow-visible font-normal text-[#1a1206] leading-[1.1]"
-              style={{
-                fontFamily: "'Ibarra Real Nova', serif",
-                fontSize: 'clamp(60px, 7vw, 96px)',
-                marginLeft: '100px',
-                transform: 'translateX(-80px)',
-              }}
-            >
-              The Secrets of<br />
-              <em>
-                the{' '}
-                <span className="flip-wrap">
-                  <span className="flip-word">
-                    <span>Cosmos</span>
-                    <span>Horoscope</span>
-                  </span>
-                </span>
-              </em>
-            </h1>
-            <p className=" ml-6 text-sm text-[#6b5d45] leading-[1.7] my-5 max-w-[340px]" style={{ fontFamily: "'Glacial Indifference', serif" }}>
-              Step into the mystical world of astrology and uncover the secrets the cosmos holds.
-              Let our experienced astrologer guide you through the stars, revealing insights tailored just for you.
-            </p>
-            <button 
-                onClick={() => {
-    console.log("CLICKED");
-    openBooking();
-  }}
-
-              className="ml-6 border border-dashed border-[#f8f8f8] bg-[#1a1206] text-[#f5f0e8] px-6 py-2.5 text-sm tracking-widest hover:bg-[#1a1206] hover:text-[#f5f0e8] transition-all duration-300"
-              style={{ fontFamily: "'Glacial Indifference', serif" }}
-            >
-              Request a Consultation
-            </button>
-          </div>
-
-          {/* ── CENTER (slider) ── */}
-          <div
-            className="relative flex justify-center items-end overflow-visible z-[1]"
-            style={{ height: '600px' }}
+        {/* heroRef wraps both hero + about so visibility gate covers full parallax zone */}
+        <div ref={heroRef}>
+          <section
+            className="relative min-h-[600px] overflow-visible items-center grid bg-transparent"
+            style={heroGridStyle}
           >
-            {/* Slider capsule */}
+            {/* Zodiac watermark */}
             <div
-              className="relative overflow-hidden bg-[#c8bfaa]"
-              style={{ width: '460px', height: '580px', borderRadius: '230px 230px 0 0' }}
-            >
-              {slides.map((s, i) => (
-                <div
-                  key={i}
-                  className={`slide-img ${i === currentSlide ? 'active' : ''}`}
-                  style={{ borderRadius: '180px 180px 0 0', overflow: 'hidden' }}
-                >
-                  <img src={s.src} alt={s.alt} className="w-full h-full object-cover" />
-                </div>
-              ))}
-            </div>
-
-            {/* Saturn planet — top-right of slider */}
-            <div
-              ref={saturnRef}
-              className="absolute pointer-events-none z-10"
-              style={{ width: '140px', height: '170px', top: '20px', right: '-30px' }}
-            >
-              <img src="/assets/planet.webp" alt="planet" className="w-full h-full object-contain" />
-            </div>
-
-            {/* Crystal stone — bottom-left of slider */}
-            <div
-              ref={crystalRef}
-              className="absolute pointer-events-none z-10"
-              style={{ width: '170px', height: '150px', bottom: '0', left: '-80px' }}
-            >
-              <img src="/assets/stone.webp" alt="stone" className="w-full h-full object-contain" />
-            </div>
-
-            {/* Slide dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
-              {slides.map((_, i) => (
-                <span
-                  key={i}
-                  onClick={() => setCurrentSlide(i)}
-                  className={`w-2 h-2 rounded-full cursor-pointer transition-colors duration-300 ${
-                    i === currentSlide ? 'bg-[#1a1206]' : 'bg-[#c8bfaa]'
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* ── RIGHT ── */}
-          <div
-            className="relative z-10 overflow-visible"
-            style={{ marginLeft: '-100px', padding: '60px', marginTop: '100px' }}
-          >
-            <div
-              className="font-normal text-[#1a1206] leading-[1.1] opacity-90"
+              className="absolute inset-0 pointer-events-none"
               style={{
-                fontFamily: "'Ibarra Real Nova', serif",
-                fontSize: 'clamp(48px, 5.5vw, 90px)',
-                marginLeft: '-10px',
+                backgroundImage: "url('/assets/zodiac-ring.svg')",
+                backgroundSize: 'cover',
+                opacity: 0.07,
               }}
-            >
-              <div>Discover Your</div>
-              <div>Destiny</div>
-              <div>
+            />
+
+            {/* ── LEFT ── */}
+            <div className="relative z-10 ml-5" style={{ marginRight: '-170px' }}>
+              <span className="block text-base text-[#8a7a5a] mb-3 tracking-wide">
+                Vedic Astrology &amp; Cosmic Guidance
+              </span>
+              <h1
+                className="overflow-visible font-normal text-[#1a1206] leading-[1.1]"
+                style={{
+                  fontFamily: "'Ibarra Real Nova', serif",
+                  fontSize: 'clamp(60px, 7vw, 96px)',
+                  marginLeft: '100px',
+                  transform: 'translateX(-80px)',
+                }}
+              >
+                The Secrets of<br />
                 <em>
-                  <span className="flip-wrap-big">
-                    <span className="flip-big">
-                      <span>with Stars</span>
-                      <span>with Numbers</span>
+                  the{' '}
+                  <span className="flip-wrap">
+                    <span className="flip-word">
+                      <span>Cosmos</span>
+                      <span>Horoscope</span>
                     </span>
                   </span>
                 </em>
-              </div>
-            </div>
-            <div className="mt-6">
-              <div
-                className="mt-1 text-[#1a1206] flex items-center gap-2 "
-                style={{ fontFamily: "'Glacial Indifference', serif", fontSize: '28px' }}
+              </h1>
+              <p
+                className="ml-6 text-sm text-[#6b5d45] leading-[1.7] my-5 max-w-[340px]"
+                style={{ fontFamily: "'Glacial Indifference', serif" }}
               >
-                Unveil Your Future{' '}
-                <span className="flip-wrap-sm">
-                  <span className="flip-sm">
-                    <span>with Numbers</span>
-                    <span>with Stars</span>
+                Step into the mystical world of astrology and uncover the secrets the cosmos holds.
+                Let our experienced astrologer guide you through the stars, revealing insights tailored just for you.
+              </p>
+              <button
+                onClick={handleBooking}
+                className="ml-6 border border-dashed border-[#f8f8f8] bg-[#1a1206] text-[#f5f0e8] px-6 py-2.5 text-sm tracking-widest hover:bg-[#1a1206] hover:text-[#f5f0e8] transition-all duration-300"
+                style={{ fontFamily: "'Glacial Indifference', serif" }}
+              >
+                Request a Consultation
+              </button>
+            </div>
+
+            {/* ── CENTER (isolated slider component) ── */}
+            <HeroSlider saturnRef={saturnRef} crystalRef={crystalRef} />
+
+            {/* ── RIGHT ── */}
+            <div
+              className="relative z-10 overflow-visible"
+              style={{ marginLeft: '-100px', padding: '60px', marginTop: '100px' }}
+            >
+              <div
+                className="font-normal text-[#1a1206] leading-[1.1] opacity-90"
+                style={{
+                  fontFamily: "'Ibarra Real Nova', serif",
+                  fontSize: 'clamp(48px, 5.5vw, 90px)',
+                  marginLeft: '-10px',
+                }}
+              >
+                <div>Discover Your</div>
+                <div>Destiny</div>
+                <div>
+                  <em>
+                    <span className="flip-wrap-big">
+                      <span className="flip-big">
+                        <span>with Stars</span>
+                        <span>with Numbers</span>
+                      </span>
+                    </span>
+                  </em>
+                </div>
+              </div>
+              <div className="mt-6">
+                <div
+                  className="mt-1 text-[#1a1206] flex items-center gap-2"
+                  style={{ fontFamily: "'Glacial Indifference', serif", fontSize: '28px' }}
+                >
+                  Unveil Your Future{' '}
+                  <span className="flip-wrap-sm">
+                    <span className="flip-sm">
+                      <span>with Numbers</span>
+                      <span>with Stars</span>
+                    </span>
                   </span>
-                </span>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* ══════════════════════ SECTION 2 — ABOUT ══════════════════════ */}
-        <section
-          className="py-20 grid grid-cols-3 gap-10 items-center relative"
-          ref={sectionRef}
-          style={{
-            backgroundImage: "url('/assets/secbg.png')",
-            backgroundSize: '600px',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-          }}
-        >
-          {/* Left image */}
-          <div className="relative">
-            <div
-              className="overflow-hidden bg-[#c8bfaa]"
-              style={{ width: '500px', height: '480px', borderRadius: '0px 300px 300px 0px' }}
-            >
-              <img src="/assets/section1.webp" alt="Tarot reading" className="w-full h-full object-cover" />
-            </div>
-            {/* Beige crystal float */}
-            <div
-              ref={crystal2Ref}
-              className="absolute pointer-events-none z-10"
-              style={{
-                left: '-40px',
-                top: '-150px',
-                width: '250px',
-                height: '250px',
-                backgroundImage: "url('/assets/beige.webp')",
-                backgroundSize: 'contain',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-                willChange: 'transform',
-              }}
-            />
-          </div>
-
-          {/* Centre text */}
-          <div className="px-4">
-            <p
-  className="text-[#b8860b] text-[11px] tracking-[0.25em] uppercase mb-4 flex items-center gap-3 justify-center text-center"
-            style={{ fontFamily: "'Glacial Indifference', sans-serif" }}
+          {/* ══════════════════════ SECTION 2 — ABOUT ══════════════════════ */}
+          <section
+            className="py-20 grid grid-cols-3 gap-10 items-center relative"
+            ref={sectionRef}
+            style={sectionBgStyle}
           >
-            <span className="block w-8 h-px bg-[#b8860b]" />
-            WHO WE ARE
-            <span className="block w-8 h-px bg-[#b8860b]" />
-          </p>
-            <h2
-              className="font-normal text-center text-[#1a1206] leading-[1.2] mb-5"
-              style={{
-                fontFamily: "'Ibarra Real Nova', serif",
-                fontSize: 'clamp(36px, 4vw, 54px)',
-              }}
-            >
-              About <strong className="font-bold">Vedic Saar</strong>
-            </h2>
-            <p className="text-base text-[#6b5d45] leading-[1.8]  text-center" style={{ fontFamily: "'Glacial Indifference', serif" }}>
-              Vedic Saar is dedicated to guiding individuals through the profound sciences of Vedic Astrology,
-              Numerology, Vaastu, and Spiritual Remedies. Rooted in ancient traditions and supported by deep
-              study and experience, our consultations help individuals gain clarity in life's most important decisions.
-              From career and relationships to finances and spiritual growth, Vedic Saar provides insight, guidance,
-              and practical remedies to restore harmony and balance in life.
-            </p>
-            <button
-className="mt-6 border border-dashed border-[#1a1206] bg-transparent text-[#1a1206] px-6 py-2.5 text-sm tracking-widest hover:bg-[#1a1206] hover:text-[#f5f0e8] transition-all duration-300 block mx-auto"
-              style={{ fontFamily: "'Glacial Indifference', serif" }}
-            >
-              Discover More
-            </button>
-
-          <div className="mt-10 grid grid-cols-2 gap-6">
-            <Stat num={10000} suffix="+" label="Readings" />
-            <Stat num={20} suffix="+" label="Years of Experience" />
-          </div>
-          </div>
-
-          {/* Right image */}
-          <div className="relative flex justify-end">
-            <div
-              className="overflow-hidden bg-[#c8bfaa]"
-              style={{ width: '580px', height: '700px', borderRadius: '300px 0px 0px 0px' }}
-            >
-              <img src="/assets/section2.png" alt="Crystal ball" className="w-full h-full object-cover left-3 top-7" />
+            {/* Left image */}
+            <div className="relative">
+              <div
+                className="overflow-hidden bg-[#c8bfaa]"
+                style={{ width: '500px', height: '480px', borderRadius: '0px 300px 300px 0px' }}
+              >
+                <img
+                  src="/assets/section1.webp"
+                  alt="Tarot reading"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              {/* Beige crystal float */}
+              <div
+                ref={crystal2Ref}
+                className="absolute pointer-events-none z-10"
+                style={{
+                  left: '-40px',
+                  top: '-150px',
+                  width: '250px',
+                  height: '250px',
+                  backgroundImage: "url('/assets/beige.webp')",
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                }}
+              />
             </div>
-            {/* Moon float */}
-            <div
-              ref={moonRef}
-              className="absolute pointer-events-none z-10"
-              style={{
-                top: '-90px',
-                right: '10px',
-                width: '120px',
-                height: '120px',
-                backgroundImage: "url('/assets/moon.webp')",
-                backgroundSize: 'cover',
-                willChange: 'transform',
-              }}
-            />
-          </div>
-        </section>
+
+            {/* Centre text */}
+            <div className="px-4">
+              <p
+                className="text-[#b8860b] text-[11px] tracking-[0.25em] uppercase mb-4 flex items-center gap-3 justify-center text-center"
+                style={{ fontFamily: "'Glacial Indifference', sans-serif" }}
+              >
+                <span className="block w-8 h-px bg-[#b8860b]" />
+                WHO WE ARE
+                <span className="block w-8 h-px bg-[#b8860b]" />
+              </p>
+              <h2
+                className="font-normal text-center text-[#1a1206] leading-[1.2] mb-5"
+                style={{
+                  fontFamily: "'Ibarra Real Nova', serif",
+                  fontSize: 'clamp(36px, 4vw, 54px)',
+                }}
+              >
+                About <em className="text-[#b8860b] font-normal">Vedic Saar</em>
+              </h2>
+              <p
+                className="text-base text-[#6b5d45] leading-[1.8] text-center"
+                style={{ fontFamily: "'Glacial Indifference', serif" }}
+              >
+                Vedic Saar is dedicated to guiding individuals through the profound sciences of Vedic Astrology,
+                Numerology, Vaastu, and Spiritual Remedies. Rooted in ancient traditions and supported by deep
+                study and experience, our consultations help individuals gain clarity in life's most important decisions.
+                From career and relationships to finances and spiritual growth, Vedic Saar provides insight, guidance,
+                and practical remedies to restore harmony and balance in life.
+              </p>
+              <button
+                className="mt-6 border border-dashed border-[#1a1206] bg-transparent text-[#1a1206] px-6 py-2.5 text-sm tracking-widest hover:bg-[#1a1206] hover:text-[#f5f0e8] transition-all duration-300 block mx-auto"
+                style={{ fontFamily: "'Glacial Indifference', serif" }}
+              >
+                Discover More
+              </button>
+
+              <div className="mt-10 grid grid-cols-2 gap-6">
+                <Stat num={10000} suffix="+" label="Readings" />
+                <Stat num={20}    suffix="+" label="Years of Experience" />
+              </div>
+            </div>
+
+            {/* Right image */}
+            <div className="relative flex justify-end">
+              <div
+                className="overflow-hidden bg-[#c8bfaa]"
+                style={{ width: '580px', height: '700px', borderRadius: '300px 0px 0px 0px' }}
+              >
+                <img
+                  src="/assets/section2.webp"
+                  alt="Crystal ball"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              {/* Moon float */}
+              <div
+                ref={moonRef}
+                className="absolute pointer-events-none z-10"
+                style={{
+                  top: '-90px',
+                  right: '10px',
+                  width: '120px',
+                  height: '120px',
+                  backgroundImage: "url('/assets/moon.webp')",
+                  backgroundSize: 'cover',
+                }}
+              />
+            </div>
+          </section>
+        </div>
 
       </div>
     </>

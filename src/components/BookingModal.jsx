@@ -116,17 +116,18 @@ export default function BookingModal({ isOpen, onClose, preselectedService = "" 
           padding: 20px; backdrop-filter: blur(3px);
         }
         .bm-modal {
-          background: #faf6ef; width: 100%; max-width: 500px;
+          background: white; width: 100%; max-width: 500px;
           max-height: 90vh; overflow-y: auto; border-radius: 2px;
           position: relative;
           scrollbar-width: thin; scrollbar-color: rgba(184,134,11,0.25) transparent;
+          border: 1px dashed rgba(184,134,11,1);
         }
         .bm-modal::-webkit-scrollbar { width: 3px; }
         .bm-modal::-webkit-scrollbar-thumb { background: rgba(184,134,11,0.25); }
         .bm-header {
           padding: 44px 44px 26px;
           border-bottom: 1px solid rgba(184,134,11,0.15);
-          position: sticky; top: 0; background: #faf6ef; z-index: 2;
+          position: sticky; top: 0; background: white; z-index: 2;
         }
         .bm-close {
           position: absolute; top: 18px; right: 18px;
@@ -193,7 +194,7 @@ export default function BookingModal({ isOpen, onClose, preselectedService = "" 
         }
         .bm-submit {
           width: 100%; padding: 16px; background: #1a1206;
-          border: none; border-radius: 2px;
+          border: 1px dashed white; border-radius: 2px;
           font-family: 'Glacial Indifference', sans-serif;
           font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
           color: #f5ede0; cursor: pointer;
@@ -255,7 +256,7 @@ export default function BookingModal({ isOpen, onClose, preselectedService = "" 
                   </svg>
                 </button>
                 <p className="bm-eyebrow">Begin Your Journey</p>
-                <h2 className="bm-title">Book a <em>Consultation</em></h2>
+                <h2 className="bm-title">Book a Consultation</h2>
               </div>
 
               <div className="bm-body">
@@ -329,7 +330,7 @@ export default function BookingModal({ isOpen, onClose, preselectedService = "" 
               <h2 className="bm-success-title">Request Received</h2>
               <p className="bm-success-text">
                 Thank you, {form.name.split(" ")[0]}.<br />
-                We'll be in touch within 24 hours.
+                We'll be in touch with you soon.
               </p>
               <button className="bm-success-btn" onClick={onClose}>Close</button>
             </div>

@@ -25,6 +25,190 @@ const mantras = [
   { id: 'lakshmi', name: 'Lakshmi Mantra', deity: 'Lakshmi · Venus', planet: 'Venus', color: '#8a3a6a', accent: '#e890c8', image: '/assets/mantras/mantra-img/Lakshmi.png', beejMantra: 'ॐ श्रीं ह्रीं महालक्ष्म्यै नमः', sanskrit: 'ॐ श्रीं ह्रीं श्रीं कमले कमलालये प्रसीद प्रसीद ॐ श्रीं ह्रीं श्रीं महालक्ष्म्यै नमः', transliteration: 'Om Shreem Hreem Shreem | Kamale Kamalalaye Praseed Praseed | Om Shreem Hreem Shreem | Mahalakshmyai Namah', meaning: 'O Lotus-dwelling Goddess Lakshmi, I invoke your grace. Grant me prosperity, abundance, and the divine blessings of Venus.', benefits: ['Wealth & prosperity', 'Venus energy boost', 'Love & harmony', 'Luxury & beauty'], chantCount: '108×', bestTime: 'Friday evening', audio: '/assets/mantras/Maha Laxmi Mantra _ Om Shreem Mahalakshmiyei Namaha _ 108 Times _ Fast.mp3' },
 ];
 
+// ─── HANUMAN CHALISA LYRICS (Spotify-style) ──────────────────────────────
+const hanumanLyrics = [
+  "श्री गुरु चरण सरोज रज, निज मनु मुकुरु सुधारि।",
+  "वरनऊँ रघुवर विमल जसु, जो दायकु फल चारि॥",
+  "बुद्धिहीन तनु जानिके, सुमिरो पवन कुमार।",
+  "बल बुद्धि विद्या देहु मोहिं, हरहु कलेश विकार॥",
+  "जय हनुमान ज्ञान गुन सागर। जय कपीस तिहुँ लोक उजागर॥",
+  "राम दूत अतुलित बल धामा। अंजनिपुत्र पवन सुत नामा॥",
+  "महावीर बिक्रम बजरंगी। कुमति निवार सुमिति के संगी॥",
+  "कंचन वरन विराज सुवेसा। कानन कुंडल कुंचित केसा॥",
+  "हाथ बज्र औ ध्वजा विराजै। काँधे मूँज जनेऊ साजै॥",
+  "शंकर सुवन केसरीनंदन। तेज प्रताप महा जग बंदन॥",
+  "विद्यावान गुनी अति चातुर। राम काज करिबे को आतुर॥",
+  "प्रभु चरित्र सुनिबे को रसिया। राम लखन सीता मन बसिया॥",
+  "सूक्ष्म रूप धरि सियहि दिखावा। बिकट रूप धरि लंक जरावा॥",
+  "भीम रूप धरि असुर सँहारे। रामचंन्द्र के काज सँवारे॥",
+  "लाय सजीवन लखन जियाये। श्री रघुबीर हरषि उर लाये॥",
+  "रघुपति कीन्ही बहुत बड़ाई। तुम मम प्रिय भरत सम भाई॥",
+  "सहस बदन तुम्हरो जस गावैं। अस कहि श्रीपति कंठ लगावैं॥",
+  "सनकादिक ब्रह्मादि मुनीसा। नारद सारद सहित अहीसा॥",
+  "जम कुबेर दिगपाल जहाँ ते। कबि कोबिद कहि सके कहाँ ते॥",
+  "तुम उपकार सुग्रीवहिं कीन्हा। राम मिलाय राज पद दीन्हा॥",
+  "तुम्हरो मंत्र विभीषन माना। लंकेश्वर भये सब जग जाना॥",
+  "जुग सहस्त्र जोजन पर भानू। लील्यो ताहि मधुर फल जानू॥",
+  "प्रभु मुद्रिका मेलि मुख माहीं। जलधि लाँघि गये अचरज नाहीं॥",
+  "दुर्गम काज जगत के जेते। सुगम अनुग्रह तुम्हरे तेते॥",
+  "राम दुआरे तुम रखवारे। होत न आज्ञा बिनु पैसारे॥",
+  "सब सुख लहैं तुम्हारी सरना। तुम रच्छक काहू को डर ना॥",
+  "आपन तेज सम्हारो आपै। तीनों लोक हाँक तें काँपै॥",
+  "भूत पिसाच निकट नहिं आवै। महावीर जब नाम सुनावैं॥",
+  "नासै रोग हरै सब पीरा। जपत निरंतर हनुमत बीरा॥",
+  "संकट तें हनुमान छुड़ावै। मन क्रम वचन ध्यान जो लावै॥",
+  "सब पर राम तपस्वीं राजा। तिन के काज सकल तुम साजा॥",
+  "और मनोरथ जो कोई लावै। सोइ अमित जीवन फल पावै॥",
+  "चारों जुग परताप तुम्हारा। है परसिद्ध जगत उजियारा॥",
+  "साधु संत के तुम रखबारे। असुर निकंदन राम दुलारे॥",
+  "अष्ट सिद्धि नौ निधि के दाता। अस बर दीन जानकी माता॥",
+  "राम रसायन तुम्हरे पासा। सदा रहो रघुपति के दासा॥",
+  "तुम्हरे भजन राम को पावै। जनम जनम के दुख बिसरावै॥",
+  "अंत काल रघुबर पुर जाई। जहाँ जन्म हरि भक्त कहाई॥",
+  "और देवता चित्त न धरई। हनुमत सेइ सर्ब सुख करई॥",
+  "संकट कटै मिटै सब पीरा। जो सुमिरैं हनुमत बलबीरा॥",
+  "जै जै जै हनुमान गोसाईं। कृपा करहु गुरू देव की नाईं॥",
+  "जो सत बार पाठ कर कोई। छूटहि बन्दि महासुख होई॥",
+  "जो यह पढै हनुमान चलीसा। होय सिद्धि साखी गौरीसा॥",
+  "तुलसीदास सदा हरि चेरा। कीजै नाथ हृदय महँ डेरा॥",
+  "पवनतनय संकट हरन, मंगल मूरति रुप।",
+  "राम लखन सीता सहित, हृदय बसहु सुर भूप॥",
+];
+
+// ─── LYRICS SCROLL VIEW ───────────────────────────────────────────────────
+function LyricsScroll({ mantra, isPlaying, progress }) {
+  const [activeLine, setActiveLine] = useState(0);
+  const containerRef = useRef(null);
+  const intervalRef = useRef(null);
+  const totalLines = hanumanLyrics.length;
+
+  // Sync active line to audio progress
+  useEffect(() => {
+    const line = Math.floor(progress * totalLines);
+    setActiveLine(Math.min(line, totalLines - 1));
+  }, [progress]);
+
+  // Auto-advance when playing (fallback if no real sync)
+  useEffect(() => {
+    if (isPlaying) {
+      intervalRef.current = setInterval(() => {
+        setActiveLine(prev => (prev + 1) % totalLines);
+      }, 10000);
+    } else {
+      clearInterval(intervalRef.current);
+    }
+    return () => clearInterval(intervalRef.current);
+  }, [isPlaying]);
+
+  // Scroll active line into center
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const activeEl = container.querySelector(`[data-line="${activeLine}"]`);
+    if (activeEl) {
+      const containerHeight = container.offsetHeight;
+      const elOffset = activeEl.offsetTop;
+      const elHeight = activeEl.offsetHeight;
+      container.scrollTo({
+        top: elOffset - containerHeight / 2 + elHeight / 2,
+        behavior: 'smooth',
+      });
+    }
+  }, [activeLine]);
+
+  return (
+    <div style={{ padding: '20px 26px', position: 'relative', zIndex: 1 }}>
+      <p style={{
+        fontFamily: "'Glacial Indifference', serif",
+        fontSize: 8.5,
+        letterSpacing: '0.22em',
+        textTransform: 'uppercase',
+        color: mantra.accent,
+        margin: '0 0 14px',
+        transition: 'color 0.8s ease',
+      }}>Chalisa · Lyrics</p>
+
+      {/* Fade masks top & bottom */}
+      <div style={{ position: 'relative' }}>
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, height: 56,
+          background: `linear-gradient(to bottom, rgba(18,12,3,0.97) 0%, transparent 100%)`,
+          pointerEvents: 'none', zIndex: 2,
+        }} />
+        <div style={{
+          position: 'absolute', bottom: 0, left: 0, right: 0, height: 56,
+          background: `linear-gradient(to top, rgba(18,12,3,0.97) 0%, transparent 100%)`,
+          pointerEvents: 'none', zIndex: 2,
+        }} />
+
+        <div
+          ref={containerRef}
+          style={{
+            height: 148, // shows ~2 lines prominently
+            overflowY: 'scroll',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            position: 'relative',
+          }}
+        >
+          {/* Spacer so first line can center */}
+          <div style={{ height: 40 }} />
+
+          {hanumanLyrics.map((line, i) => {
+            const distance = Math.abs(i - activeLine);
+            const isActive = i === activeLine;
+            const isNear = distance === 1;
+
+            return (
+              <div
+                key={i}
+                data-line={i}
+                onClick={() => setActiveLine(i)}
+                style={{
+                  fontFamily: "'Noto Serif Devanagari', serif",
+                  fontSize: isActive ? 18 : isNear ? 15 : 13,
+                  lineHeight: 1.85,
+                  textAlign: 'center',
+                  padding: '4px 8px',
+                  cursor: 'pointer',
+                  color: isActive
+                    ? mantra.accent
+                    : isNear
+                    ? 'rgba(245,237,224,0.55)'
+                    : 'rgba(245,237,224,0.18)',
+                  fontWeight: isActive ? 500 : 400,
+                  letterSpacing: isActive ? '0.02em' : '0',
+                  transform: isActive ? 'scale(1.02)' : 'scale(1)',
+                  transition: 'all 0.45s cubic-bezier(0.4,0,0.2,1)',
+                  filter: distance > 2 ? 'blur(0.6px)' : 'none',
+                  userSelect: 'none',
+                }}
+              >
+                {line}
+              </div>
+            );
+          })}
+
+          {/* Spacer so last line can center */}
+          <div style={{ height: 40 }} />
+        </div>
+      </div>
+
+      {/* Line counter */}
+      <p style={{
+        fontFamily: "'Glacial Indifference', serif",
+        fontSize: 9,
+        letterSpacing: '0.14em',
+        color: 'rgba(255,255,255,0.18)',
+        textAlign: 'center',
+        margin: '10px 0 0',
+      }}>
+        {activeLine + 1} / {totalLines}
+      </p>
+    </div>
+  );
+}
+
 // ─── PARALLAX (original) ──────────────────────────────────────────────────
 function ParallaxImages() {
   const stoneRef = useRef(null);
@@ -192,16 +376,18 @@ function MantraPanel({ mantra, isPlaying, onToggle, progress, onSeek }) {
 
       <HR top={0} bottom={0} />
 
-      {/* ── 2. SANSKRIT + TRANSLITERATION ──────────────────────────── */}
-      <div style={{ padding: '20px 26px', position: 'relative', zIndex: 1 }}>
-        <p style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 8.5, letterSpacing: '0.22em', textTransform: 'uppercase', color: mantra.accent, margin: '0 0 10px', transition: 'color 0.8s ease' }}>Sanskrit</p>
-        <p style={{ fontFamily: "'Noto Serif Devanagari', serif", fontSize: 'clamp(14px,1.9vw,17px)', color: '#f5ede0', lineHeight: 2, margin: 0 }}>{mantra.sanskrit}</p>
-
-        <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '16px 0 14px' }} />
-
-        <p style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 8.5, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', margin: '0 0 8px' }}>Transliteration</p>
-        <p style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 15, color: '#d4c4a0', lineHeight: 1.85, margin: 0 }}>{mantra.transliteration}</p>
-      </div>
+{/* ── 2. SANSKRIT / LYRICS ──────────────────────────────────────── */}
+{mantra.id === 'hanuman-chalisa' ? (
+  <LyricsScroll mantra={mantra} isPlaying={isPlaying} progress={progress} />
+) : (
+  <div style={{ padding: '20px 26px', position: 'relative', zIndex: 1 }}>
+    <p style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 8.5, letterSpacing: '0.22em', textTransform: 'uppercase', color: mantra.accent, margin: '0 0 10px', transition: 'color 0.8s ease' }}>Sanskrit</p>
+    <p style={{ fontFamily: "'Noto Serif Devanagari', serif", fontSize: 'clamp(14px,1.9vw,17px)', color: '#f5ede0', lineHeight: 2, margin: 0 }}>{mantra.sanskrit}</p>
+    <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '16px 0 14px' }} />
+    <p style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 8.5, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', margin: '0 0 8px' }}>Transliteration</p>
+    <p style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 15, color: '#d4c4a0', lineHeight: 1.85, margin: 0 }}>{mantra.transliteration}</p>
+  </div>
+)}
 
       <HR top={0} bottom={0} />
 

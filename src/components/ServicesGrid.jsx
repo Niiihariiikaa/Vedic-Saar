@@ -550,7 +550,7 @@ export default function ServicesGrid() {
           <p
             className="flex items-center justify-center gap-3 mb-4"
             style={{
-              fontFamily: "'Ibarra Real Nova', serif",
+              fontFamily: "'Glacial Indifference', sans-serif",
               fontSize: "11px",
               letterSpacing: "0.28em",
               textTransform: "uppercase",

@@ -1,33 +1,106 @@
 import React from 'react'
 import Stack from './Stack'
-
+import  { memo } from 'react'
+import CountUp from 'react-countup'
+import { useInView } from 'react-intersection-observer'
 const testimonials = [
   {
-    name: "Aneesha Verma",
-    
+    name: "Ashish Gupta",
     rating: 5,
-    text: "It was a very positive experience to meet Mr. Manish. He takes his work rather seriously and spends due time on preparing and interpreting the astrological chart. His descriptions of personality, behavior, thoughts etc are highly accurate. He makes predictions but also explains the rationale behind them so they seem more believable to the listener. He provides a detailed and comprehensive view of the astrological chart and answers all questions patiently.",
-    
+    text: "In my opinion he is one of the best astrologer and Vastu consultant. His knowledge and understanding of this subject is absolutely great. He knows how to apply and solve issues with this ancient knowledge in modern lifestyle and predict practically.",
     initial: "A",
   },
   {
-    name: "Harpreet Kaur",
-
+    name: "Shubham (Lakhpat Rai Sons)",
     rating: 5,
-    text: "I had a wonderful experience consulting with Mr. Manish Malhotra. His predictions were remarkably accurate, and the way he explained everything made it easy to understand and follow. He is extremely kind, patient, and genuinely cares about guiding people in the right direction. His calm nature and insightful approach bring a lot of clarity and comfort. I truly appreciate his expertise and highly recommend him to anyone looking for reliable and compassionate astrological guidance.",
-  
-    initial: "H",
+    text: "Only person I trust in terms of astrology. I've been following him for 6 years. He has always guided me at every step of life with extremely accurate predictions and always helped me find a way out of problems.",
+    initial: "S",
   },
   {
-    name: "Veer Anand",
-
+    name: "Kavita Jain",
     rating: 5,
-    text: "I had a wonderful experience with Astrologer Manish ji. Their analysis was thorough, accurate, and delivered with compassion. They helped me understand both the practical and emotional aspects of my chart. Highly professional and genuinely gifted.",
-
+    text: "Manish ji explained everything patiently and made the session feel personal, not mechanical. He didn’t push unnecessary remedies. Feels like someone you can truly trust rather than a commercial service.",
+    initial: "K",
+  },
+  {
+    name: "Sukesh Kumar",
+    rating: 5,
+    text: "My life was very disturbed with financial issues and stress when I met him. He came like a blessing and helped me through a very tough phase with guidance and clarity.",
+    initial: "S",
+  },
+  {
+    name: "Ana Jain",
+    rating: 5,
+    text: "Their predictions are always accurate and guidance is thoughtful and practical. They take time to understand concerns and provide clarity that genuinely helps.",
+    initial: "A",
+  },
+  {
+    name: "Fariha Asif",
+    rating: 5,
+    text: "The reading felt deeply insightful. The explanation really resonated. The way he combines astrology and numbers is amazing. Highly recommend!",
+    initial: "F",
+  },
+  {
+    name: "Vanisha Bajaj",
+    rating: 5,
+    text: "He always predicted accurately. Whatever he told me actually happened in my life.",
     initial: "V",
   },
-
-];
+  {
+    name: "Shrishti Aggarwal",
+    rating: 5,
+    text: "I’ve been in touch with him for 7–8 years. His predictions have always been on point. To me he’s like an elder brother guiding me.",
+    initial: "S",
+  },
+  {
+    name: "Mukul Sharma",
+    rating: 5,
+    text: "He listened very patiently and even without exact birth time, calculated correctly and guided us well. Very satisfying experience.",
+    initial: "M",
+  },
+  {
+    name: "Gulrukh Alamgir",
+    rating: 5,
+    text: "He has vast knowledge of astrology and vastu. Very soft spoken and kind. Highly recommend.",
+    initial: "G",
+  },
+  {
+    name: "Anil Pathak",
+    rating: 5,
+    text: "Since 2020 my entire family has been following his guidance. His predictions are highly accurate and he is an excellent vastu consultant.",
+    initial: "A",
+  },
+  {
+    name: "Sumit W",
+    rating: 5,
+    text: "Consulting him for over 3 years. Not just an astrologer but also a great counselor. Solutions bring both results and internal peace.",
+    initial: "S",
+  },
+  {
+    name: "Payal Jain",
+    rating: 5,
+    text: "Very patient and soft spoken. Gives proper time and listens carefully. Always feel satisfied after consultation.",
+    initial: "P",
+  },
+  {
+    name: "Jatin Mahajan",
+    rating: 5,
+    text: "Always had a great session. He listens properly and answers everything clearly. Highly recommend.",
+    initial: "J",
+  },
+  {
+    name: "Simran Sachdeva",
+    rating: 5,
+    text: "Extremely accurate and insightful. The guidance has helped me navigate important life decisions.",
+    initial: "S",
+  },
+  {
+    name: "Gaurav (G C)",
+    rating: 5,
+    text: "His approach is very scientific and logical. Analysis and forecasting are always spot on. Truly honest guidance.",
+    initial: "G",
+  },
+]
 
 const StarRating = ({ count }) => (
   <div className="flex gap-0.5 mb-3">
@@ -42,6 +115,36 @@ const StarRating = ({ count }) => (
     ))}
   </div>
 );
+
+// ─── Memoized Stat — never re-renders unless num/suffix/label change ──────────
+const Stat = memo(({ num, suffix, label }) => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 })
+
+  return (
+    <div ref={ref}>
+      <div
+        className="text-4xl font-normal text-[#1a1206]"
+        style={{ fontFamily: "'Ibarra Real Nova', serif" }}
+      >
+        {inView ? (
+          <CountUp
+            end={num}
+            duration={2}
+            suffix={` ${suffix}`}
+            separator=","
+            preserveValue
+          />
+        ) : (
+          <span>0</span>
+        )}
+      </div>
+      <div className="text-sm text-[#8a7a5a] mt-1 pt-2 border-t border-dashed border-[#c8bfaa]">
+        {label}
+      </div>
+    </div>
+  )
+})
+Stat.displayName = 'Stat'
 
 const TestimonialCard = ({ name, location, rating, text, service, initial }) => (
   <div
@@ -117,7 +220,7 @@ const Testimonials = () => {
             style={{ fontFamily: "'Ibarra Real Nova', serif" }}
           >
             Voices of the<br />
-            <span className=" text-[#b8860b]">Cosmos</span>
+            <em className=" text-[#b8860b]">Cosmos</em>
           </h2>
 
           {/* body */}
@@ -131,31 +234,14 @@ const Testimonials = () => {
           </p>
 
           {/* stat row */}
-          <div className="flex gap-10 justify-center md:justify-start mb-10">
-            {[
-              { num: '10000+', label: 'Readings Done' },
-              { num: '20+ yrs', label: 'Experience' },
-            ].map(({ num, label }) => (
-              <div key={label}>
-                <p
-                  className="text-[#b8860b] text-[28px] font-light leading-none"
-                  style={{ fontFamily: "'Ibarra Real Nova', serif" }}
-                >
-                  {num}
-                </p>
-                <p
-                  className="text-[#9a8060] text-[11px] tracking-widest uppercase mt-1"
-                  style={{ fontFamily: "'Glacial Indifference', serif" }}
-                >
-                  {label}
-                </p>
+              <div className="mt-10 grid grid-cols-2 gap-6">
+                <Stat num={10000} suffix="+" label="Readings" />
+                <Stat num={20}    suffix="+" label="Years of Experience" />
               </div>
-            ))}
-          </div>
 
           {/* CTA */}
           <button
-            className="border border-dashed  border-[#b8860b]/60 text-[#b8860b] px-8 py-3 text-[11px] tracking-[0.2em] uppercase hover:bg-[#b8860b] hover:text-[#0e0a04] transition-all duration-300"
+            className="border border-dashed  border-[#b8860b]/60 text-[#b8860b] px-8 py-3 text-[11px] mt-6 tracking-[0.2em] uppercase hover:bg-[#b8860b] hover:text-[#0e0a04] transition-all duration-300"
             style={{ fontFamily: "'Glacial Indifference', sans-serif" }}
           >
             Read All Reviews
