@@ -18,7 +18,7 @@ const navRoutes = {
   'Remedies':     '/remedies',
   'Gemstones':    '/gemstones',
   'Mantra':      '/mantra',
-
+  'Vedic Astrology': '/vedic-astrology',
   
   'About':        '/about',
  
@@ -62,7 +62,7 @@ export default function Navbar() {
     <div style={{ fontFamily: "'Glacial Indifference', serif" }}>
 
       {/* ── TOP BAR WITH VIDEO ── */}
-      <div className="relative h-[32px] overflow-hidden flex items-center justify-between px-6 bg-[#0e0e0e]">
+      <div className="relative h-[38px] overflow-hidden flex items-center justify-between px-6 bg-[#0e0e0e]">
         <video
           autoPlay muted loop playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-100 pointer-events-none"
@@ -80,7 +80,7 @@ export default function Navbar() {
       </div>
 
       {/* ── NAV LINKS ── */}
-     <nav className="bg-white border-b border-[#b8870b72] border-dashed  h-24 px-6 py-3 flex items-center justify-between">
+     <nav className="bg-white border-b border-[#b8870b72] border-dashed  h-28 px-6 py-3 flex items-center justify-between">
 
   {/* LEFT: Logo */}
   <div className="flex items-center">
@@ -129,7 +129,7 @@ export default function Navbar() {
 
     {/* CTA */}
     <Link to="/consultation">
-      <button className="ml-2 border border-dashed bg-transparent border-[black] text-black px-4 py-2 text-xs tracking-widest whitespace-nowrap hover:bg-[#b8860b] hover:text-white transition-all duration-200">
+      <button className="ml-2 border border-dashed bg-transparent border-[black] text-black px-4 py-2 text-s tracking-widest whitespace-nowrap hover:bg-[#b8860b] hover:text-white transition-all duration-200">
         Book Reading
       </button>
     </Link>

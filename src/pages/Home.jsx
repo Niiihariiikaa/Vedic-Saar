@@ -402,7 +402,7 @@ export default function Homepage() {
                   fontSize: 'clamp(36px, 4vw, 54px)',
                 }}
               >
-                About <em className="text-[#b8860b] font-normal">Vedic Saar</em>
+                About <em className="font-normal">Vedic Saar</em>
               </h2>
               <p
                 className="text-base text-[#6b5d45] leading-[1.8] text-center"

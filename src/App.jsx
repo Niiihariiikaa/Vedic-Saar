@@ -11,6 +11,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import KnowYourAstrologer from './components/Astrologer'
 import Footer from './components/Footer'
 import MantrasPage from './pages/Mantras'
+import VedicAstrologyPage from './pages/Vedic'
 gsap.registerPlugin(ScrollTrigger);
 
 function MainLayout() {
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/" element={<MainLayout />} />
         <Route path="/gemstones" element={<GemstonesPage />} />
         <Route path="/mantra" element={<MantrasPage />} />
+        <Route path="/vedic-astrology" element={<VedicAstrologyPage />} />
       </Routes>
     </BrowserRouter>
   )
