@@ -23,7 +23,7 @@ function MainLayout() {
       <ServicesGrid />
       <KnowYourAstrologer />
       <Testimonials />
-      <Footer />
+      
     </>
   )
 }
@@ -38,6 +38,7 @@ export default function App() {
         <Route path="/mantra" element={<MantrasPage />} />
         <Route path="/vedic-astrology" element={<VedicAstrologyPage />} />
       </Routes>
+      <Footer />  {/* ✅ Renders on every route */}
     </BrowserRouter>
   )
 }
