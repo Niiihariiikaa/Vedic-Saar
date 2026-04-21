@@ -171,20 +171,24 @@ function Hero() {
       position: "relative", minHeight: "100vh",
       display: "flex", alignItems: "flex-start", justifyContent: "center",
       textAlign: "center",
-      background: "linear-gradient(160deg, #e0f9f7 0%, #f2fffe 55%, white 100%)",
-      backgroundImage: 'url("/assets/vedicbg.svg")', backgroundSize: "cover",
-      overflow: "visible", padding: "160px 40px 80px",
+      background: "white",
+      backgroundImage: 'url("/assets/vedicbg.svg")',
+      backgroundSize: "cover",
+      overflow: "hidden", padding: "160px 40px 80px",
     }}>
+      {/* soft teal radial glow */}
+      <div style={{ position: "absolute", top: "30%", left: "50%", transform: "translate(-50%,-50%)", width: 700, height: 700, background: "radial-gradient(circle, rgba(78,205,196,0.07) 0%, transparent 70%)", pointerEvents: "none" }} />
+
       {/* floating crystal left */}
-      <div ref={gemRef} style={{ position: "absolute", left: "-40px", bottom: "60px", width: 320, height: 420, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 40, opacity: 0.85 }}>
-        <img src="/assets/beigecrystal.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", overflow: "visible" }} />
+      <div ref={gemRef} style={{ position: "absolute", left: "-40px", bottom: "60px", width: 300, height: 400, pointerEvents: "none", zIndex: 4, opacity: 0.75, animation: "drift 7s ease-in-out infinite" }}>
+        <img src="/assets/beigecrystal.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
       </div>
       {/* orb right */}
-      <div ref={orbRef} style={{ position: "absolute", right: "-20px", top: "90px", width: 200, height: 300, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 1, opacity: 0.80 }}>
+      <div ref={orbRef} style={{ position: "absolute", right: "-20px", top: "90px", width: 200, height: 280, pointerEvents: "none", zIndex: 1, opacity: 0.70 }}>
         <img src="/assets/moon.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
       </div>
 
-      <div style={{ position: "relative", zIndex: 2, maxWidth: 680, marginBottom: -180, transform: "translateY(-80px)" }}>
+      <div style={{ position: "relative", zIndex: 2, maxWidth: 700, transform: "translateY(-60px)" }}>
         <div style={{ fontFamily: "'Ibarra Real Nova', serif", fontWeight: 450, display: "inline-block", fontSize: 68, color: "black", padding: "6px 20px", marginBottom: 40, animation: "floatUp 0.8s ease forwards", letterSpacing: "0.02em" }}>
           Numerology
         </div>
@@ -234,7 +238,7 @@ function SlidingStrip() {
 
   return (
     <div style={{ overflow: "hidden", position: "relative" }}>
-      <div style={{ background: "rgba(180,235,230,0.55)", borderTop: "1px solid rgba(78,205,196,0.35)", borderBottom: "1px solid rgba(78,205,196,0.2)", WebkitMaskImage: fade, maskImage: fade }}>
+      <div style={{ background: "rgba(233,228,220,0.65)", borderTop: "1px solid rgba(78,205,196,0.2)", borderBottom: "1px solid rgba(78,205,196,0.12)", WebkitMaskImage: fade, maskImage: fade }}>
         <div ref={topRef} className="strip-row" style={{ color: "#2a1f1a" }}>
           {tr.map((t, i) => <span key={i}>{t}</span>)}
         </div>
@@ -273,10 +277,10 @@ function WhatIsSection() {
   return (
     <section ref={sectionRef} style={{
       padding: "130px 80px 140px", overflow: "hidden", position: "relative",
-      background: `url("/assets/vedic2bg.svg") calc(100% + 50px) bottom / cover no-repeat, #e8f9f7`,
+      background: `url("/assets/vedic2bg.svg") calc(100% + 50px) bottom / cover no-repeat, #faf8f5`,
       contain: "paint",
     }}>
-      <div style={{ position: "absolute", bottom: 0, left: 0, width: 900, height: 300, background: "radial-gradient(ellipse at bottom left, rgba(78,205,196,0.22) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, width: 900, height: 300, background: "radial-gradient(ellipse at bottom left, rgba(78,205,196,0.07) 0%, transparent 70%)", pointerEvents: "none" }} />
 
       <div ref={bodyRef} style={{
         maxWidth: 1200, margin: "0 auto",
@@ -373,9 +377,9 @@ function GainSection() {
     <section style={{
       padding: "100px 72px",
       position: "relative", overflow: "hidden",
-      background: "linear-gradient(0deg, #c8edea 0%, #dcf5f3 45%, #edfaf8 100%)",
+      background: "linear-gradient(0deg, #f2ece0 0%, #fdf8f0 55%, #faf8f5 100%)",
     }}>
-      <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 300, background: "radial-gradient(ellipse at bottom center, rgba(78,205,196,0.28) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 300, background: "radial-gradient(ellipse at bottom center, rgba(78,205,196,0.09) 0%, transparent 70%)", pointerEvents: "none" }} />
 
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: 64 }}>
@@ -429,7 +433,7 @@ function WhySection() {
   return (
     <section style={{
       padding: "100px 72px", overflow: "hidden", position: "relative",
-      background: "linear-gradient(180deg, #c8edea 0%, #dcf5f3 50%, #edfaf8 100%)",
+      background: "linear-gradient(180deg, #f2ece0 0%, #fdf8f0 55%, #faf8f5 100%)",
     }}>
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto" }}>
         <div className="rv" style={{ marginBottom: 16 }}>
@@ -496,7 +500,7 @@ function ApproachSection() {
   return (
     <section style={{
       padding: "100px 72px", position: "relative", overflow: "hidden",
-      background: "linear-gradient(180deg, #edfaf8 0%, #d0f0ed 55%, #c4ebe8 100%)",
+      background: "linear-gradient(180deg, #faf8f5 0%, #f2ece0 55%, #f7efe2 100%)",
     }}>
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 80, alignItems: "start", position: "relative", zIndex: 1 }}>
         <div>
@@ -562,14 +566,14 @@ function WhoAndCTASection() {
   return (
     <section style={{
       position: "relative", overflow: "hidden",
-      backgroundColor: "#c4ebe8",
+      backgroundColor: "#f7efe2",
       backgroundImage: 'url("/assets/vediclast.svg")',
       backgroundSize: "cover", backgroundPosition: "center top",
       backgroundRepeat: "no-repeat",
       padding: "120px 72px 140px",
     }}>
       {/* top fade blend */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 180, background: "linear-gradient(180deg, #c4ebe8 0%, transparent 100%)", pointerEvents: "none", zIndex: 2 }} />
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 180, background: "linear-gradient(180deg, #f7efe2 0%, transparent 100%)", pointerEvents: "none", zIndex: 2 }} />
 
       {/* spinning number wheel */}
       <div ref={spinRef} style={{ position: "absolute", zIndex: 1, top: "-200px", left: "-300px", width: 900, opacity: 0.06, pointerEvents: "none", animation: "spinSlow 80s linear infinite", willChange: "transform" }}>
