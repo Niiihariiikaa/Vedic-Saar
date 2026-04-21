@@ -19,6 +19,7 @@ const navRoutes = {
   'Gemstones':    '/gemstones',
   'Mantra':      '/mantra',
   'Vedic Astrology': '/vedic-astrology',
+  'Numerology': '/numerology',
   
   'About':        '/about',
  
@@ -29,7 +30,7 @@ const subRoutes = {
   // Predictions
   'Vedic Astrology':    '/predictions/vedic-astrology',
   'K P Astrology':      '/predictions/kp-astrology',
-  'Numerology':         '/predictions/numerology',
+  'Numerology':         '/numerology',
   'Prashna':            '/predictions/prashna',
   'Yearly Prediction':  '/predictions/yearly-prediction',
   // Life Solutions
@@ -49,7 +50,7 @@ const subRoutes = {
 }
 
 const navItems = [
-  'Home', 'Life Solutions', 'Vaastu', ' Numerology', 'Vedic Astrology', 'Rudraksha',
+  'Home', 'Life Solutions', 'Vaastu', 'Numerology', 'Vedic Astrology', 'Rudraksha',
    'Remedies',  'Blogs', 
    'Testimonials', 'About',   'Gemstones',
   'Mantra'

@@ -45,15 +45,23 @@ const dashedBtn = (color = dark) => ({
 
 /* ── tilt ─────────────────────────────────────────────────────────────────────── */
 const tilt = {
+  onMouseEnter(e) {
+    const el = e.currentTarget;
+    el.style.willChange = "transform";
+    el._tiltRect = el.getBoundingClientRect();
+  },
   onMouseMove(e) {
     const el = e.currentTarget;
-    const r  = el.getBoundingClientRect();
+    const r  = el._tiltRect || el.getBoundingClientRect();
     const x  = (e.clientX - r.left) / r.width  - 0.5;
     const y  = (e.clientY - r.top)  / r.height - 0.5;
     el.style.transform = `perspective(900px) rotateY(${x * 12}deg) rotateX(${y * -12}deg) scale3d(1.025,1.025,1.025)`;
   },
   onMouseLeave(e) {
-    e.currentTarget.style.transform = "perspective(900px) rotateY(0deg) rotateX(0deg) scale3d(1,1,1)";
+    const el = e.currentTarget;
+    el.style.transform = "perspective(900px) rotateY(0deg) rotateX(0deg) scale3d(1,1,1)";
+    el.style.willChange = "auto";
+    el._tiltRect = null;
   },
 };
 
@@ -87,7 +95,7 @@ const globalCss = `
 
   .rv { opacity:0; transform:translateY(28px); transition:opacity 0.65s cubic-bezier(.22,1,.36,1),transform 0.65s cubic-bezier(.22,1,.36,1); }
   .rv.vis { opacity:1; transform:translateY(0); }
-  .card-3d { transform-style:preserve-3d; transition:transform 0.15s ease,box-shadow 0.2s ease; will-change:transform; }
+  .card-3d { transform-style:preserve-3d; transition:transform 0.15s ease,box-shadow 0.2s ease; }
 
   .arch {
     width:110px; height:142px;
@@ -102,7 +110,7 @@ const globalCss = `
   .icon-card:hover { transform:translateY(-8px); }
 
   @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-  .why-card { animation:fadeUp 0.6s ease both; transform-style:preserve-3d; will-change:transform; }
+  .why-card { animation:fadeUp 0.6s ease both; transform-style:preserve-3d; }
   .why-card:nth-child(1) { animation-delay:0.1s; }
   .why-card:nth-child(2) { animation-delay:0.22s; }
   .why-card:nth-child(3) { animation-delay:0.34s; }
@@ -153,8 +161,9 @@ function Hero() {
   const moonRef    = useRef(null);
   useEffect(() => {
     return subscribeScroll((y) => {
-      if (crystalRef.current) crystalRef.current.style.transform = `translateY(${y * 0.25}px)`;
-      if (moonRef.current)    moonRef.current.style.transform    = `translateY(${y * 0.18}px)`;
+      if (y > window.innerHeight * 1.5) return;
+      if (crystalRef.current) crystalRef.current.style.transform = `translate3d(0, ${y * 0.25}px, 0)`;
+      if (moonRef.current)    moonRef.current.style.transform    = `translate3d(0, ${y * 0.18}px, 0)`;
     });
   }, []);
   return (
@@ -165,10 +174,10 @@ function Hero() {
       backgroundImage: 'url("/assets/vedicbg.svg")', backgroundSize: "cover",
       overflow: "visible", padding: "160px 40px 80px",
     }}>
-      <div ref={crystalRef} style={{ position: "absolute", left: "-40px", bottom: "60px", width: 320, height: 420, willChange: "transform", pointerEvents: "none", zIndex: 40, opacity: 0.85 }}>
+      <div ref={crystalRef} style={{ position: "absolute", left: "-40px", bottom: "60px", width: 320, height: 420, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 40, opacity: 0.85 }}>
         <img src="/assets/beigecrystal.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", overflow: "visible" }} />
       </div>
-      <div ref={moonRef} style={{ position: "absolute", right: "-20px", top: "90px", width: 200, height: 300, willChange: "transform", pointerEvents: "none", zIndex: 1, opacity: 0.80 }}>
+      <div ref={moonRef} style={{ position: "absolute", right: "-20px", top: "90px", width: 200, height: 300, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 1, opacity: 0.80 }}>
         <img src="/assets/moon.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
       </div>
       <div style={{ position: "relative", zIndex: 2, maxWidth: 680, marginBottom: -180, transform: "translateY(-80px)" }}>
@@ -267,9 +276,11 @@ function WhatIsSection() {
     let topOffset = s.getBoundingClientRect().top + window.scrollY;
     const onResize = () => { topOffset = s.getBoundingClientRect().top + window.scrollY; };
     window.addEventListener("resize", onResize, { passive: true });
+    const sHeight = s.offsetHeight;
     const unsub = subscribeScroll((y) => {
+      if (y > topOffset + sHeight || y + window.innerHeight < topOffset) return;
       const scrolledPast = y - topOffset;
-      w.style.transform = `translateZ(0) translateX(-200px) rotate(${Math.max(0, scrolledPast) / 4}deg)`;
+      w.style.transform = `translate3d(-200px, 0, 0) rotateZ(${Math.max(0, scrolledPast) / 4}deg)`;
     });
     return () => { unsub(); window.removeEventListener("resize", onResize); };
   }, []);
@@ -282,7 +293,7 @@ function WhatIsSection() {
   padding: "130px 80px 140px",
   overflow: "hidden",
   position: "relative",
-
+  contain: "paint",
   background: `
     url("/assets/vedic2bg.svg") calc(100% + 50px) bottom / cover no-repeat,
     #faf8f5
@@ -314,7 +325,9 @@ function WhatIsSection() {
   display: "block",
   transformOrigin: "center",
   willChange: "transform",
-  transform: "translateZ(0) translateX(-200px)",
+  transform: "translate3d(-200px, 0, 0)",
+  backfaceVisibility: "hidden",
+  WebkitBackfaceVisibility: "hidden",
   position: "relative",
   zIndex: 1,
 }}
@@ -388,7 +401,8 @@ const gains = [
     <section style={{
       padding: "100px 72px",
       position: "relative", overflow: "hidden",
-      background: "linear-gradient(180deg, #f7efe2 0%, #fdf8f0 55%, #f2ece0 100%)",
+     background: "linear-gradient(0deg, #f2ece0 0%, #fdf8f0 55%, #faf8f5 100%)"
+
     }}>
       {/* centre radial glow */}
       <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 300, background: "radial-gradient(ellipse at bottom center, rgba(201,169,110,0.11) 0%, transparent 70%)", pointerEvents: "none" }} />
@@ -445,8 +459,9 @@ function WhySection() {
       padding: "100px 72px", overflow: "hidden", position: "relative",
       background: "linear-gradient(180deg, #f2ece0 0%, #fdf8f0 55%, #faf8f5 100%)"
     }}>
+
       {/* left-edge gold accent bar */}
-      <div style={{ position: "absolute", left: 0, top: "15%", bottom: "15%", width: 4, background: "radial-gradient(ellipse at top center, rgba(201,169,110,0.11) 0%, transparent 70%)", pointerEvents: "none", borderRadius: "0 2px 2px 0" }} />
+      <div style={{ position: "absolute", left: 0, top: "15%", bottom: "15%", width: 40, background: "radial-gradient(ellipse at top center, rgba(201,169,110,0.11) 0%, transparent 70%)", pointerEvents: "none", borderRadius: "0 2px 2px 0" }} />
       <div style={{ position: "absolute", right: "-60px", top: "10%", width: 340, opacity: 0.07, pointerEvents: "none" }}>
         <img src="/assets/costelation.png" alt="" loading="lazy" decoding="async" style={{ width: "100%", objectFit: "contain" }} />
       </div>
@@ -498,6 +513,7 @@ function WhySection() {
           </div>
         </div>
       </div>
+    
     </section>
   );
 }

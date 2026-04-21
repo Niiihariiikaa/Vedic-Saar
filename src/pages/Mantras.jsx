@@ -13,11 +13,11 @@ function audioSrc(path) {
 const mantras = [
   { id: 'gayatri', name: 'Gayatri Mantra', deity: 'Surya · Sun', planet: 'Sun', color: '#c8860a', accent: '#f5c842', image: '/assets/mantras/mantra-img/Om.png', beejMantra: 'ॐ ह्रां ह्रीं ह्रौं सः सूर्याय नमः', sanskrit: 'ॐ भूर्भुवः स्वः तत्सवितुर्वरेण्यं भर्गो देवस्य धीमहि धियो यो नः प्रचोदयात्', transliteration: 'Om Bhur Bhuvah Svah | Tat Savitur Varenyam | Bhargo Devasya Dheemahi | Dhiyo Yo Nah Prachodayat', meaning: 'We meditate on the divine light of the Sun, who illuminates all realms. May that sacred effulgence awaken and guide our intellect.', benefits: ['Clarity of mind', 'Solar energy', 'Wisdom & intellect', 'Spiritual awakening'], chantCount: '108×', bestTime: 'Sunrise & Sunset', audio: '/assets/mantras/Gayatri-Mantra.mp3' },
   { id: 'chandra', name: 'Chandra Mantra', deity: 'Chandra · Moon', planet: 'Moon', color: '#4a6080', accent: '#a0c8e8', image: '/assets/mantras/mantra-img/Chandra.png', sanskrit: 'ॐ श्रां श्रीं श्रौं सः चंद्रमसे नमः', transliteration: 'Om Shraam Shreem Shraum Sah Chandramase Namah', meaning: 'Salutations to Chandra, the luminous Moon. May the divine Moon bless me with peace, emotional harmony, and the nectar of divine grace.', benefits: ['Emotional balance', 'Mental peace', 'Chandra dosha relief', 'Intuition & creativity'], chantCount: '108×', bestTime: 'Monday evening, Purnima', audio: '/assets/mantras/Chandra-Mantra.mp3' },
-  { id: 'mangal', name: 'Mangal Mantra', deity: 'Mangal · Mars', planet: 'Mars', color: '#9b2c1a', accent: '#f07050', image: '/assets/mantras/mantra-img/Mangal.png', beejMantra: 'ॐ क्रां क्रीं क्रौं सः भौमाय नमः', sanskrit: 'ॐ क्रां क्रीं क्रौं सः भौमाय नमः।', transliteration: 'Om Kraam Kreem Kraum Sah Bhaumaya Namah', meaning: 'Salutations to Mangal, the fiery Mars. O red planet, lord of courage and valor, remove all obstacles and bless me with strength and vitality.', benefits: ['Courage & vitality', 'Mangal dosha relief', 'Victory over enemies', 'Strength & stamina'], chantCount: '108×', bestTime: 'Tuesday sunrise', audio: '/assets/mantras/Mangal Mantra MP3.mp3' },
+  { id: 'mangal', name: 'Mangal Mantra', deity: 'Mangal · Mars', planet: 'Mars', color: '#9b2c1a', accent: '#f07050', image: '/assets/mantras/mantra-img/Mangal.png', beejMantra: 'ॐ क्रां क्रीं क्रौं सः भौमाय नमः', sanskrit: 'ॐ क्रां क्रीं क्रौं सः भौमाय नमः।', transliteration: 'Om Kraam Kreem Kraum Sah Bhaumaya Namah', meaning: 'Salutations to Mangal, the fiery Mars. O red planet, lord of courage and valor, remove all obstacles and bless me with strength and vitality.', benefits: ['Courage & vitality', 'Mangal dosha relief', 'Victory over enemies', 'Strength & stamina'], chantCount: '108×', bestTime: 'Tuesday sunrise', audio: '/assets/mantras/Om Kram Kreem Kroum Sah Bhaumaya Namah 108 Times Fast _ Mangal Beej Mantra.mp3' },
   { id: 'budha', name: 'Budha Mantra', deity: 'Budha · Mercury', planet: 'Mercury', color: '#2d7a57', accent: '#4ec890', image: '/assets/mantras/mantra-img/Budhha.png', beejMantra: 'ॐ ब्रां ब्रीं ब्रौं सः बुधाय नमः', sanskrit: 'ॐ ब्रां ब्रीं ब्रौं सः बुधाय नमः', transliteration: 'Om Braam Breem Braum Sah Budhaya Namah', meaning: 'Salutations to Mercury, the planet of intellect, communication, and commerce. May you bless me with clarity of thought and the power of eloquent expression.', benefits: ['Sharp intellect', 'Communication skills', 'Business success', 'Mercury dosha relief'], chantCount: '108×', bestTime: 'Wednesday morning', audio: '/assets/mantras/Om Bram Breem Broum Sah Budhaya Namah 108 Times Fast _ Budh Beej Mantra.mp3' },
   { id: 'brihaspati', name: 'Brihaspati Mantra', deity: 'Brihaspati · Jupiter', planet: 'Jupiter', color: '#7a5a18', accent: '#e8b84a', image: '/assets/mantras/mantra-img/Brahspati.png', beejMantra: 'ॐ ग्रां ग्रीं ग्रौं सः गुरुवे नमः', sanskrit: 'ॐ ग्रां ग्रीं ग्रौं सः गुरुवे नमः', transliteration: 'Om Graam Greem Graum Sah Gurave Namah', meaning: 'Salutations to Brihaspati, the divine Guru. O Jupiter, lord of wisdom and dharma, bless me with knowledge, prosperity, and spiritual growth.', benefits: ['Wisdom & knowledge', 'Guru dosha relief', 'Prosperity & luck', 'Spiritual growth'], chantCount: '108× or 19,000×', bestTime: 'Thursday morning', audio: '/assets/mantras/Brihaspati.mp3' },
   { id: 'shukra', name: 'Shukra Mantra', deity: 'Shukra · Venus', planet: 'Venus', color: '#7a4f8a', accent: '#c890e8', image: '/assets/mantras/mantra-img/shukr.png', beejMantra: 'ॐ द्रां द्रीं द्रौं सः शुक्राय नमः', sanskrit: 'ॐ द्रां द्रीं द्रौं सः शुक्राय नमः।', transliteration: 'Om Draam Dreem Draum Sah Shukraya Namah', meaning: 'Salutations to Shukra, the radiant Venus. O planet of beauty and love, bless me with artistic expression, romantic harmony, and material comforts.', benefits: ['Love & relationships', 'Artistic talents', 'Beauty & luxury', 'Shukra dosha relief'], chantCount: '108×', bestTime: 'Friday morning', audio: '/assets/mantras/Shukra-Mantra.mp3' },
-  { id: 'shani', name: 'Shani Mantra', deity: 'Shani Dev · Saturn', planet: 'Saturn', color: '#3a3060', accent: '#7870d0', image: '/assets/mantras/mantra-img/Shani.png', beejMantra: 'ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः', sanskrit: 'ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः', transliteration: 'Om Praam Preem Praum Sah Shanaishcharaya Namah', meaning: 'Salutations to Shani, the slow-moving one. O Saturn, lord of karma and discipline, please remove all obstacles from my path.', benefits: ['Saturn sade sati relief', 'Karma purification', 'Discipline & focus', 'Removes delays'], chantCount: '108× or 23,000×', bestTime: 'Saturday dusk', audio: '/assets/mantras/Om Sham Shanicharaya Namah _ 108 Times in 5 Minutes _ Shani Mantra Fast.mp3' },
+  { id: 'shani', name: 'Shani Mantra', deity: 'Shani Dev · Saturn', planet: 'Saturn', color: '#3a3060', accent: '#7870d0', image: '/assets/mantras/mantra-img/Shani.png', beejMantra: 'ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः', sanskrit: 'ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः', transliteration: 'Om Praam Preem Praum Sah Shanaishcharaya Namah', meaning: 'Salutations to Shani, the slow-moving one. O Saturn, lord of karma and discipline, please remove all obstacles from my path.', benefits: ['Saturn sade sati relief', 'Karma purification', 'Discipline & focus', 'Removes delays'], chantCount: '108× or 23,000×', bestTime: 'Saturday dusk', audio: '/assets/mantras/om pram preem proum sah shanaischaraya namah 10 Times Fast _ Shani Beej Mantra.mp3' },
   { id: 'rahu', name: 'Rahu Mantra', deity: 'Rahu · North Node', planet: 'Rahu', color: '#4a3010', accent: '#c89050', image: '/assets/mantras/mantra-img/Rahu.png', beejMantra: 'ॐ भ्रां भ्रीं भ्रौं सः राहवे नमः', sanskrit: 'ॐ भ्रां भ्रीं भ्रौं सः राहवे नमः', transliteration: 'Om Bhraam Bhreem Bhraum Sah Rahave Namah', meaning: 'Salutations to Rahu, the ascending lunar node. O shadow planet of illusion and transformation, grant me clarity, wisdom and liberation from confusion.', benefits: ['Rahu dosha relief', 'Removes confusion', 'Worldly success', 'Hidden knowledge'], chantCount: '108×', bestTime: 'Saturday night', audio: '/assets/mantras/Om Ram Rahave Namah 108 Times in 5 Minutes _ Rahu Mantra Fast.mp3' },
   { id: 'ketu', name: 'Ketu Mantra', deity: 'Ketu · South Node', planet: 'Ketu', color: '#2e4a30', accent: '#70b878', image: '/assets/mantras/mantra-img/Ketu.png', beejMantra: 'ॐ स्रां स्रीं स्रौं सः केतवे नमः', sanskrit: 'ॐ स्रां स्रीं स्रौं सः केतवे नमः', transliteration: 'Om Sraam Sreem Sraum Sah Ketave Namah', meaning: 'Salutations to Ketu, the descending lunar node. O shadow planet of moksha and liberation, guide me toward spiritual awakening and freedom from ancestral karma.', benefits: ['Ketu dosha relief', 'Spiritual liberation', 'Ancestral karma', 'Psychic intuition'], chantCount: '108×', bestTime: 'Saturday night', audio: '/assets/mantras/Om Kem Ketave Namah 108 Times in 5 Minutes _ Ketu Mantra _ Fast.mp3' },
   { id: 'mahamrityunjaya', name: 'Mahamrityunjaya', deity: 'Shiva · Healer', planet: 'Mars & Moon', color: '#598BAF', accent: '#598BAF', image: '/assets/mantras/mantra-img/Shiva.png', beejMantra: 'ॐ ह्रौं जूं सः ॐ भूर्भुवः स्वः', sanskrit: 'ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् उर्वारुकमिव बन्धनान् मृत्योर्मुक्षीय मामृतात्', transliteration: 'Om Tryambakam Yajamahe | Sugandhim Pushtivardhanam | Urvarukamiva Bandhanan | Mrityor Mukshiya Maamritat', meaning: 'We worship the three-eyed Lord Shiva, the fragrant, the nourisher of all. Like a cucumber freed from its vine, liberate us from the bondage of death.', benefits: ['Protection & healing', 'Removes fear of death', 'Mangal dosha relief', 'Victory over illness'], chantCount: '108×', bestTime: 'Monday dawn, Pradosha', audio: '/assets/mantras/mahamriyunjaya.mp3' },
@@ -76,46 +76,7 @@ const hanumanLyrics = [
 ];
 
 // ─── LYRICS SCROLL VIEW ───────────────────────────────────────────────────
-function LyricsScroll({ mantra, isPlaying, progress }) {
-  const [activeLine, setActiveLine] = useState(0);
-  const containerRef = useRef(null);
-  const intervalRef = useRef(null);
-  const totalLines = hanumanLyrics.length;
-
-  // Sync active line to audio progress
-  useEffect(() => {
-    const line = Math.floor(progress * totalLines);
-    setActiveLine(Math.min(line, totalLines - 1));
-  }, [progress]);
-
-  // Auto-advance when playing (fallback if no real sync)
-  useEffect(() => {
-    if (isPlaying) {
-      intervalRef.current = setInterval(() => {
-        setActiveLine(prev => (prev + 1) % totalLines);
-      }, 10000);
-    } else {
-      clearInterval(intervalRef.current);
-    }
-    return () => clearInterval(intervalRef.current);
-  }, [isPlaying]);
-
-  // Scroll active line into center
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    const activeEl = container.querySelector(`[data-line="${activeLine}"]`);
-    if (activeEl) {
-      const containerHeight = container.offsetHeight;
-      const elOffset = activeEl.offsetTop;
-      const elHeight = activeEl.offsetHeight;
-      container.scrollTo({
-        top: elOffset - containerHeight / 2 + elHeight / 2,
-        behavior: 'smooth',
-      });
-    }
-  }, [activeLine]);
-
+function LyricsScroll({ mantra }) {
   return (
     <div style={{ padding: '20px 26px', position: 'relative', zIndex: 1 }}>
       <p style={{
@@ -128,82 +89,42 @@ function LyricsScroll({ mantra, isPlaying, progress }) {
         transition: 'color 0.8s ease',
       }}>Chalisa · Lyrics</p>
 
-      {/* Fade masks top & bottom */}
-      <div style={{ position: 'relative' }}>
-        <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, height: 56,
-          background: `linear-gradient(to bottom, rgba(18,12,3,0.97) 0%, transparent 100%)`,
-          pointerEvents: 'none', zIndex: 2,
-        }} />
-        <div style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0, height: 56,
-          background: `linear-gradient(to top, rgba(18,12,3,0.97) 0%, transparent 100%)`,
-          pointerEvents: 'none', zIndex: 2,
-        }} />
-
-        <div
-          ref={containerRef}
-          style={{
-            height: 148, // shows ~2 lines prominently
-            overflowY: 'scroll',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            position: 'relative',
-          }}
-        >
-          {/* Spacer so first line can center */}
-          <div style={{ height: 40 }} />
-
-          {hanumanLyrics.map((line, i) => {
-            const distance = Math.abs(i - activeLine);
-            const isActive = i === activeLine;
-            const isNear = distance === 1;
-
-            return (
-              <div
-                key={i}
-                data-line={i}
-                onClick={() => setActiveLine(i)}
-                style={{
-                  fontFamily: "'Noto Serif Devanagari', serif",
-                  fontSize: isActive ? 18 : isNear ? 15 : 13,
-                  lineHeight: 1.85,
-                  textAlign: 'center',
-                  padding: '4px 8px',
-                  cursor: 'pointer',
-                  color: isActive
-                    ? mantra.accent
-                    : isNear
-                    ? 'rgba(245,237,224,0.55)'
-                    : 'rgba(245,237,224,0.18)',
-                  fontWeight: isActive ? 500 : 400,
-                  letterSpacing: isActive ? '0.02em' : '0',
-                  transform: isActive ? 'scale(1.02)' : 'scale(1)',
-                  transition: 'all 0.45s cubic-bezier(0.4,0,0.2,1)',
-                  filter: distance > 2 ? 'blur(0.6px)' : 'none',
-                  userSelect: 'none',
-                }}
-              >
-                {line}
-              </div>
-            );
-          })}
-
-          {/* Spacer so last line can center */}
-          <div style={{ height: 40 }} />
-        </div>
+      <div
+        style={{
+          height: 340,
+          overflowY: 'auto',
+          scrollbarWidth: 'thin',
+          scrollbarColor: `${mantra.color}40 transparent`,
+          paddingRight: 6,
+        }}
+      >
+        {hanumanLyrics.map((line, i) => (
+          <p
+            key={i}
+            style={{
+              fontFamily: "'Noto Serif Devanagari', serif",
+              fontSize: 15,
+              lineHeight: 2,
+              color: 'rgba(245,237,224,0.75)',
+              margin: '0 0 2px',
+              padding: '2px 0',
+              borderBottom: i % 2 === 1 ? `1px solid ${mantra.color}15` : 'none',
+            }}
+          >
+            {line}
+          </p>
+        ))}
       </div>
 
-      {/* Line counter */}
       <p style={{
         fontFamily: "'Glacial Indifference', serif",
         fontSize: 9,
         letterSpacing: '0.14em',
         color: 'rgba(255,255,255,0.18)',
-        textAlign: 'center',
-        margin: '10px 0 0',
+        textAlign: 'right',
+        margin: '8px 0 0',
       }}>
-        {activeLine + 1} / {totalLines}
+        {hanumanLyrics.length} lines · scroll to read
       </p>
     </div>
   );
@@ -378,7 +299,7 @@ function MantraPanel({ mantra, isPlaying, onToggle, progress, onSeek }) {
 
 {/* ── 2. SANSKRIT / LYRICS ──────────────────────────────────────── */}
 {mantra.id === 'hanuman-chalisa' ? (
-  <LyricsScroll mantra={mantra} isPlaying={isPlaying} progress={progress} />
+  <LyricsScroll mantra={mantra} />
 ) : (
   <div style={{ padding: '20px 26px', position: 'relative', zIndex: 1 }}>
     <p style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 8.5, letterSpacing: '0.22em', textTransform: 'uppercase', color: mantra.accent, margin: '0 0 10px', transition: 'color 0.8s ease' }}>Sanskrit</p>
@@ -655,9 +576,9 @@ export default function MantrasPage() {
         <div style={{ textAlign: 'center', padding: '0 32px 80px' }}>
           <div style={{ display: 'inline-block',  padding: '40px 48px', backdropFilter: 'blur(10px)', maxWidth: 560 }}>
             <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#b8860b', marginBottom: 10 }}>✦ Personalized Sadhana</p>
-            <h3 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 28, fontWeight: 400, color: '#1a1206', marginBottom: 12, lineHeight: 1.2 }}>Which Mantra is <b style={{ color: '#b8860b' }}>Right for You?</b></h3>
+            <h3 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 28, fontWeight: 400, color: '#1a1206', marginBottom: 12, lineHeight: 1.2 }}>Which Mantra is <em style={{ color: '#b8860b' }}>Right for You?</em></h3>
             <p style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 15, color: '#6b5a40', lineHeight: 1.75, marginBottom: 20 }}>Our Vedic astrologers will analyze your birth chart and prescribe the exact mantras, japa count, and timing aligned to your planetary placements.</p>
-            <button onMouseEnter={e => e.currentTarget.style.background = '#b8860b'} onMouseLeave={e => e.currentTarget.style.background = '#1a1206'} style={{ background: 'transparent', color: '#f5ede0', fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '14px 36px', border: '1px dashed white', cursor: 'pointer', transition: 'background 0.3s ease' }}>Book Mantra Consultation</button>
+            <button onMouseEnter={e => e.currentTarget.style.background = '#b8860b'} onMouseLeave={e => e.currentTarget.style.background = '#1a1206'} style={{ background: '#1a1206', color: '#f5ede0', fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '14px 36px', border: '1px dashed white', cursor: 'pointer', transition: 'background 0.3s ease' }}>Book Mantra Consultation</button>
           </div>
         </div>
 
