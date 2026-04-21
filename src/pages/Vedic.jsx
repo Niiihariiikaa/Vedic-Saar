@@ -1,5 +1,27 @@
 import { useState, useEffect, useRef } from "react";
 import SplashCursor from "../components/SplashCursor";
+import { Lightbulb, Sparkles, HeartHandshake, Orbit, Moon } from "lucide-react";
+
+/* ── Scroll Manager (singleton — one RAF loop, zero re-renders) ────────────── */
+let _scrollY = 0;
+let _ticking = false;
+let _scrollInitialized = false;
+const _listeners = new Set();
+
+function subscribeScroll(fn) {
+  if (!_scrollInitialized && typeof window !== "undefined") {
+    window.addEventListener("scroll", () => {
+      _scrollY = window.scrollY;
+      if (!_ticking) {
+        requestAnimationFrame(() => { _listeners.forEach(f => f(_scrollY)); _ticking = false; });
+        _ticking = true;
+      }
+    }, { passive: true });
+    _scrollInitialized = true;
+  }
+  _listeners.add(fn);
+  return () => _listeners.delete(fn);
+}
 
 const gold = "#c9a96e";
 const dark = "#1a1410";
@@ -55,7 +77,7 @@ const globalCss = `
   @import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap');
   @import url('https://fonts.cdnfonts.com/css/glacial-indifference-2');
 
-  * { margin:0; padding:0; box-sizing:border-box; }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
   body { background:#fff; color:#1a1410; }
   html { scroll-behavior:smooth; }
 
@@ -115,43 +137,25 @@ function AccItem({ title, body }) {
     <div className="acc-item">
       <button className="acc-btn" onClick={() => setOpen(o => !o)}>
         <span className={`acc-arrow${open ? " open" : ""}`}>›</span>
-        <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 14, color: dark, letterSpacing: 0.4 }}>{title}</span>
+        <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 20, color: dark, letterSpacing: 0.4 }}>{title}</span>
       </button>
       <div className="acc-body" style={{ maxHeight: open ? 120 : 0, opacity: open ? 1 : 0 }}>
-        <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 13, color: "#7a6e68", lineHeight: 1.75, paddingBottom: 14, paddingLeft: 32 }}>{body}</p>
+        <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 14, color: "#7a6e68", lineHeight: 1.75, paddingBottom: 14, paddingLeft: 32 }}>{body}</p>
       </div>
     </div>
   );
 }
 
-/* ── STARFIELD ────────────────────────────────────────────────────────────────── */
-function StarField() {
-  const stars = Array.from({ length: 60 }, (_, i) => ({
-    id: i, x: Math.random() * 100, y: Math.random() * 100,
-    size: Math.random() * 1.5 + 0.5, opacity: Math.random() * 0.5 + 0.1, delay: Math.random() * 4,
-  }));
-  return (
-    <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
-      {stars.map(s => (
-        <div key={s.id} style={{
-          position: "absolute", left: `${s.x}%`, top: `${s.y}%`,
-          width: s.size, height: s.size, background: "#fff", borderRadius: "50%",
-          opacity: s.opacity,
-          animation: `twinkle ${2 + s.delay}s ease-in-out infinite alternate`,
-          animationDelay: `${s.delay}s`,
-        }} />
-      ))}
-    </div>
-  );
-}
 
 /* ── HERO ─────────────────────────────────────────────────────────────────────── */
 function Hero() {
-  const [scrollY, setScrollY] = useState(0);
+  const crystalRef = useRef(null);
+  const moonRef    = useRef(null);
   useEffect(() => {
-    const fn = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
+    return subscribeScroll((y) => {
+      if (crystalRef.current) crystalRef.current.style.transform = `translateY(${y * 0.25}px)`;
+      if (moonRef.current)    moonRef.current.style.transform    = `translateY(${y * 0.18}px)`;
+    });
   }, []);
   return (
     <section style={{
@@ -159,16 +163,15 @@ function Hero() {
       display: "flex", alignItems: "flex-start", justifyContent: "center",
       textAlign: "center", background: "white",
       backgroundImage: 'url("/assets/vedicbg.svg")', backgroundSize: "cover",
-      overflow: "hidden", padding: "160px 40px 80px",
+      overflow: "visible", padding: "160px 40px 80px",
     }}>
-      <StarField />
-      <div style={{ position: "absolute", left: "-40px", bottom: "60px", width: 320, height: 420, transform: `translateY(${scrollY * 0.25}px)`, pointerEvents: "none", zIndex: 10, opacity: 0.85 }}>
-        <img src="/assets/beigecrystal.png" alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+      <div ref={crystalRef} style={{ position: "absolute", left: "-40px", bottom: "60px", width: 320, height: 420, willChange: "transform", pointerEvents: "none", zIndex: 40, opacity: 0.85 }}>
+        <img src="/assets/beigecrystal.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", overflow: "visible" }} />
       </div>
-      <div style={{ position: "absolute", right: "-20px", top: "90px", width: 200, height: 300, transform: `translateY(${scrollY * 0.18}px)`, pointerEvents: "none", zIndex: 1, opacity: 0.80 }}>
-        <img src="/assets/moon.png" alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+      <div ref={moonRef} style={{ position: "absolute", right: "-20px", top: "90px", width: 200, height: 300, willChange: "transform", pointerEvents: "none", zIndex: 1, opacity: 0.80 }}>
+        <img src="/assets/moon.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
       </div>
-      <div style={{ position: "relative", zIndex: 2, maxWidth: 680, transform: "translateY(-80px)" }}>
+      <div style={{ position: "relative", zIndex: 2, maxWidth: 680, marginBottom: -180, transform: "translateY(-80px)" }}>
         <div style={{ fontFamily: "'Ibarra Real Nova', serif", fontWeight: 450, display: "inline-block", fontSize: 70, color: "black", padding: "6px 20px", marginBottom: 137, animation: "floatUp 0.8s ease forwards" }}>
           Vedic Astrology
         </div>
@@ -188,10 +191,10 @@ function Hero() {
           Decode Your Destiny Through<br />
           <em style={{ color: gold, fontStyle: "italic" }}> Vedic Astrology</em>
         </h1>
-        <p style={{ fontSize: 16, color: "#9b8fa0", lineHeight: 1.8, marginBottom: 10, fontFamily: "'Glacial Indifference', sans-serif", animation: "floatUp 0.8s 0.4s ease both" }}>
+        <p style={{ fontSize: 20, color: "#9b8fa0", lineHeight: 1.8, marginBottom: 10, fontFamily: "'Glacial Indifference', sans-serif", animation: "floatUp 0.8s 0.4s ease both" }}>
           Ancient wisdom. Modern clarity. Personalized guidance for your life's biggest decisions.
         </p>
-        <p style={{ fontSize: 14, color: "#6b6075", fontStyle: "italic", marginBottom: 44, fontFamily: "'Glacial Indifference', sans-serif", animation: "floatUp 0.8s 0.5s ease both" }}>
+        <p style={{ fontSize: 20, color: gold, fontStyle: "italic", marginBottom: 44, fontFamily: "'Ibarra Real Nova', serif", animation: "floatUp 0.8s 0.5s ease both" }}>
           Your journey is not random — it is written in the stars. Let us help you understand it.
         </p>
         <button
@@ -209,26 +212,24 @@ function Hero() {
 function ConstellationOverlay() {
   return (
     <div style={{ position: "relative", height: "0px", zIndex: 20 }}>
-      <img src="/assets/costelation.png" alt="" style={{ position: "absolute", top: "-320px", left: "80%", transform: "translateX(-50%)", width: "500px", opacity: 0.5, pointerEvents: "none" }} />
+      <img src="/assets/costelation.png" alt="" loading="lazy" decoding="async" style={{ position: "absolute", top: "-120px", left: "70%", transform: "translateX(-50%)", width: "600px", opacity: 0.5, pointerEvents: "none" }} />
     </div>
   );
 }
 
 /* ── SLIDING STRIP — short, transparent, fading edges ────────────────────────── */
 function SlidingStrip() {
-  const [offset, setOffset] = useState(0);
-  const rafRef = useRef(null);
-  const scrollRef = useRef(0);
+  const topRowRef = useRef(null);
+  const botRowRef = useRef(null);
   useEffect(() => {
-    const onScroll = () => { scrollRef.current = window.scrollY; };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    const tick = () => { setOffset(scrollRef.current); rafRef.current = requestAnimationFrame(tick); };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(rafRef.current); };
+    return subscribeScroll((y) => {
+      if (topRowRef.current) topRowRef.current.style.transform = `translateX(-${y * 0.2}px)`;
+      if (botRowRef.current) botRowRef.current.style.transform = `translateX(calc(-700px + ${y * 0.2}px))`;
+    });
   }, []);
 
   const top = ["☾ Kundli Analysis","✶ Birth Chart","☯ Ascendant Reading","✧ Planetary Dashas","☾ Navamsa Chart","✶ Lagna Chart","☯ Sade Sati","✧ Yogas & Doshas"];
-  const bot = ["✶ Career & Finance","✶ Compatibility","✶ Muhurat Timing","✶ Retrograde Insights","✶ Nakshatra Analysis","✶ Life Path","✶ Karma & Dharma","✶ Yearly Horoscope"];
+  const bot = ["✶ Career & Finance","✶ Compatibility","✶ Muhurat Timing","✶ Retrograde Insights","✶ Nakshatra Analysis","✶ Life Path","✶ Karma & Dharma","✶ Vedic Remedies"];
   const topRow = [...top,...top,...top,...top,...top];
   const botRow = [...bot,...bot,...bot,...bot,...bot];
 
@@ -238,13 +239,13 @@ function SlidingStrip() {
     <div style={{ overflow: "hidden", position: "relative" }}>
       {/* top strip */}
       <div style={{ position: "relative", background: "rgba(233,228,220,0.65)", borderTop: "1px solid rgba(201,169,110,0.2)", borderBottom: "1px solid rgba(201,169,110,0.15)", WebkitMaskImage: fadeEdge, maskImage: fadeEdge }}>
-        <div className="strip-row" style={{ transform: `translateX(-${offset * 0.2}px)`, color: "#2a1f1a" }}>
+        <div ref={topRowRef} className="strip-row" style={{ color: "#2a1f1a" }}>
           {topRow.map((t, i) => <span key={i}>{t}</span>)}
         </div>
       </div>
       {/* bottom strip */}
       <div style={{ position: "relative", background: "rgba(17,17,17,0.78)", borderBottom: "1px solid rgba(201,169,110,0.12)", WebkitMaskImage: fadeEdge, maskImage: fadeEdge }}>
-        <div className="strip-row" style={{ transform: `translateX(calc(-700px + ${offset * 0.2}px))`, color: "rgba(255,255,255,0.80)" }}>
+        <div ref={botRowRef} className="strip-row" style={{ color: "rgba(255,255,255,0.80)" }}>
           {botRow.map((t, i) => <span key={i}>{t}</span>)}
         </div>
       </div>
@@ -260,62 +261,62 @@ function WhatIsSection() {
   useReveal(bodyRef);
 
   useEffect(() => {
-    let raf;
-    const update = () => {
-      const s = sectionRef.current;
-      const w = wheelRef.current;
-      if (!s || !w) return;
-      const scrolledPast = -s.getBoundingClientRect().top;
-      w.style.transform = `rotate(${Math.max(0, scrolledPast) / 4}deg)`;
-    };
-    const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    update();
-    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(raf); };
+    const s = sectionRef.current;
+    const w = wheelRef.current;
+    if (!s || !w) return;
+    let topOffset = s.getBoundingClientRect().top + window.scrollY;
+    const onResize = () => { topOffset = s.getBoundingClientRect().top + window.scrollY; };
+    window.addEventListener("resize", onResize, { passive: true });
+    const unsub = subscribeScroll((y) => {
+      const scrolledPast = y - topOffset;
+      w.style.transform = `translateZ(0) translateX(-200px) rotate(${Math.max(0, scrolledPast) / 4}deg)`;
+    });
+    return () => { unsub(); window.removeEventListener("resize", onResize); };
   }, []);
 
   return (
 <section
   ref={sectionRef}
+  
   style={{
-    padding: "130px 80px 140px",
-    overflow: "hidden",
-    position: "relative",
-   
-    background:' #faf8f5',
-    backgroundImage: 'url("/assets/vedic2bg.svg")',
-    backgroundPosition: "calc(100% + 50px) bottom",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-  }}
+  padding: "130px 80px 140px",
+  overflow: "hidden",
+  position: "relative",
+
+  background: `
+    url("/assets/vedic2bg.svg") calc(100% + 50px) bottom / cover no-repeat,
+    #faf8f5
+  `,
+}}
+
 >
       {/* gold radial top-right */}
 
       {/* bottom-left warm tint */}
-      <div style={{ position: "absolute", bottom: 0, left: 0, width: 400, height: 300, background: "radial-gradient(ellipse at bottom left, rgba(201,169,110,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, width: 900, height: 300, background: "radial-gradient(ellipse at bottom left, rgba(201,169,110,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-      <div ref={bodyRef} style={{
-        maxWidth: 1200, margin: "0 auto",
+      <div ref={bodyRef} style={{ 
+        maxWidth: 1200, marginTop: -100,
         display: "grid", gridTemplateColumns: "1fr 1.25fr",
-        gap: 80, alignItems: "center", position: "relative", zIndex: 2,
+        gap: 200, alignItems: "center", position: "relative", zIndex: 50,
       }}>
         {/* LEFT — wheel, normal image, rotation via JS */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
-          <div style={{ position: "absolute", inset: "10%", background: "radial-gradient(circle, rgba(201,169,110,0.16) 0%, transparent 70%)", pointerEvents: "none", borderRadius: "50%" }} />
+          <div style={{ position: "absolute", inset: "90%", pointerEvents: "none", borderRadius: "50%" }} />
           <img
             ref={wheelRef}
             src="/assets/wheel.png"
             alt="Vedic Astrology Wheel"
           style={{
-  width: "200%",       // 👈 makes it bigger than container
-  maxWidth: "none",     // 👈 removes cap
+  width: "250%",
+  maxWidth: "none",
   height: "auto",
   display: "block",
-  transformOrigin: "center center",
+  transformOrigin: "center",
   willChange: "transform",
+  transform: "translateZ(0) translateX(-200px)",
   position: "relative",
   zIndex: 1,
-  left: "-300px"        // 👈 shifts it left to keep centered as it grows
 }}
           />
         </div>
@@ -329,17 +330,17 @@ function WhatIsSection() {
           <h2 className="rv" style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: HEADING_SIZE, fontWeight: 400, color: dark, lineHeight: 1.1, marginBottom: 16, transitionDelay: "0.08s" }}>
             What is Vedic<br />Astrology?
           </h2>
-          <p className="rv" style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 22, color: gold, fontStyle: "italic", marginBottom: 36, transitionDelay: "0.12s" }}>
+          <p className="rv" style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 37, color: gold, fontStyle: "italic", marginBottom: 36, transitionDelay: "0.12s" }}>
             Jyotish Shastra
           </p>
-          <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 14.5, color: "#6b5f5e", lineHeight: 1.95, marginBottom: 20, transitionDelay: "0.16s" }}>
+          <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 22, color: "#6b5f5e", lineHeight: 1.95, marginBottom: 20, transitionDelay: "0.16s" }}>
             Vedic Astrology, or Jyotish Shastra, is a 5,000-year-old sacred science rooted in the Vedas. It studies the precise positions of planets at the time of your birth to create your unique birth chart (Kundli) — a cosmic blueprint of your life.
           </p>
-          <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 14.5, color: "#6b5f5e", lineHeight: 1.95, marginBottom: 40, transitionDelay: "0.2s" }}>
+          <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 22, color: "#6b5f5e", lineHeight: 1.95, marginBottom: 40, transitionDelay: "0.2s" }}>
             This chart is not just about predictions. It is a map of your personality, karmic patterns, strengths, challenges, and life purpose.
           </p>
           <div className="rv" style={{ borderLeft: `3px solid ${gold}`, padding: "20px 26px", background: `${gold}0a`, marginBottom: 44, transitionDelay: "0.24s" }}>
-            <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 17, color: "#7a6460", lineHeight: 1.85, fontStyle: "italic" }}>
+            <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 20, color: "#7a6460", lineHeight: 1.85, fontStyle: "italic" }}>
               Unlike generic horoscopes, Vedic Astrology is deeply personalized and incredibly precise when interpreted correctly.
             </p>
           </div>
@@ -366,19 +367,28 @@ function GainSection() {
   const ref = useRef(null);
   useReveal(ref);
 
-  const gains = [
-    { sym: "☽", label: "Personality & Life Path",   desc: "Deep insights into who you truly are at a soul level — your strengths, karmic patterns, and life purpose." },
-    { sym: "★", label: "Career & Finances",          desc: "Clarity on career choices, financial timing, and major life decisions with precise planetary guidance." },
-    { sym: "☯", label: "Relationship Dynamics",      desc: "Understanding of compatibility, karmic bonds, and how to nurture your most important relationships." },
-    { sym: "✦", label: "Opportunities & Challenges", desc: "Awareness of upcoming planetary shifts — so you prepare instead of react and align with favorable energies." },
-    { sym: "◎", label: "Emotional Reassurance",      desc: "Instead of feeling lost, you begin to feel guided and in control — with the confidence to move forward." },
-  ];
+const gains = [
+  { icon: Lightbulb, label: "Insights",
+    desc: "Deep insights into who you truly are at a soul level — your strengths, karmic patterns, and life purpose." },
+
+  { icon: Sparkles, label: "Clarity",
+    desc: "Clarity on career choices, financial timing, and major life decisions with precise planetary guidance." },
+
+  { icon: HeartHandshake, label: "Understanding",
+    desc: "Understanding of compatibility, karmic bonds, and how to nurture your most important relationships." },
+
+  { icon: Orbit, label: "Awareness",
+    desc: "Awareness of upcoming planetary shifts — so you prepare instead of react and align with favorable energies." },
+
+  { icon: Moon, label: "Reassurance",
+    desc: "Instead of feeling lost, you begin to feel guided and in control — with the confidence to move forward." },
+];
 
   return (
     <section style={{
-      padding: "100px 72px", borderTop: "1px solid rgba(26,20,16,0.06)",
+      padding: "100px 72px",
       position: "relative", overflow: "hidden",
-      background: "linear-gradient(180deg, #fff 0%, #fdf8f0 55%, #f7efe2 100%)",
+      background: "linear-gradient(180deg, #f7efe2 0%, #fdf8f0 55%, #f2ece0 100%)",
     }}>
       {/* centre radial glow */}
       <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 300, background: "radial-gradient(ellipse at bottom center, rgba(201,169,110,0.11) 0%, transparent 70%)", pointerEvents: "none" }} />
@@ -393,16 +403,16 @@ function GainSection() {
           <h2 className="rv" style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: HEADING_SIZE, fontWeight: 400, color: dark, lineHeight: 1.1, transitionDelay: "0.08s" }}>
             What You Can Gain
           </h2>
-          <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 14.5, color: "#7a6e68", marginTop: 14, maxWidth: 520, margin: "14px auto 0", lineHeight: 1.8, transitionDelay: "0.14s" }}>
+          <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 22, color: "#7a6e68", marginTop: 14, maxWidth: 520, margin: "14px auto 0", lineHeight: 1.8, transitionDelay: "0.14s" }}>
             A Vedic Astrology consultation is not just about knowing the future — it's about empowerment.
           </p>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 28 }}>
           {gains.map((g, i) => (
             <div key={i} className="rv icon-card" style={{ textAlign: "center", transitionDelay: `${0.06 + i * 0.09}s`, padding: "0 8px" }}>
-              <div className="arch">{g.sym}</div>
-              <h4 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 18, fontWeight: 500, color: dark, marginBottom: 10, lineHeight: 1.3 }}>{g.label}</h4>
-              <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 13, color: "#7a6e68", lineHeight: 1.85 }}>{g.desc}</p>
+              <div className="arch">  <g.icon size={40} strokeWidth={1.5} /></div>
+              <h4 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 30, fontWeight: 500, color: dark, marginBottom: 10, lineHeight: 1.3 }}>{g.label}</h4>
+              <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 16, color: "#7a6e68", lineHeight: 1.85 }}>{g.desc}</p>
             </div>
           ))}
         </div>
@@ -433,13 +443,12 @@ function WhySection() {
   return (
     <section style={{
       padding: "100px 72px", overflow: "hidden", position: "relative",
-      marginTop: -2, paddingTop: 102,
-      background: "linear-gradient(180deg, #f7efe2 0%, #f7efe2 5%, #fdf8f3 40%, #f9f3ea 100%)",
+      background: "linear-gradient(180deg, #f2ece0 0%, #fdf8f0 55%, #faf8f5 100%)"
     }}>
       {/* left-edge gold accent bar */}
-      <div style={{ position: "absolute", left: 0, top: "15%", bottom: "15%", width: 4, background: `linear-gradient(180deg, transparent, ${gold}88, transparent)`, pointerEvents: "none", borderRadius: "0 2px 2px 0" }} />
+      <div style={{ position: "absolute", left: 0, top: "15%", bottom: "15%", width: 4, background: "radial-gradient(ellipse at top center, rgba(201,169,110,0.11) 0%, transparent 70%)", pointerEvents: "none", borderRadius: "0 2px 2px 0" }} />
       <div style={{ position: "absolute", right: "-60px", top: "10%", width: 340, opacity: 0.07, pointerEvents: "none" }}>
-        <img src="/assets/costelation.png" alt="" style={{ width: "100%", objectFit: "contain" }} />
+        <img src="/assets/costelation.png" alt="" loading="lazy" decoding="async" style={{ width: "100%", objectFit: "contain" }} />
       </div>
 
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto" }}>
@@ -451,7 +460,7 @@ function WhySection() {
           <h2 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: HEADING_SIZE, fontWeight: 400, color: dark, lineHeight: 1.1, marginBottom: 12 }}>
             Clarity Where There<br />Is Confusion
           </h2>
-          <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 14.5, color: "#7a6e68", lineHeight: 1.85, maxWidth: 540 }}>
+          <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 22, color: "#7a6e68", lineHeight: 1.85, maxWidth: 540 }}>
             At some point, everyone faces uncertainty. Vedic Astrology brings light to life's hardest questions.
           </p>
         </div>
@@ -459,14 +468,14 @@ function WhySection() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20, margin: "52px 0" }}>
           {questions.map((item, i) => (
             <div key={i} className="why-card card-3d" {...tilt} style={{
-              background: "rgba(250,248,245,0.75)",
+              background: "rgba(250,248,245,0.95)",
               border: `1px solid rgba(201,169,110,0.3)`,
               padding: "40px 32px 32px", cursor: "default", minHeight: 230,
               display: "flex", flexDirection: "column", justifyContent: "space-between",
-              boxShadow: "0 2px 20px rgba(0,0,0,0.05)", backdropFilter: "blur(4px)",
+              boxShadow: "0 2px 20px rgba(0,0,0,0.05)",
             }}>
               <div style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 52, color: gold, lineHeight: 0.75, marginBottom: 22, opacity: 0.55 }}>"</div>
-              <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 18, fontWeight: 400, color: dark, lineHeight: 1.65, flexGrow: 1, marginBottom: 24 }}>{item.q}</p>
+              <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 22, fontWeight: 400, color: dark, lineHeight: 1.65, flexGrow: 1, marginBottom: 24 }}>{item.q}</p>
               <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 11, color: gold, letterSpacing: 2, textTransform: "uppercase", fontFamily: "'Glacial Indifference', sans-serif", borderTop: `1px solid rgba(201,169,110,0.2)`, paddingTop: 16 }}>
                 <span>✦</span>{item.sub}
               </div>
@@ -483,7 +492,7 @@ function WhySection() {
             {benefits.map((b, i) => (
               <div key={i} className="rv benefit-row" style={{ transitionDelay: `${0.14 + i * 0.06}s` }}>
                 <span style={{ width: 6, height: 6, background: gold, borderRadius: "50%", flexShrink: 0, marginTop: 7 }} />
-                <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 14, color: "#6a5e58", lineHeight: 1.7 }}>{b}</span>
+                <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 18, color: "#6a5e58", lineHeight: 1.7 }}>{b}</span>
               </div>
             ))}
           </div>
@@ -507,12 +516,10 @@ function ApproachSection() {
 
   return (
     <section style={{
-      padding: "100px 72px", position: "relative", overflow: "hidden",
-      borderTop: "1px solid rgba(26,20,16,0.06)",
-      background: "linear-gradient(180deg, #faf8f5 0%, #f2ece0 55%, #faf8f5 100%)",
+      overflow: "visible",
+      padding: "100px 72px", position: "relative",
+      background: "linear-gradient(180deg, #faf8f5 0%, #f2ece0 55%, #f7efe2 100%)",
     }}>
-      {/* top gold rule */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, transparent, ${gold}77 40%, ${gold}aa 60%, transparent)`, pointerEvents: "none" }} />
 
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 80, alignItems: "start", position: "relative", zIndex: 1 }}>
         <div>
@@ -523,13 +530,16 @@ function ApproachSection() {
           <h2 className="rv" style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: HEADING_SIZE, fontWeight: 400, color: dark, lineHeight: 1.12, marginBottom: 24, transitionDelay: "0.08s" }}>
             How We Help You at<br /><em style={{ color: gold, fontStyle: "italic" }}>Vedic Saar</em>
           </h2>
-          <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 14.5, color: "#7a6e68", lineHeight: 1.9, marginBottom: 40, transitionDelay: "0.14s" }}>
+          <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 22, color: "#7a6e68", lineHeight: 1.9, marginBottom: 40, transitionDelay: "0.14s" }}>
             At Vedic Saar, we believe astrology should be practical, honest, and actionable — not vague or fear-based.
           </p>
-          <div className="rv" style={{ padding: "28px 32px", background: dark, borderLeft: `3px solid ${gold}`, transitionDelay: "0.2s" }}>
-            <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 17, color: "rgba(255,255,255,0.72)", lineHeight: 1.85, fontStyle: "italic" }}>
-              "The answers you are searching for already exist — let us uncover them together."
+
+           <div className="rv" style={{ borderLeft: `3px solid ${gold}`, padding: "20px 26px", background: `${gold}0a`, marginBottom: 44, transitionDelay: "0.24s" }}>
+            <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 20, color: "#7a6460", lineHeight: 1.85, fontStyle: "italic" }}>
+                            "The answers you are searching for already exist — let us uncover them together."
+
             </p>
+         
           </div>
         </div>
         <div>
@@ -538,7 +548,7 @@ function ApproachSection() {
               <div className="step-num">{s.n}</div>
               <div>
                 <h5 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 22, fontWeight: 600, color: dark, marginBottom: 8 }}>{s.title}</h5>
-                <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 14, color: "#7a7068", lineHeight: 1.75 }}>{s.desc}</p>
+                <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 18, color: "#7a7068", lineHeight: 1.75 }}>{s.desc}</p>
               </div>
             </div>
           ))}
@@ -550,8 +560,21 @@ function ApproachSection() {
 
 /* ── WHO + CTA ────────────────────────────────────────────────────────────────── */
 function WhoAndCTASection() {
-  const ref = useRef(null);
+  const ref       = useRef(null);
+  const mantraRef = useRef(null);
   useReveal(ref);
+
+  useEffect(() => {
+    const el = mantraRef.current;
+    if (!el) return;
+    el.style.animationPlayState = "paused";
+    const obs = new IntersectionObserver(
+      ([entry]) => { el.style.animationPlayState = entry.isIntersecting ? "running" : "paused"; },
+      { threshold: 0.01 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   const who = [
     "Feeling stuck or confused about your life direction",
@@ -564,19 +587,22 @@ function WhoAndCTASection() {
 
   return (
     <section style={{
-      position: "relative", overflow: "hidden",
+      position: "relative", overflow: "visible",
+      backgroundColor: "#f7efe2",
       backgroundImage: 'url("/assets/vediclast.svg")',
       backgroundSize: "cover", backgroundPosition: "center top",
       backgroundRepeat: "no-repeat",
       padding: "120px 72px 140px",
     }}>
+      {/* top fade to blend with previous section */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 180, background: "linear-gradient(180deg, #f7efe2 0%, transparent 100%)", pointerEvents: "none", zIndex: 2 }} />
       {/* mantra wheel — top left, large, very transparent */}
-      <div style={{ position: "absolute", top: "-80px", left: "-100px", width: 600, opacity: 0.04, pointerEvents: "none", animation: "spinSlow 90s linear infinite", willChange: "transform" }}>
-        <img src="/assets/mantra-wheel.png" alt="" style={{ width: "100%", objectFit: "contain" }} />
+      <div ref={mantraRef} style={{ position: "absolute", zIndex: 60, top: "-350px", left: "-250px", width: 980, opacity: 0.07, pointerEvents: "none", animation: "spinSlow 90s linear infinite", willChange: "transform" }}>
+        <img src="/assets/mantra-wheel.png" alt="" loading="lazy" decoding="async" style={{ width: "200%", objectFit: "contain" }} />
       </div>
       {/* crescent moon — background decoration */}
-      <div style={{ position: "absolute", top: "-60px", right: "-80px", width: 520, opacity: 0.12, pointerEvents: "none" }}>
-        <img src="/assets/crescentmoon.png" alt="" style={{ width: "100%", objectFit: "contain" }} />
+      <div style={{ position: "absolute", top: "-990px", right: "-80px", width: 820, opacity: 0.12, pointerEvents: "none" }}>
+        <img src="/assets/crescentmoon.png" alt="" loading="lazy" decoding="async" style={{ width: "100%", objectFit: "contain" }} />
       </div>
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", position: "relative", zIndex: 1 }}>
 
@@ -597,7 +623,7 @@ function WhoAndCTASection() {
             {who.map((item, i) => (
               <div key={i} className="rv who-row" style={{ transitionDelay: `${i * 0.07}s` }}>
                 <span style={{ color: gold, fontSize: 16, flexShrink: 0, marginTop: 1 }}>›</span>
-                <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 14.5, color: dark, lineHeight: 1.8 }}>{item}</span>
+                <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 22, color: dark, lineHeight: 1.8 }}>{item}</span>
               </div>
             ))}
           </div>
@@ -626,7 +652,7 @@ function WhoAndCTASection() {
     <p
       style={{
         fontFamily: "'Glacial Indifference', sans-serif",
-        fontSize: 11,
+        fontSize: 22,
         letterSpacing: 3,
         textTransform: "uppercase",
         color: gold,
@@ -656,7 +682,7 @@ function WhoAndCTASection() {
     <p
       style={{
         fontFamily: "'Glacial Indifference', sans-serif",
-        fontSize: 18,
+        fontSize: 22,
         color: "#7a6460",
         
         lineHeight: 1.75,
