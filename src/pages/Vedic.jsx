@@ -27,7 +27,6 @@ const gold = "#c9a96e";
 const dark = "#1a1410";
 const HEADING_SIZE = "clamp(36px,3.8vw,52px)";
 
-/* ── shared button styles ─────────────────────────────────────────────────────── */
 const dashedBtn = (color = dark) => ({
   background: "transparent",
   color,
@@ -43,7 +42,6 @@ const dashedBtn = (color = dark) => ({
   whiteSpace: "nowrap",
 });
 
-/* ── tilt ─────────────────────────────────────────────────────────────────────── */
 const tilt = {
   onMouseEnter(e) {
     const el = e.currentTarget;
@@ -133,7 +131,6 @@ const globalCss = `
   .acc-arrow.open { transform:rotate(90deg); }
   .acc-body { overflow:hidden; transition:max-height 0.35s cubic-bezier(.22,1,.36,1),opacity 0.35s; }
 
-  /* strip */
   .strip-row { display:flex; gap:48px; white-space:nowrap; align-items:center; padding:0 40px; will-change:transform; min-width:300vw; height:68px; }
   .strip-row span { font-family:'Ibarra Real Nova',serif; font-size:30px; }
 `;
@@ -153,7 +150,6 @@ function AccItem({ title, body }) {
     </div>
   );
 }
-
 
 /* ── HERO ─────────────────────────────────────────────────────────────────────── */
 function Hero() {
@@ -184,19 +180,7 @@ function Hero() {
         <div style={{ fontFamily: "'Ibarra Real Nova', serif", fontWeight: 450, display: "inline-block", fontSize: 70, color: "black", padding: "6px 20px", marginBottom: 137, animation: "floatUp 0.8s ease forwards" }}>
           Vedic Astrology
         </div>
-
-        <h1
-  style={{
-    marginTop: 80,
-    fontFamily: "'Ibarra Real Nova', serif",
-    fontSize: HEADING_SIZE,
-    fontWeight: 400,
-    lineHeight: 1.15,
-    color: "black",
-    marginBottom: 40, // 👈 increase from 24 → 40
-    animation: "floatUp 0.8s 0.2s ease both"
-  }}
->
+        <h1 style={{ marginTop: 80, fontFamily: "'Ibarra Real Nova', serif", fontSize: HEADING_SIZE, fontWeight: 400, lineHeight: 1.15, color: "black", marginBottom: 40, animation: "floatUp 0.8s 0.2s ease both" }}>
           Decode Your Destiny Through<br />
           <em style={{ color: gold, fontStyle: "italic" }}> Vedic Astrology</em>
         </h1>
@@ -206,12 +190,12 @@ function Hero() {
         <p style={{ fontSize: 20, color: gold, fontStyle: "italic", marginBottom: 44, fontFamily: "'Ibarra Real Nova', serif", animation: "floatUp 0.8s 0.5s ease both" }}>
           Your journey is not random — it is written in the stars. Let us help you understand it.
         </p>
-        <button
-          style={{ ...dashedBtn(dark), animation: "floatUp 0.8s 0.6s ease both" }}
-          onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.borderColor = gold; e.currentTarget.style.color = gold; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.borderColor = dark; e.currentTarget.style.color = dark; }}>
-          Book Your Consultation →
-        </button>
+                   <button
+              style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
+              Book Your Numerology Consultation →
+            </button>
       </div>
     </section>
   );
@@ -226,7 +210,7 @@ function ConstellationOverlay() {
   );
 }
 
-/* ── SLIDING STRIP — short, transparent, fading edges ────────────────────────── */
+/* ── SLIDING STRIP ────────────────────────────────────────────────────────────── */
 function SlidingStrip() {
   const topRowRef = useRef(null);
   const botRowRef = useRef(null);
@@ -241,18 +225,15 @@ function SlidingStrip() {
   const bot = ["✶ Career & Finance","✶ Compatibility","✶ Muhurat Timing","✶ Retrograde Insights","✶ Nakshatra Analysis","✶ Life Path","✶ Karma & Dharma","✶ Vedic Remedies"];
   const topRow = [...top,...top,...top,...top,...top];
   const botRow = [...bot,...bot,...bot,...bot,...bot];
-
   const fadeEdge = "linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%)";
 
   return (
     <div style={{ overflow: "hidden", position: "relative" }}>
-      {/* top strip */}
       <div style={{ position: "relative", background: "rgba(233,228,220,0.65)", borderTop: "1px solid rgba(201,169,110,0.2)", borderBottom: "1px solid rgba(201,169,110,0.15)", WebkitMaskImage: fadeEdge, maskImage: fadeEdge }}>
         <div ref={topRowRef} className="strip-row" style={{ color: "#2a1f1a" }}>
           {topRow.map((t, i) => <span key={i}>{t}</span>)}
         </div>
       </div>
-      {/* bottom strip */}
       <div style={{ position: "relative", background: "rgba(17,17,17,0.78)", borderBottom: "1px solid rgba(201,169,110,0.12)", WebkitMaskImage: fadeEdge, maskImage: fadeEdge }}>
         <div ref={botRowRef} className="strip-row" style={{ color: "rgba(255,255,255,0.80)" }}>
           {botRow.map((t, i) => <span key={i}>{t}</span>)}
@@ -262,7 +243,7 @@ function SlidingStrip() {
   );
 }
 
-/* ── WHAT IS VEDIC — wheel as normal in-flow image ────────────────────────────── */
+/* ── WHAT IS VEDIC ────────────────────────────────────────────────────────────── */
 function WhatIsSection() {
   const sectionRef = useRef(null);
   const wheelRef   = useRef(null);
@@ -286,55 +267,26 @@ function WhatIsSection() {
   }, []);
 
   return (
-<section
-  ref={sectionRef}
-  
-  style={{
-  padding: "130px 80px 140px",
-  overflow: "hidden",
-  position: "relative",
-  contain: "paint",
-  background: `
-    url("/assets/vedic2bg.svg")  bottom / cover no-repeat,
-    #faf8f5
-  `,
-}}
-
->
-      {/* gold radial top-right */}
-
-      {/* bottom-left warm tint */}
-      <div style={{ position: "absolute", bottom: 0, left: 0, width: 900, height: 300, background: "radial-gradient(ellipse at bottom left, rgba(201,169,110,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
-
-      <div ref={bodyRef} style={{ 
+    <section ref={sectionRef} style={{
+      padding: "130px 80px 140px",
+      overflow: "hidden",
+      position: "relative",
+      contain: "paint",
+      background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%)",
+    }}>
+      <div ref={bodyRef} style={{
         maxWidth: 1200, marginTop: -100,
         display: "grid", gridTemplateColumns: "1fr 1.25fr",
         gap: 200, alignItems: "center", position: "relative", zIndex: 50,
       }}>
-        {/* LEFT — wheel, normal image, rotation via JS */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
-          <div style={{ position: "absolute", inset: "90%", pointerEvents: "none", borderRadius: "50%" }} />
           <img
             ref={wheelRef}
             src="/assets/wheel.png"
             alt="Vedic Astrology Wheel"
-          style={{
-  width: "250%",
-  maxWidth: "none",
-  height: "auto",
-  display: "block",
-  transformOrigin: "center",
-  willChange: "transform",
-  transform: "translate3d(-200px, 0, 0)",
-  backfaceVisibility: "hidden",
-  WebkitBackfaceVisibility: "hidden",
-  position: "relative",
-  zIndex: 1,
-}}
+            style={{ width: "250%", maxWidth: "none", height: "auto", display: "block", transformOrigin: "center", willChange: "transform", transform: "translate3d(-200px, 0, 0)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", position: "relative", zIndex: 1 }}
           />
         </div>
-
-        {/* RIGHT */}
         <div style={{ paddingTop: 8 }}>
           <div className="rv" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
             <span style={{ width: 28, height: 1, background: gold }} />
@@ -362,11 +314,11 @@ function WhatIsSection() {
             <AccItem title="Personalized Consultation Sessions" body="One-on-one guidance tailored to your specific questions — career, relationships, spiritual growth, and major life decisions." />
           </div>
           <div className="rv" style={{ marginTop: 44, transitionDelay: "0.32s" }}>
-            <button
-              style={dashedBtn(dark)}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.borderColor = gold; e.currentTarget.style.color = gold; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.borderColor = dark; e.currentTarget.style.color = dark; }}>
-              Book Your Consultation →
+             <button
+              style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
+              Book Your Numerology Consultation →
             </button>
           </div>
         </div>
@@ -380,34 +332,20 @@ function GainSection() {
   const ref = useRef(null);
   useReveal(ref);
 
-const gains = [
-  { icon: Lightbulb, label: "Insights",
-    desc: "Deep insights into who you truly are at a soul level — your strengths, karmic patterns, and life purpose." },
-
-  { icon: Sparkles, label: "Clarity",
-    desc: "Clarity on career choices, financial timing, and major life decisions with precise planetary guidance." },
-
-  { icon: HeartHandshake, label: "Understanding",
-    desc: "Understanding of compatibility, karmic bonds, and how to nurture your most important relationships." },
-
-  { icon: Orbit, label: "Awareness",
-    desc: "Awareness of upcoming planetary shifts — so you prepare instead of react and align with favorable energies." },
-
-  { icon: Moon, label: "Reassurance",
-    desc: "Instead of feeling lost, you begin to feel guided and in control — with the confidence to move forward." },
-];
+  const gains = [
+    { icon: Lightbulb, label: "Insights",      desc: "Deep insights into who you truly are at a soul level — your strengths, karmic patterns, and life purpose." },
+    { icon: Sparkles,  label: "Clarity",       desc: "Clarity on career choices, financial timing, and major life decisions with precise planetary guidance." },
+    { icon: HeartHandshake, label: "Understanding", desc: "Understanding of compatibility, karmic bonds, and how to nurture your most important relationships." },
+    { icon: Orbit,     label: "Awareness",     desc: "Awareness of upcoming planetary shifts — so you prepare instead of react and align with favorable energies." },
+    { icon: Moon,      label: "Reassurance",   desc: "Instead of feeling lost, you begin to feel guided and in control — with the confidence to move forward." },
+  ];
 
   return (
     <section style={{
       padding: "100px 72px",
       position: "relative", overflow: "hidden",
-      background: `url("/assets/vedic3bg.svg") center / cover no-repeat, linear-gradient(0deg, #f2ece0 0%, #fdf8f0 55%, #faf8f5 100%)`,
+      background: "linear-gradient(180deg, #f5f0e8 0%, #fdf8f0 55%, #faf8f5 100%)",
     }}>
-      <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 280, background: "radial-gradient(ellipse at top center, rgba(201,169,110,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 300, background: "radial-gradient(ellipse at bottom center, rgba(201,169,110,0.11) 0%, transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", top: "40%", left: 0, width: 400, height: 400, background: "radial-gradient(ellipse at center left, rgba(201,169,110,0.05) 0%, transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", top: "40%", right: 0, width: 400, height: 400, background: "radial-gradient(ellipse at center right, rgba(201,169,110,0.05) 0%, transparent 70%)", pointerEvents: "none" }} />
-
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: 64 }}>
           <div className="rv" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 16 }}>
@@ -425,7 +363,7 @@ const gains = [
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 28 }}>
           {gains.map((g, i) => (
             <div key={i} className="rv icon-card" style={{ textAlign: "center", transitionDelay: `${0.06 + i * 0.09}s`, padding: "0 8px" }}>
-              <div className="arch">  <g.icon size={40} strokeWidth={1.5} /></div>
+              <div className="arch"><g.icon size={40} strokeWidth={1.5} /></div>
               <h4 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 30, fontWeight: 500, color: dark, marginBottom: 10, lineHeight: 1.3 }}>{g.label}</h4>
               <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 16, color: "#7a6e68", lineHeight: 1.85 }}>{g.desc}</p>
             </div>
@@ -458,18 +396,8 @@ function WhySection() {
   return (
     <section style={{
       padding: "100px 72px", overflow: "hidden", position: "relative",
-      background: "linear-gradient(180deg, #f2ece0 0%, #fdf8f0 55%, #faf8f5 100%)"
+      background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 55%, #faf8f5 100%)",
     }}>
-
-      <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 300, background: "radial-gradient(ellipse at top center, rgba(201,169,110,0.09) 0%, transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: 0, left: 0, width: 500, height: 350, background: "radial-gradient(ellipse at bottom left, rgba(201,169,110,0.07) 0%, transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: 0, right: 0, width: 500, height: 350, background: "radial-gradient(ellipse at bottom right, rgba(201,169,110,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
-      {/* left-edge gold accent bar */}
-      <div style={{ position: "absolute", left: 0, top: "15%", bottom: "15%", width: 40, background: "radial-gradient(ellipse at top center, rgba(201,169,110,0.11) 0%, transparent 70%)", pointerEvents: "none", borderRadius: "0 2px 2px 0" }} />
-      <div style={{ position: "absolute", right: "-60px", top: "10%", width: 340, opacity: 0.07, pointerEvents: "none" }}>
-        <img src="/assets/costelation.png" alt="" loading="lazy" decoding="async" style={{ width: "100%", objectFit: "contain" }} />
-      </div>
-
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto" }}>
         <div className="rv" style={{ marginBottom: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
@@ -517,7 +445,6 @@ function WhySection() {
           </div>
         </div>
       </div>
-    
     </section>
   );
 }
@@ -538,9 +465,8 @@ function ApproachSection() {
     <section style={{
       overflow: "visible",
       padding: "100px 72px", position: "relative",
-      background: "linear-gradient(180deg, #faf8f5 0%, #f2ece0 55%, #f7efe2 100%)",
+      background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 55%, #f7efe2 100%)",
     }}>
-
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 80, alignItems: "start", position: "relative", zIndex: 1 }}>
         <div>
           <div className="rv" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
@@ -553,13 +479,10 @@ function ApproachSection() {
           <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 22, color: "#7a6e68", lineHeight: 1.9, marginBottom: 40, transitionDelay: "0.14s" }}>
             At Vedic Saar, we believe astrology should be practical, honest, and actionable — not vague or fear-based.
           </p>
-
-           <div className="rv" style={{ borderLeft: `3px solid ${gold}`, padding: "20px 26px", background: `${gold}0a`, marginBottom: 44, transitionDelay: "0.24s" }}>
+          <div className="rv" style={{ borderLeft: `3px solid ${gold}`, padding: "20px 26px", background: `${gold}0a`, marginBottom: 44, transitionDelay: "0.24s" }}>
             <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 20, color: "#7a6460", lineHeight: 1.85, fontStyle: "italic" }}>
-                            "The answers you are searching for already exist — let us uncover them together."
-
+              "The answers you are searching for already exist — let us uncover them together."
             </p>
-         
           </div>
         </div>
         <div>
@@ -614,31 +537,14 @@ function WhoAndCTASection() {
       backgroundRepeat: "no-repeat",
       padding: "120px 72px 140px",
     }}>
-      {/* top fade to blend with previous section */}
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 180, background: "linear-gradient(180deg, #f7efe2 0%, transparent 100%)", pointerEvents: "none", zIndex: 2 }} />
-      {/* mantra wheel — top left, large, very transparent */}
+
       <div ref={mantraRef} style={{ position: "absolute", zIndex: 60, top: "-350px", left: "-250px", width: 980, opacity: 0.07, pointerEvents: "none", animation: "spinSlow 90s linear infinite", willChange: "transform" }}>
         <img src="/assets/mantra-wheel.png" alt="" loading="lazy" decoding="async" style={{ width: "200%", objectFit: "contain" }} />
       </div>
-      {/* crescent moon — background decoration */}
-      <div style={{ position: "absolute", top: "-990px", right: "-80px", width: 820, opacity: 0.5, pointerEvents: "none" }}>
-        <img src="/assets/crescentmoon.png" alt="" loading="lazy" decoding="async" style={{ width: "100%", objectFit: "contain" }} />
-      </div>
-      <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", position: "relative", zIndex: 1 }}>
 
+      <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: 80, marginBottom: 100, alignItems: "start", position: "relative" }}>
-          <img
-            src="/assets/costelation.png"
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            style={{
-              position: "absolute", top: "-80px", right: "-60px",
-              width: 500, opacity: 0.5, pointerEvents: "none",
-              userSelect: "none",
-            }}
-          />
           <div>
             <div className="rv" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
               <span style={{ width: 28, height: 1, background: gold }} />
@@ -662,87 +568,33 @@ function WhoAndCTASection() {
         </div>
 
         {/* CTA */}
-
-<div
-  className="rv"
-  style={{
-    transitionDelay: "0.1s",
-
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-
-    textAlign: "center",
-    minHeight: "70vh",
-
-    padding: "240px 100px 160px",
-  }}
->
-  <div style={{ maxWidth: "720px" }}>
-    
-    <p
-      style={{
-        fontFamily: "'Glacial Indifference', sans-serif",
-        fontSize: 22,
-        letterSpacing: 3,
-        textTransform: "uppercase",
-        color: gold,
-        marginTop:40,
-        marginBottom: 22,
-      }}
-    >
-      Illuminate Your Path
-    </p>
-
-    <h2
-      style={{
-        fontFamily: "'Ibarra Real Nova', serif",
-        fontSize: HEADING_SIZE,
-        fontWeight: 400,
-        color: dark,
-        lineHeight: 1.2,
-        marginBottom: 22,
-        letterSpacing: "0.02em",
-      }}
-    >
-      Book Your Vedic <br />
-      Astrology <br />
-      Consultation
-    </h2>
-
-    <p
-      style={{
-        fontFamily: "'Glacial Indifference', sans-serif",
-        fontSize: 22,
-        color: "#7a6460",
-        
-        lineHeight: 1.75,
-        marginBottom: 42,
-      }}
-    >
-      The answers you are searching for already exist — <br />
-      let us uncover them together.
-    </p>
-
-    <button
-      style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "translateY(-3px)";
-        e.currentTarget.style.background = "#2e2620";
-        e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "none";
-        e.currentTarget.style.background = dark;
-        e.currentTarget.style.boxShadow = "none";
-      }}
-    >
-      Book Your Consultation Now →
-    </button>
-  </div>
-</div>
-</div>
+        <div className="rv" style={{
+          transitionDelay: "0.1s",
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+          textAlign: "center", minHeight: "70vh", padding: "240px 100px 160px",
+        }}>
+          <div style={{ maxWidth: "720px" }}>
+            <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 22, letterSpacing: 3, textTransform: "uppercase", color: gold, marginTop: 40, marginBottom: 22 }}>
+              Illuminate Your Path
+            </p>
+            <h2 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: HEADING_SIZE, fontWeight: 400, color: dark, lineHeight: 1.2, marginBottom: 22, letterSpacing: "0.02em" }}>
+              Book Your Vedic <br />
+              Astrology <br />
+              Consultation
+            </h2>
+            <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 22, color: "#7a6460", lineHeight: 1.75, marginBottom: 42 }}>
+              The answers you are searching for already exist — <br />
+              let us uncover them together.
+            </p>
+            <button
+              style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
+              Book Your Consultation Now →
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

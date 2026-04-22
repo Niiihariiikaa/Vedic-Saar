@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import SplashCursor from "../components/SplashCursor";
-import ScrollStack, { ScrollStackItem } from "../components/ScrollStack";
 import CircularGallery from "../components/CircularGallery";
-import { Hash, Compass, Type, Smartphone, Home } from "lucide-react";
 
 /* ── Scroll Manager ─────────────────────────────────────────────────────────── */
 let _scrollY = 0;
@@ -123,6 +121,57 @@ const globalCss = `
 
   .strip-row { display:flex; gap:48px; white-space:nowrap; align-items:center; padding:0 40px; will-change:transform; min-width:300vw; height:68px; }
   .strip-row span { font-family:'Ibarra Real Nova',serif; font-size:30px; }
+
+  /* ── Tarot Fan Cards ── */
+  .tarot-fan-wrap {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    perspective: 1400px;
+  }
+
+  .tarot-card-slot {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 205px;
+    height: 350px;
+    transform-origin: bottom center;
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(.22,1,.36,1), z-index 0s;
+  }
+
+  .tarot-card-inner {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.65s cubic-bezier(.22,1,.36,1);
+    position: relative;
+  }
+
+  .tarot-card-slot.hovered .tarot-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .tarot-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+  }
+
+  .tarot-back-face {
+    transform: rotateY(180deg);
+  }
+
+  .tarot-card-slot.hovered {
+    z-index: 30 !important;
+  }
 `;
 
 /* ── Accordion ───────────────────────────────────────────────────────────────── */
@@ -159,7 +208,6 @@ function Hero() {
       display: "flex", alignItems: "flex-start", justifyContent: "center",
       textAlign: "center", background: "white",
       backgroundImage: 'url("/assets/vedicbg.svg")', backgroundSize: "cover",
-      
       overflow: "visible", padding: "160px 40px 80px",
     }}>
       <div ref={crystalRef} style={{ position: "absolute", left: "-40px", bottom: "60px", width: 320, height: 420, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 40, opacity: 0.85 }}>
@@ -184,12 +232,12 @@ function Hero() {
         <p style={{ fontSize: 20, color: gold, fontStyle: "italic", marginBottom: 44, fontFamily: "'Ibarra Real Nova', serif", animation: "floatUp 0.8s 0.5s ease both" }}>
           Every number carries a cosmic frequency that shapes your relationships, career, health, and wealth.
         </p>
-        <button
-          style={{ ...dashedBtn(dark), animation: "floatUp 0.8s 0.6s ease both" }}
-          onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.borderColor = gold; e.currentTarget.style.color = gold; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.borderColor = dark; e.currentTarget.style.color = dark; }}>
-          Book Your Consultation →
-        </button>
+                  <button
+              style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
+              Book Your Numerology Consultation →
+            </button>
       </div>
     </section>
   );
@@ -263,11 +311,8 @@ function WhatIsSection() {
   return (
     <section ref={sectionRef} style={{
       padding: "130px 80px 140px", overflow: "hidden", position: "relative", contain: "paint",
-      background: `url("/assets/vedic2bg.svg") bottom / cover no-repeat, #faf8f5`, 
+      background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%)",
     }}>
-      <div style={{ position: "absolute", bottom: 0, left: 0, width: 900, height: 300, background: "radial-gradient(ellipse at bottom left, rgba(201,169,110,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", top: 0, right: 0, width: 600, height: 400, background: "radial-gradient(ellipse at top right, rgba(201,169,110,0.06) 0%, transparent 65%)", pointerEvents: "none" }} />
-
       <div ref={bodyRef} style={{
         maxWidth: 1200, marginTop: -100,
         display: "grid", gridTemplateColumns: "1fr 1.25fr",
@@ -279,7 +324,7 @@ function WhatIsSection() {
             ref={wheelRef}
             src="/assets/num.png"
             alt="Numerology Wheel"
-            style={{ width: "250%", maxWidth: "none", height: "auto", display: "block", transformOrigin: "center", willChange: "transform", transform: "translate3d(-200px, 0, 0)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", position: "relative", zIndex: 1 }}
+            style={{ width: "250%", maxWidth: "none", height: "auto", display: "block", transformOrigin: "center", willChange: "transform", transform: "translate3d(-200px, 0, 0)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", position: "relative", zIndex: 1, opacity: 0.2 }}
           />
         </div>
 
@@ -311,11 +356,11 @@ function WhatIsSection() {
             <AccItem title="Name & Mobile Number Vibration" body="Every alphabet carries a numerical value. A name or mobile number misaligned with your core numbers creates invisible resistance — even when you're doing everything right." />
           </div>
           <div className="rv" style={{ marginTop: 44, transitionDelay: "0.32s" }}>
-            <button
-              style={dashedBtn(dark)}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.borderColor = gold; e.currentTarget.style.color = gold; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.borderColor = dark; e.currentTarget.style.color = dark; }}>
-              Book Your Consultation →
+              <button
+              style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
+              Book Your Numerology Consultation →
             </button>
           </div>
         </div>
@@ -324,92 +369,213 @@ function WhatIsSection() {
   );
 }
 
-/* ── KEY NUMBERS ─────────────────────────────────────────────────────────────── */
-function KeyNumbersSection() {
+/* ── NUMBERS FAN SECTION ─────────────────────────────────────────────────────── */
+function NumberFlipSection() {
+  const ref = useRef(null);
+  const [hov, setHov] = useState(null);
+  useReveal(ref);
+
   const numbers = [
-    { icon: Hash,       label: "Birth Number",    sub: "Who You Are at the Core",      desc: "Derived from your date of birth, this number reveals your natural personality, talents, and the energy you carry through life. It influences how you think, the relationships you attract, and the career paths where you truly thrive.", bg: "#faf8f5" },
-    { icon: Compass,    label: "Life Path Number", sub: "Your Cosmic Roadmap",           desc: "The most important number in Vedic numerology. Calculated from your full date of birth, it reveals your life's overarching purpose, the lessons your soul came to learn, and why certain phases feel effortless while others feel like a struggle.", bg: "#f7f2ea" },
-    { icon: Type,       label: "Name Number",      sub: "The Vibration You Project",     desc: "Every alphabet carries a numerical value. Your name, when converted into numbers, reveals the energy you broadcast to the world. A name misaligned with your Birth or Life Path Number creates invisible resistance — repeated failures and blocked opportunities.", bg: "#fdf8f0" },
-    { icon: Smartphone, label: "Mobile Number",    sub: "Energy You Carry Every Day",   desc: "Your phone number is not just a contact detail — you interact with it dozens of times daily. When its vibration clashes with your personal numbers, it can subtly drain your energy, invite miscommunication, and block financial growth.", bg: "#f7f2ea" },
-    { icon: Home,       label: "House Number",     sub: "The Energy of Your Space",     desc: "Where you live carries a numerological vibration that affects your health, peace of mind, family relationships, and financial stability. Understanding your house number helps you choose the right home and create a space that truly supports your goals.", bg: "#faf8f5" },
+    { num: 1, name: "The Leader",       traits: "Independent, ambitious, and driven.",         desc: "Number 1 represents leadership, confidence, and new beginnings. People influenced by this number are natural pioneers who like to take initiative and create their own path." },
+    { num: 2, name: "The Peacemaker",   traits: "Sensitive, intuitive, and cooperative.",       desc: "Number 2 is all about harmony, relationships, and emotional intelligence. It represents balance and the ability to connect deeply with others." },
+    { num: 3, name: "The Creative",     traits: "Expressive, joyful, and imaginative.",         desc: "Number 3 is linked with creativity, communication, and self-expression. It brings charm, optimism, and a natural ability to inspire others." },
+    { num: 4, name: "The Builder",      traits: "Practical, disciplined, and hardworking.",     desc: "Number 4 stands for stability, structure, and strong foundations. It represents people who are reliable and focused on long-term success." },
+    { num: 5, name: "The Explorer",     traits: "Adventurous, dynamic, and freedom-loving.",    desc: "Number 5 symbolizes change, movement, and curiosity. It thrives on new experiences and dislikes routine or restrictions." },
+    { num: 6, name: "The Nurturer",     traits: "Caring, responsible, and compassionate.",      desc: "Number 6 is deeply connected to love, family, and responsibility. It represents those who naturally take care of others and seek harmony in their surroundings." },
+    { num: 7, name: "The Seeker",       traits: "Spiritual, analytical, and introspective.",    desc: "Number 7 is associated with wisdom, inner growth, and deep thinking. It represents a search for truth and a strong connection to spirituality." },
+    { num: 8, name: "The Achiever",     traits: "Powerful, ambitious, and success-oriented.",   desc: "Number 8 is linked to wealth, authority, and material success. It represents strong leadership and the ability to turn goals into reality." },
+    { num: 9, name: "The Humanitarian", traits: "Compassionate, wise, and selfless.",           desc: "Number 9 symbolizes completion, generosity, and service to others. It represents a higher purpose and a desire to make a positive impact." },
   ];
 
-  return (
-    <section style={{
-      position: "relative", overflow: "hidden",
-      background: `url("/assets/vedic3bg.svg") center / cover no-repeat, linear-gradient(0deg, #f2ece0 0%, #fdf8f0 55%, #faf8f5 100%)`,
-    }}>
-      <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 280, background: "radial-gradient(ellipse at top center, rgba(201,169,110,0.08) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
-      <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 300, background: "radial-gradient(ellipse at bottom center, rgba(201,169,110,0.11) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
-      <div style={{ position: "absolute", top: "40%", left: 0, width: 400, height: 400, background: "radial-gradient(ellipse at center left, rgba(201,169,110,0.05) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
-      <div style={{ position: "absolute", top: "40%", right: 0, width: 400, height: 400, background: "radial-gradient(ellipse at center right, rgba(201,169,110,0.05) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
+  const RADIUS = 480;
+  const ANGLES = [-55, -40, -28, -14, 0, 14, 28, 40, 55];
 
-      {/* Section heading — above the scroll stack */}
-      <div style={{ maxWidth: 1160, margin: "0 auto", padding: "100px 72px 0", position: "relative", zIndex: 1, textAlign: "center" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 16 }}>
-          <span style={{ width: 28, height: 1, background: gold }} />
-          <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: gold }}>Your Numerological Blueprint</span>
-          <span style={{ width: 28, height: 1, background: gold }} />
+  return (
+    <section ref={ref} style={{
+      position: "relative", overflow: "hidden",
+      background: "linear-gradient(180deg, #f5f0e8 0%, #fdf8f0 40%, #faf8f5 100%)",
+      paddingBottom: 0,
+    }}>
+      <div style={{ maxWidth: 1160, margin: "0 auto", padding: "100px 72px 0", position: "relative", zIndex: 1 }}>
+        <div style={{ textAlign: "center", marginBottom: 64 }}>
+          <div className="rv" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 16 }}>
+            <span style={{ width: 28, height: 1, background: gold }} />
+            <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: gold }}>Numerological Blueprint</span>
+            <span style={{ width: 28, height: 1, background: gold }} />
+          </div>
+          <h2 className="rv" style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: HEADING_SIZE, fontWeight: 400, color: dark, lineHeight: 1.1, marginBottom: 14, transitionDelay: "0.08s" }}>
+            Meaning of Numbers<br /><em style={{ color: gold, fontStyle: "italic" }}>in Numerology</em>
+          </h2>
+          <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 20, color: "#7a6e68", maxWidth: 500, margin: "0 auto", lineHeight: 1.8, transitionDelay: "0.14s" }}>
+            Hover each card to reveal the cosmic vibration it carries.
+          </p>
         </div>
-        <h2 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: HEADING_SIZE, fontWeight: 400, color: dark, lineHeight: 1.1, marginBottom: 14 }}>
-          The Significance of<br />Your Key Numbers
-        </h2>
-        <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 22, color: "#7a6e68", margin: "0 auto", maxWidth: 540, lineHeight: 1.8 }}>
-          Every number in your life carries meaning. Together, they tell the complete story of who you are.
-        </p>
       </div>
 
-      <ScrollStack
-        itemDistance={60}
-        itemScale={0.04}
-        itemStackDistance={20}
-        stackPosition="15%"
-        scaleEndPosition="8%"
-        baseScale={0.88}
+      {/* ── TRUE ARC FAN — all cards share one pivot point below viewport ── */}
+      <div
+        className="rv"
+        style={{
+          top: -160,
+          position: "relative",
+          width: "100%",
+          height: 560,
+          transitionDelay: "0.2s",
+          overflow: "visible",
+        }}
       >
-        {numbers.map((n, i) => (
-          <ScrollStackItem key={i}>
-            <div style={{
-              background: "#fff",
-              borderRadius: 32,
-              border: `1px solid rgba(201,169,110,0.25)`,
-              padding: "48px 56px",
-              display: "flex",
-              gap: 40,
-              alignItems: "flex-start",
-            }}>
+        <div style={{
+          position: "absolute", bottom: 0, left: "50%",
+          transform: "translateX(-50%)", width: "55%", height: 1,
+          background: `linear-gradient(90deg, transparent, rgba(201,169,110,0.2), transparent)`,
+          zIndex: 0,
+        }} />
+
+        {numbers.map((n, i) => {
+          const isHov = hov === i;
+          const angle = ANGLES[i];
+          const baseZ = 9 - Math.abs(i - 4);
+          const zi = isHov ? 30 : baseZ;
+
+          // True circular arc: pivot is RADIUS px below the card bottom edge
+          const transform = isHov
+            ? `rotate(0deg) translateY(-${RADIUS + 90}px) scale(1.09)`
+            : `rotate(${angle}deg) translateY(-${RADIUS}px)`;
+
+          return (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                bottom: -RADIUS + 20,
+                left: "50%",
+                marginLeft: -102,
+                width: 205,
+                height: 350,
+                transformOrigin: "center bottom",
+                transformStyle: "preserve-3d",
+                transform,
+                transition: "transform 0.52s cubic-bezier(.22,1,.36,1)",
+                zIndex: zi,
+                cursor: "pointer",
+              }}
+              onMouseEnter={() => setHov(i)}
+              onMouseLeave={() => setHov(null)}
+            >
+              {/* Flip container */}
               <div style={{
-                width: 72, height: 72, flexShrink: 0,
-                border: `1.5px solid rgba(201,169,110,0.4)`,
-                borderRadius: "50%",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                background: "rgba(201,169,110,0.07)",
-                marginTop: 4,
-                color: gold,
+                
+                width: "100%",
+                height: "100%",
+                transformStyle: "preserve-3d",
+                transform: isHov ? "rotateY(180deg)" : "rotateY(0deg)",
+                transition: "transform 0.65s cubic-bezier(.22,1,.36,1)",
+                position: "relative",
               }}>
-                <n.icon size={28} strokeWidth={1.5} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ display: "flex", alignItems: "baseline", gap: 18, marginBottom: 14, flexWrap: "wrap" }}>
-                  <h3 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 30, fontWeight: 600, color: dark, lineHeight: 1.15 }}>{n.label}</h3>
-                  <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: 2.5, textTransform: "uppercase", color: gold }}>{n.sub}</span>
+
+                {/* FRONT — card back design (ornate) */}
+                <div style={{
+                  position: "absolute", inset: 0, borderRadius: 12, overflow: "hidden",
+                  backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden",
+                  background: "#faf8f5",
+                  border: "1px solid rgba(201,169,110,0.5)",
+                  boxShadow: isHov
+                    ? "0 24px 60px rgba(0,0,0,0.22), 0 0 0 1px rgba(201,169,110,0.3)"
+                    : `0 ${6 + Math.abs(i - 4) * 2}px ${20 + Math.abs(i - 4) * 4}px rgba(0,0,0,${0.08 + Math.abs(i-4)*0.015})`,
+                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                }}>
+                  {/* Ornate inner border */}
+                  <div style={{ position: "absolute", inset: 8, border: "1px solid rgba(201,169,110,0.25)", borderRadius: 6 }} />
+                  <div style={{ position: "absolute", inset: 11, border: "0.5px solid rgba(201,169,110,0.12)", borderRadius: 4 }} />
+
+                  {/* Corner ornaments */}
+                  {[["top","left"],["top","right"],["bottom","left"],["bottom","right"]].map(([v, h], ci) => (
+                    <span key={ci} style={{ position: "absolute", [v]: 14, [h]: 14, fontSize: 7, color: gold, opacity: 0.6, lineHeight: 1 }}>✦</span>
+                  ))}
+
+                  {/* Numerology wheel watermark */}
+                  <img src="/assets/wheel.png" alt="" aria-hidden decoding="async" style={{
+                    position: "absolute", width: "130%", height: "130%",
+                    top: "50%", left: "50%", transform: "translate(-50%,-50%)",
+                    objectFit: "contain", opacity: 0.08, pointerEvents: "none",
+                    mixBlendMode: "multiply",
+                  }} />
+
+                  <span style={{ position: "relative", zIndex: 1, fontFamily: "'Glacial Indifference',sans-serif", fontSize: 7.5, letterSpacing: 3, textTransform: "uppercase", color: gold, marginBottom: 18, opacity: 0.7 }}>Numerology</span>
+
+                  {/* Large number */}
+                  <span style={{
+                    position: "relative", zIndex: 1,
+                    fontFamily: "'Ibarra Real Nova',serif",
+                    fontSize: 86,
+                    color: gold,
+                    lineHeight: 1,
+                    opacity: 0.75,
+                    textShadow: "0 2px 8px rgba(201,169,110,0.15)",
+                  }}>{n.num}</span>
+
+                  <div style={{ position: "relative", zIndex: 1, width: 32, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "14px 0" }} />
+
+                  <span style={{ position: "relative", zIndex: 1, fontFamily: "'Ibarra Real Nova',serif", fontSize: 12.5, color: dark, textAlign: "center", letterSpacing: "0.03em", padding: "0 16px", lineHeight: 1.4, opacity: 0.8 }}>{n.name}</span>
                 </div>
-                <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 19, color: "#7a6e68", lineHeight: 1.85, maxWidth: 680 }}>{n.desc}</p>
+
+                {/* BACK — revealed cosmic info */}
+                <div style={{
+                  position: "absolute", inset: 0, borderRadius: 12, overflow: "hidden",
+                  backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden",
+                  transform: "rotateY(180deg)",
+                  background: `linear-gradient(160deg, #1f1a14 0%, #2a2018 50%, #1a1410 100%)`,
+                  border: "1px solid rgba(201,169,110,0.3)",
+                  boxShadow: "0 24px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(201,169,110,0.15)",
+                  padding: "22px 18px",
+                  display: "flex", flexDirection: "column",
+                }}>
+                  <div style={{ position: "absolute", inset: 8, border: "1px solid rgba(201,169,110,0.12)", borderRadius: 6 }} />
+
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10, position: "relative", zIndex: 1 }}>
+                    <span style={{ fontFamily: "'Ibarra Real Nova',serif", fontSize: 38, color: gold, lineHeight: 1, opacity: 0.6 }}>{n.num}</span>
+                    <span style={{ fontSize: 7, color: gold, opacity: 0.3, marginTop: 6 }}>✦</span>
+                  </div>
+
+                  <h3 style={{ position: "relative", zIndex: 1, fontFamily: "'Ibarra Real Nova',serif", fontSize: 16, fontWeight: 400, color: "#faf8f5", marginBottom: 8, lineHeight: 1.2 }}>{n.name}</h3>
+
+                  <div style={{ position: "relative", zIndex: 1, height: 1, background: "rgba(201,169,110,0.2)", marginBottom: 10 }} />
+
+                  <p style={{ position: "relative", zIndex: 1, fontFamily: "'Ibarra Real Nova',serif", fontSize: 10, color: gold, fontStyle: "italic", marginBottom: 10, lineHeight: 1.6 }}>{n.traits}</p>
+
+                  <p style={{ position: "relative", zIndex: 1, fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9.5, color: "rgba(250,248,245,0.55)", lineHeight: 1.8, flex: 1 }}>{n.desc}</p>
+
+                  {/* Bottom accent */}
+                  <div style={{ position: "relative", zIndex: 1, display: "flex", justifyContent: "center", marginTop: 12 }}>
+                    <span style={{ fontSize: 7, color: gold, opacity: 0.3, letterSpacing: 4 }}>✦ ✦ ✦</span>
+                  </div>
+                </div>
+
               </div>
             </div>
-          </ScrollStackItem>
-        ))}
-      </ScrollStack>
+          );
+        })}
+      </div>
+
+      {/* Subtle hint text */}
+      <div style={{ textAlign: "center", padding: "28px 0 80px", position: "relative", zIndex: 1 }}>
+        <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: 3, color: "rgba(201,169,110,0.5)", textTransform: "uppercase" }}>
+          ← hover any card →
+        </span>
+      </div>
     </section>
   );
 }
 
 const IMPACT_AREAS = [
-  { label: "Career & Business",   desc: "Find your most aligned profession and ensure your business name attracts success and opportunity.",   bg: "#fff" },
+  { label: "Career & Business",    desc: "Find your most aligned profession and ensure your business name attracts success and opportunity.",   bg: "#fff" },
   { label: "Love & Relationships", desc: "Understand deep compatibility beyond sun signs and navigate karmic bonds with clarity.",              bg: "#fff" },
   { label: "Wealth & Finance",     desc: "Know the right time to invest, launch, or consolidate — working with your personal vibration.",      bg: "#fff" },
-  { label: "Health",               desc: "Identify numerological vulnerabilities before they manifest and strengthen your wellbeing.",          bg: "#fff" },
+  { label: "Health & Wellness",    desc: "Identify numerological vulnerabilities before they manifest and strengthen your overall wellbeing.",  bg: "#fff" },
   { label: "Child Naming",         desc: "Give your child a name that sets them up for confidence, ease, and a life in alignment.",             bg: "#fff" },
+  { label: "Spiritual Growth",     desc: "Align with your soul's purpose by understanding the deeper frequencies embedded in your numbers.",   bg: "#fff" },
+  { label: "Travel & Relocation",  desc: "Choose dates and destinations that harmonise with your personal cycles for the smoothest transitions.", bg: "#fff" },
+  { label: "Education & Learning", desc: "Identify your strongest fields and the optimal timing for study, exams, and skill development.",     bg: "#fff" },
 ];
 
 const SIGNS = [
@@ -430,17 +596,14 @@ function makeAreaCanvas(label, desc, bg, index) {
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  // gold bar — centered
   ctx.fillStyle = "#c9a96e";
   ctx.fillRect(cx - 22, 60, 44, 3);
 
-  // number — centered
   ctx.textAlign = "center";
   ctx.font = "500 15px 'Glacial Indifference', sans-serif";
   ctx.fillStyle = "#c9a96e";
   ctx.fillText(`0${index + 1}`, cx, 108);
 
-  // label — centered, word wrap at 40px
   ctx.font = "bold 42px 'Ibarra Real Nova', serif";
   ctx.fillStyle = "#1a1410";
   const words = label.split(" ");
@@ -456,7 +619,6 @@ function makeAreaCanvas(label, desc, bg, index) {
   const labelStartY = lines.length > 1 ? 188 : 210;
   lines.forEach((l, li) => ctx.fillText(l, cx, labelStartY + li * 54));
 
-  // divider
   const divY = labelStartY + lines.length * 54 + 22;
   ctx.strokeStyle = "rgba(201,169,110,0.3)";
   ctx.lineWidth = 1;
@@ -464,7 +626,6 @@ function makeAreaCanvas(label, desc, bg, index) {
   ctx.moveTo(80, divY); ctx.lineTo(W - 80, divY);
   ctx.stroke();
 
-  // description — centered word wrap at 20px
   ctx.font = "20px 'Glacial Indifference', sans-serif";
   ctx.fillStyle = "#7a6e68";
   const dwords = desc.split(" ");
@@ -500,10 +661,8 @@ function ImpactSection() {
   return (
     <section style={{
       overflow: "hidden", position: "relative",
-      background: "linear-gradient(180deg, #f2ece0 0%, #fdf8f0 60%, #faf8f5 100%)",
+      background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 60%, #faf8f5 100%)",
     }}>
-      <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 300, background: "radial-gradient(ellipse at top center, rgba(201,169,110,0.09) 0%, transparent 70%)", pointerEvents: "none" }} />
-
       {/* ── HEADING ── */}
       <div ref={bodyRef} style={{ maxWidth: 1160, margin: "0 auto", padding: "100px 72px 48px", textAlign: "center" }}>
         <div className="rv" style={{ marginBottom: 18 }}>
@@ -545,20 +704,8 @@ function ImpactSection() {
         </div>
       )}
 
-      {/* ── SIGNS — ScrollStack on dark bg ── */}
+      {/* ── SIGNS ── */}
       <div style={{ padding: "0 72px 0", maxWidth: 1160, margin: "0 auto", position: "relative" }}>
-        <img
-          src="/assets/costelation.png"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          style={{
-            position: "absolute", top: "-60px", left: "-40px",
-            width: 480, opacity: 0.5, pointerEvents: "none",
-            userSelect: "none",
-          }}
-        />
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
           <span style={{ width: 28, height: 1, background: gold }} />
           <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: gold }}>Do You Recognise This?</span>
@@ -605,12 +752,8 @@ function ApproachSection() {
   return (
     <section style={{
       overflow: "visible", padding: "100px 72px", position: "relative",
-      background: "linear-gradient(180deg, #faf8f5 0%, #f2ece0 55%, #f7efe2 100%)",
+      background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 55%, #f7efe2 100%)",
     }}>
-      <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 300, background: "radial-gradient(ellipse at top center, rgba(201,169,110,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", top: "30%", right: 0, width: 500, height: 500, background: "radial-gradient(ellipse at center right, rgba(201,169,110,0.06) 0%, transparent 65%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: 0, left: 0, width: 600, height: 300, background: "radial-gradient(ellipse at bottom left, rgba(201,169,110,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
-
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 80, alignItems: "start", position: "relative", zIndex: 1 }}>
         <div>
           <div className="rv" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
@@ -686,9 +829,6 @@ function WhoAndCTASection() {
 
       <div ref={mantraRef} style={{ position: "absolute", zIndex: 60, top: "-350px", left: "-250px", width: 980, opacity: 0.07, pointerEvents: "none", animation: "spinSlow 90s linear infinite", willChange: "transform" }}>
         <img src="/assets/mantra-wheel.png" alt="" loading="lazy" decoding="async" style={{ width: "200%", objectFit: "contain" }} />
-      </div>
-      <div style={{ position: "absolute", top: "-990px", right: "-80px", width: 820, opacity: 0.5, pointerEvents: "none" }}>
-        <img src="/assets/crescentmoon.png" alt="" loading="lazy" decoding="async" style={{ width: "100%", objectFit: "contain" }} />
       </div>
 
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", position: "relative", zIndex: 1 }}>
@@ -767,10 +907,9 @@ export default function NumerologyPage() {
       <style>{globalCss}</style>
       <div style={{ fontFamily: "'Glacial Indifference', sans-serif", background: "#fff", minHeight: "100vh", overflowX: "hidden" }}>
         <Hero />
-        
         <WhatIsSection />
         <SlidingStrip />
-        <KeyNumbersSection />
+        <NumberFlipSection />
         <ImpactSection />
         <ApproachSection />
         <WhoAndCTASection />
