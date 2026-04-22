@@ -401,11 +401,12 @@ const gains = [
     <section style={{
       padding: "100px 72px",
       position: "relative", overflow: "hidden",
-     background: "linear-gradient(0deg, #f2ece0 0%, #fdf8f0 55%, #faf8f5 100%)"
-
+      background: `url("/assets/vedic3bg.svg") center / cover no-repeat, linear-gradient(0deg, #f2ece0 0%, #fdf8f0 55%, #faf8f5 100%)`,
     }}>
-      {/* centre radial glow */}
+      <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 280, background: "radial-gradient(ellipse at top center, rgba(201,169,110,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 300, background: "radial-gradient(ellipse at bottom center, rgba(201,169,110,0.11) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: "40%", left: 0, width: 400, height: 400, background: "radial-gradient(ellipse at center left, rgba(201,169,110,0.05) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: "40%", right: 0, width: 400, height: 400, background: "radial-gradient(ellipse at center right, rgba(201,169,110,0.05) 0%, transparent 70%)", pointerEvents: "none" }} />
 
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: 64 }}>
@@ -460,6 +461,9 @@ function WhySection() {
       background: "linear-gradient(180deg, #f2ece0 0%, #fdf8f0 55%, #faf8f5 100%)"
     }}>
 
+      <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "80%", height: 300, background: "radial-gradient(ellipse at top center, rgba(201,169,110,0.09) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, width: 500, height: 350, background: "radial-gradient(ellipse at bottom left, rgba(201,169,110,0.07) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, right: 0, width: 500, height: 350, background: "radial-gradient(ellipse at bottom right, rgba(201,169,110,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
       {/* left-edge gold accent bar */}
       <div style={{ position: "absolute", left: 0, top: "15%", bottom: "15%", width: 40, background: "radial-gradient(ellipse at top center, rgba(201,169,110,0.11) 0%, transparent 70%)", pointerEvents: "none", borderRadius: "0 2px 2px 0" }} />
       <div style={{ position: "absolute", right: "-60px", top: "10%", width: 340, opacity: 0.07, pointerEvents: "none" }}>
@@ -617,12 +621,24 @@ function WhoAndCTASection() {
         <img src="/assets/mantra-wheel.png" alt="" loading="lazy" decoding="async" style={{ width: "200%", objectFit: "contain" }} />
       </div>
       {/* crescent moon — background decoration */}
-      <div style={{ position: "absolute", top: "-990px", right: "-80px", width: 820, opacity: 0.12, pointerEvents: "none" }}>
+      <div style={{ position: "absolute", top: "-990px", right: "-80px", width: 820, opacity: 0.5, pointerEvents: "none" }}>
         <img src="/assets/crescentmoon.png" alt="" loading="lazy" decoding="async" style={{ width: "100%", objectFit: "contain" }} />
       </div>
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", position: "relative", zIndex: 1 }}>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: 80, marginBottom: 100, alignItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: 80, marginBottom: 100, alignItems: "start", position: "relative" }}>
+          <img
+            src="/assets/costelation.png"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
+            style={{
+              position: "absolute", top: "-80px", right: "-60px",
+              width: 500, opacity: 0.5, pointerEvents: "none",
+              userSelect: "none",
+            }}
+          />
           <div>
             <div className="rv" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
               <span style={{ width: 28, height: 1, background: gold }} />
@@ -710,15 +726,15 @@ function WhoAndCTASection() {
     </p>
 
     <button
-      style={dashedBtn(gold)}
+      style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = "translateY(-3px)";
-        e.currentTarget.style.background = `${gold}18`;
-        e.currentTarget.style.boxShadow = `0 10px 32px ${gold}44`;
+        e.currentTarget.style.background = "#2e2620";
+        e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)";
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.transform = "none";
-        e.currentTarget.style.background = "transparent";
+        e.currentTarget.style.background = dark;
         e.currentTarget.style.boxShadow = "none";
       }}
     >
