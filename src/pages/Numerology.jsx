@@ -159,6 +159,7 @@ function Hero() {
       display: "flex", alignItems: "flex-start", justifyContent: "center",
       textAlign: "center", background: "white",
       backgroundImage: 'url("/assets/vedicbg.svg")', backgroundSize: "cover",
+      
       overflow: "visible", padding: "160px 40px 80px",
     }}>
       <div ref={crystalRef} style={{ position: "absolute", left: "-40px", bottom: "60px", width: 320, height: 420, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 40, opacity: 0.85 }}>
@@ -262,7 +263,7 @@ function WhatIsSection() {
   return (
     <section ref={sectionRef} style={{
       padding: "130px 80px 140px", overflow: "hidden", position: "relative", contain: "paint",
-      background: `url("/assets/vedic2bg.svg") calc(100% + 50px) bottom / cover no-repeat, #faf8f5`,
+      background: `url("/assets/vedic2bg.svg") bottom / cover no-repeat, #faf8f5`, 
     }}>
       <div style={{ position: "absolute", bottom: 0, left: 0, width: 900, height: 300, background: "radial-gradient(ellipse at bottom left, rgba(201,169,110,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", top: 0, right: 0, width: 600, height: 400, background: "radial-gradient(ellipse at top right, rgba(201,169,110,0.06) 0%, transparent 65%)", pointerEvents: "none" }} />

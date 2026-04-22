@@ -295,7 +295,7 @@ function WhatIsSection() {
   position: "relative",
   contain: "paint",
   background: `
-    url("/assets/vedic2bg.svg") calc(100% + 50px) bottom / cover no-repeat,
+    url("/assets/vedic2bg.svg")  bottom / cover no-repeat,
     #faf8f5
   `,
 }}
