@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import SplashCursor from "../components/SplashCursor";
 import CircularGallery from "../components/CircularGallery";
+import { useBooking } from "../components/BookingContext";
 
 /* ── Scroll Manager ─────────────────────────────────────────────────────────── */
 let _scrollY = 0;
@@ -194,6 +195,7 @@ function AccItem({ title, body }) {
 function Hero() {
   const crystalRef = useRef(null);
   const moonRef    = useRef(null);
+  const { openBooking } = useBooking();
   useEffect(() => {
     return subscribeScroll((y) => {
       if (y > window.innerHeight * 1.5) return;
@@ -233,6 +235,7 @@ function Hero() {
           Every number carries a cosmic frequency that shapes your relationships, career, health, and wealth.
         </p>
                   <button
+              onClick={() => openBooking("Numerology")}
               style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
@@ -290,6 +293,7 @@ function WhatIsSection() {
   const sectionRef = useRef(null);
   const wheelRef   = useRef(null);
   const bodyRef    = useRef(null);
+  const { openBooking } = useBooking();
   useReveal(bodyRef);
 
   useEffect(() => {
@@ -357,6 +361,7 @@ function WhatIsSection() {
           </div>
           <div className="rv" style={{ marginTop: 44, transitionDelay: "0.32s" }}>
               <button
+              onClick={() => openBooking("Numerology")}
               style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
@@ -379,21 +384,25 @@ function NumberFlipSection() {
   const RADIUS = 480;
   const ANGLES = [-55, -40, -28, -14, 0, 14, 28, 40, 55];
 
-  // Hover detection via mouse angle from shared pivot — cards don't fire their own events
+  // True pivot = where all cards' transformOrigin lives (RADIUS-20 px below container bottom)
+  const PIVOT_OFFSET = RADIUS - 20; // = 460px below container bottom
+
   function handleFanMove(e) {
     const rect = fanRef.current?.getBoundingClientRect();
     if (!rect) return;
     const pivotX = rect.left + rect.width / 2;
-    const pivotY = rect.bottom;                  // pivot sits at container bottom
+    const pivotY = rect.bottom + PIVOT_OFFSET;   // actual CSS transformOrigin Y
     const dx = e.clientX - pivotX;
-    const dy = pivotY - e.clientY;               // positive = mouse above pivot
+    const dy = pivotY - e.clientY;               // always positive (pivot is below viewport)
     const dist = Math.hypot(dx, dy);
-    // Only active when mouse is in the fan zone
-    if (dy < 10 || dist < 60 || dist > RADIUS + 80) { setHov(null); return; }
+    // Cards span RADIUS to RADIUS+cardHeight (480–830 px) from pivot
+    if (dist < RADIUS - 100 || dist > RADIUS + 420) { setHov(null); return; }
     const mouseAngle = Math.atan2(dx, dy) * (180 / Math.PI);
     let best = -1, bestDiff = Infinity;
     ANGLES.forEach((a, i) => { const d = Math.abs(a - mouseAngle); if (d < bestDiff) { bestDiff = d; best = i; } });
-    setHov(bestDiff < 14 ? best : null);
+    // Edge cards get a wider outer zone (no neighbour beyond them)
+    const threshold = (best === 0 || best === ANGLES.length - 1) ? 22 : 16;
+    setHov(bestDiff < threshold ? best : null);
   }
 
   const numbers = [
@@ -413,7 +422,10 @@ function NumberFlipSection() {
       position: "relative", overflow: "hidden",
       background: "linear-gradient(180deg, #f5f0e8 0%, #fdf8f0 40%, #faf8f5 100%)",
       paddingBottom: 0,
-    }}>
+    }}
+      onMouseMove={handleFanMove}
+      onMouseLeave={() => setHov(null)}
+    >
       <div style={{ maxWidth: 1160, margin: "0 auto", padding: "100px 72px 0", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: 64 }}>
           <div className="rv" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 16 }}>
@@ -441,10 +453,7 @@ function NumberFlipSection() {
           height: 560,
           transitionDelay: "0.2s",
           overflow: "visible",
-          cursor: "default",
         }}
-        onMouseMove={handleFanMove}
-        onMouseLeave={() => setHov(null)}
       >
         <div style={{
           position: "absolute", bottom: 0, left: "50%",
@@ -821,6 +830,7 @@ function ApproachSection() {
 function WhoAndCTASection() {
   const ref       = useRef(null);
   const mantraRef = useRef(null);
+  const { openBooking } = useBooking();
   useReveal(ref);
 
   useEffect(() => {
@@ -905,6 +915,7 @@ function WhoAndCTASection() {
               Limited slots available — book early to secure your session.
             </p>
             <button
+              onClick={() => openBooking("Numerology")}
               style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
@@ -939,7 +950,7 @@ export default function NumerologyPage() {
         <WhatIsSection />
         <SlidingStrip />
         <NumberFlipSection />
-        <ImpactSection />
+        
         <ApproachSection />
         <WhoAndCTASection />
       </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useBooking } from './BookingContext'
 
 const dropdowns = {
   Predictions:      ['Vedic Astrology', 'K P Astrology', 'Numerology', 'Prashna', 'Yearly Prediction'],
@@ -58,6 +59,7 @@ const navItems = [
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(null)
+  const { openBooking } = useBooking()
 
   return (
     <div style={{ fontFamily: "'Glacial Indifference', serif" }}>
@@ -129,11 +131,12 @@ export default function Navbar() {
     </ul>
 
     {/* CTA */}
-    <Link to="/consultation">
-      <button className="ml-2 border border-dashed bg-transparent border-[black] text-black px-4 py-2 text-s tracking-widest whitespace-nowrap hover:bg-[#b8860b] hover:text-white transition-all duration-200">
-        Book Reading
-      </button>
-    </Link>
+    <button
+      onClick={() => openBooking()}
+      className="ml-2 border border-dashed bg-transparent border-[black] text-black px-4 py-2 text-s tracking-widest whitespace-nowrap hover:bg-[#b8860b] hover:text-white transition-all duration-200"
+    >
+      Book Reading
+    </button>
   </div>
 </nav>
     </div>

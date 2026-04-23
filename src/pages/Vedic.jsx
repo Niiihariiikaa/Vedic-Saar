@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import SplashCursor from "../components/SplashCursor";
 import { Lightbulb, Sparkles, HeartHandshake, Orbit, Moon } from "lucide-react";
+import { useBooking } from "../components/BookingContext";
 
 /* ── Scroll Manager (singleton — one RAF loop, zero re-renders) ────────────── */
 let _scrollY = 0;
@@ -155,6 +156,7 @@ function AccItem({ title, body }) {
 function Hero() {
   const crystalRef = useRef(null);
   const moonRef    = useRef(null);
+  const { openBooking } = useBooking();
   useEffect(() => {
     return subscribeScroll((y) => {
       if (y > window.innerHeight * 1.5) return;
@@ -191,10 +193,12 @@ function Hero() {
           Your journey is not random — it is written in the stars. Let us help you understand it.
         </p>
                    <button
+                   onClick={() => openBooking("Vedic Astrology")}
+              
               style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
-              Book Your Numerology Consultation →
+              Book Your Vedic Astrology Consultation →
             </button>
       </div>
     </section>
@@ -248,6 +252,7 @@ function WhatIsSection() {
   const sectionRef = useRef(null);
   const wheelRef   = useRef(null);
   const bodyRef    = useRef(null);
+  const { openBooking } = useBooking();
   useReveal(bodyRef);
 
   useEffect(() => {
@@ -315,10 +320,11 @@ function WhatIsSection() {
           </div>
           <div className="rv" style={{ marginTop: 44, transitionDelay: "0.32s" }}>
              <button
+              onClick={() => openBooking("Vedic Astrology")}
               style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
-              Book Your Numerology Consultation →
+              Book Your Vedic Astrology Consultation →
             </button>
           </div>
         </div>
@@ -505,6 +511,7 @@ function ApproachSection() {
 function WhoAndCTASection() {
   const ref       = useRef(null);
   const mantraRef = useRef(null);
+  const { openBooking } = useBooking();
   useReveal(ref);
 
   useEffect(() => {
@@ -587,10 +594,11 @@ function WhoAndCTASection() {
               let us uncover them together.
             </p>
             <button
+              onClick={() => openBooking("Vedic Astrology")}
               style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
-              Book Your Consultation Now →
+              Book Your Vedic Astrology Consultation →
             </button>
           </div>
         </div>
