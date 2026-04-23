@@ -371,9 +371,30 @@ function WhatIsSection() {
 
 /* ── NUMBERS FAN SECTION ─────────────────────────────────────────────────────── */
 function NumberFlipSection() {
-  const ref = useRef(null);
+  const ref    = useRef(null);
+  const fanRef = useRef(null);
   const [hov, setHov] = useState(null);
   useReveal(ref);
+
+  const RADIUS = 480;
+  const ANGLES = [-55, -40, -28, -14, 0, 14, 28, 40, 55];
+
+  // Hover detection via mouse angle from shared pivot — cards don't fire their own events
+  function handleFanMove(e) {
+    const rect = fanRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const pivotX = rect.left + rect.width / 2;
+    const pivotY = rect.bottom;                  // pivot sits at container bottom
+    const dx = e.clientX - pivotX;
+    const dy = pivotY - e.clientY;               // positive = mouse above pivot
+    const dist = Math.hypot(dx, dy);
+    // Only active when mouse is in the fan zone
+    if (dy < 10 || dist < 60 || dist > RADIUS + 80) { setHov(null); return; }
+    const mouseAngle = Math.atan2(dx, dy) * (180 / Math.PI);
+    let best = -1, bestDiff = Infinity;
+    ANGLES.forEach((a, i) => { const d = Math.abs(a - mouseAngle); if (d < bestDiff) { bestDiff = d; best = i; } });
+    setHov(bestDiff < 14 ? best : null);
+  }
 
   const numbers = [
     { num: 1, name: "The Leader",       traits: "Independent, ambitious, and driven.",         desc: "Number 1 represents leadership, confidence, and new beginnings. People influenced by this number are natural pioneers who like to take initiative and create their own path." },
@@ -386,9 +407,6 @@ function NumberFlipSection() {
     { num: 8, name: "The Achiever",     traits: "Powerful, ambitious, and success-oriented.",   desc: "Number 8 is linked to wealth, authority, and material success. It represents strong leadership and the ability to turn goals into reality." },
     { num: 9, name: "The Humanitarian", traits: "Compassionate, wise, and selfless.",           desc: "Number 9 symbolizes completion, generosity, and service to others. It represents a higher purpose and a desire to make a positive impact." },
   ];
-
-  const RADIUS = 480;
-  const ANGLES = [-55, -40, -28, -14, 0, 14, 28, 40, 55];
 
   return (
     <section ref={ref} style={{
@@ -412,8 +430,9 @@ function NumberFlipSection() {
         </div>
       </div>
 
-      {/* ── TRUE ARC FAN — all cards share one pivot point below viewport ── */}
+      {/* ── TRUE ARC FAN ── */}
       <div
+        ref={fanRef}
         className="rv"
         style={{
           top: -160,
@@ -422,7 +441,10 @@ function NumberFlipSection() {
           height: 560,
           transitionDelay: "0.2s",
           overflow: "visible",
+          cursor: "default",
         }}
+        onMouseMove={handleFanMove}
+        onMouseLeave={() => setHov(null)}
       >
         <div style={{
           position: "absolute", bottom: 0, left: "50%",
@@ -437,9 +459,8 @@ function NumberFlipSection() {
           const baseZ = 9 - Math.abs(i - 4);
           const zi = isHov ? 30 : baseZ;
 
-          // True circular arc: pivot is RADIUS px below the card bottom edge
-          const transform = isHov
-            ? `rotate(0deg) translateY(-${RADIUS + 90}px) scale(1.09)`
+          const arcTransform = isHov
+            ? `rotate(0deg) translateY(-${RADIUS + 75}px) scale(1.08)`
             : `rotate(${angle}deg) translateY(-${RADIUS}px)`;
 
           return (
@@ -453,18 +474,15 @@ function NumberFlipSection() {
                 width: 205,
                 height: 350,
                 transformOrigin: "center bottom",
-                transformStyle: "preserve-3d",
-                transform,
-                transition: "transform 0.52s cubic-bezier(.22,1,.36,1)",
+                perspective: "1000px",
+                transform: arcTransform,
+                transition: "transform 0.55s cubic-bezier(.22,1,.36,1)",
                 zIndex: zi,
-                cursor: "pointer",
+                pointerEvents: "none",   // container handles all mouse events
               }}
-              onMouseEnter={() => setHov(i)}
-              onMouseLeave={() => setHov(null)}
             >
-              {/* Flip container */}
+              {/* Flip container — self-contained 3D context, isolated from arc transform */}
               <div style={{
-                
                 width: "100%",
                 height: "100%",
                 transformStyle: "preserve-3d",
@@ -568,14 +586,11 @@ function NumberFlipSection() {
 }
 
 const IMPACT_AREAS = [
-  { label: "Career & Business",    desc: "Find your most aligned profession and ensure your business name attracts success and opportunity.",   bg: "#fff" },
-  { label: "Love & Relationships", desc: "Understand deep compatibility beyond sun signs and navigate karmic bonds with clarity.",              bg: "#fff" },
-  { label: "Wealth & Finance",     desc: "Know the right time to invest, launch, or consolidate — working with your personal vibration.",      bg: "#fff" },
-  { label: "Health & Wellness",    desc: "Identify numerological vulnerabilities before they manifest and strengthen your overall wellbeing.",  bg: "#fff" },
-  { label: "Child Naming",         desc: "Give your child a name that sets them up for confidence, ease, and a life in alignment.",             bg: "#fff" },
-  { label: "Spiritual Growth",     desc: "Align with your soul's purpose by understanding the deeper frequencies embedded in your numbers.",   bg: "#fff" },
-  { label: "Travel & Relocation",  desc: "Choose dates and destinations that harmonise with your personal cycles for the smoothest transitions.", bg: "#fff" },
-  { label: "Education & Learning", desc: "Identify your strongest fields and the optimal timing for study, exams, and skill development.",     bg: "#fff" },
+  { symbol: "✦", label: "Your Birth Number",    subtitle: "Who You Are at the Core",        desc: "Derived from your date of birth, this number reveals your natural personality, talents, and the energy you carry through life. It influences how you think, the relationships you attract, and the career paths where you truly thrive.",   bg: "#fff" },
+  { symbol: "☽", label: "Your Life Path Number", subtitle: "Your Cosmic Roadmap",            desc: "The most important number in Vedic numerology. Calculated from your full date of birth, it reveals your life's overarching purpose, the lessons your soul came to learn, and why certain phases feel effortless while others feel like a struggle.", bg: "#fff" },
+  { symbol: "Ω", label: "Your Name Number",      subtitle: "The Vibration You Project",      desc: "Every alphabet carries a numerical value. Your name, when converted into numbers, reveals the energy you broadcast to the world. A name misaligned with your Birth or Life Path Number creates invisible resistance — even when you're doing everything right.", bg: "#fff" },
+  { symbol: "◈", label: "Your Mobile Number",    subtitle: "Energy You Carry Every Day",     desc: "Your phone number is not just a contact detail. You interact with it dozens of times daily. When its vibration clashes with your personal numbers, it can subtly drain your energy, invite miscommunication, and block financial growth. The right mobile number supports success, clarity, and abundance.", bg: "#fff" },
+  { symbol: "△", label: "Your House Number",     subtitle: "The Energy of Your Space",       desc: "Where you live carries a numerological vibration that affects your health, peace of mind, family relationships, and financial stability. Understanding your house number helps you choose the right home and create a space that truly supports your goals.", bg: "#fff" },
 ];
 
 const SIGNS = [
@@ -586,58 +601,72 @@ const SIGNS = [
   "You feel something in your life is persistently \"off\"",
 ];
 
-function makeAreaCanvas(label, desc, bg, index) {
-  const W = 800, H = 600;
+function makeAreaCanvas(symbol, label, subtitle, desc, bg) {
+  const W = 800, H = 620;
   const canvas = document.createElement("canvas");
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext("2d");
   const cx = W / 2;
+  const maxW = W - 140;
 
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  ctx.fillStyle = "#c9a96e";
-  ctx.fillRect(cx - 22, 60, 44, 3);
+  // Top gold rule
+  ctx.fillStyle = "rgba(201,169,110,0.4)";
+  ctx.fillRect(cx - 28, 52, 56, 2);
 
+  // Symbol
   ctx.textAlign = "center";
-  ctx.font = "500 15px 'Glacial Indifference', sans-serif";
+  ctx.font = "36px serif";
   ctx.fillStyle = "#c9a96e";
-  ctx.fillText(`0${index + 1}`, cx, 108);
+  ctx.globalAlpha = 0.75;
+  ctx.fillText(symbol, cx, 112);
+  ctx.globalAlpha = 1;
 
-  ctx.font = "bold 42px 'Ibarra Real Nova', serif";
+  // Label (title)
+  ctx.font = "600 40px 'Ibarra Real Nova', serif";
   ctx.fillStyle = "#1a1410";
   const words = label.split(" ");
-  const maxW = W - 120;
-  let lines = [], current = "";
+  let lines = [], cur = "";
   for (const w of words) {
-    const test = current ? current + " " + w : w;
-    if (ctx.measureText(test).width > maxW && current) {
-      lines.push(current); current = w;
-    } else { current = test; }
+    const test = cur ? cur + " " + w : w;
+    if (ctx.measureText(test).width > maxW && cur) { lines.push(cur); cur = w; }
+    else cur = test;
   }
-  lines.push(current);
-  const labelStartY = lines.length > 1 ? 188 : 210;
-  lines.forEach((l, li) => ctx.fillText(l, cx, labelStartY + li * 54));
+  lines.push(cur);
+  const labelY = 168;
+  lines.forEach((l, li) => ctx.fillText(l, cx, labelY + li * 50));
 
-  const divY = labelStartY + lines.length * 54 + 22;
-  ctx.strokeStyle = "rgba(201,169,110,0.3)";
+  // Subtitle (italic gold)
+  const afterLabel = labelY + lines.length * 50 + 10;
+  ctx.font = "italic 22px 'Ibarra Real Nova', serif";
+  ctx.fillStyle = "#c9a96e";
+  ctx.fillText(subtitle, cx, afterLabel);
+
+  // Divider
+  const divY = afterLabel + 30;
+  ctx.strokeStyle = "rgba(201,169,110,0.25)";
   ctx.lineWidth = 1;
   ctx.beginPath();
-  ctx.moveTo(80, divY); ctx.lineTo(W - 80, divY);
+  ctx.moveTo(90, divY); ctx.lineTo(W - 90, divY);
   ctx.stroke();
 
-  ctx.font = "20px 'Glacial Indifference', sans-serif";
+  // Description
+  ctx.font = "19px 'Glacial Indifference', sans-serif";
   ctx.fillStyle = "#7a6e68";
   const dwords = desc.split(" ");
-  let dline = "", dy = divY + 46;
+  let dline = "", dy = divY + 42;
   for (const w of dwords) {
     const test = dline ? dline + " " + w : w;
-    if (ctx.measureText(test).width > maxW && dline) {
-      ctx.fillText(dline, cx, dy);
-      dline = w; dy += 34;
-    } else { dline = test; }
+    if (ctx.measureText(test).width > maxW && dline) { ctx.fillText(dline, cx, dy); dline = w; dy += 32; }
+    else dline = test;
   }
   ctx.fillText(dline, cx, dy);
+
+  // Bottom gold rule
+  ctx.fillStyle = "rgba(201,169,110,0.4)";
+  ctx.fillRect(cx - 28, H - 52, 56, 2);
 
   return canvas.toDataURL();
 }
@@ -650,8 +679,8 @@ function ImpactSection() {
 
   useEffect(() => {
     document.fonts.ready.then(() => {
-      const items = IMPACT_AREAS.map((a, i) => ({
-        image: makeAreaCanvas(a.label, a.desc, a.bg, i),
+      const items = IMPACT_AREAS.map((a) => ({
+        image: makeAreaCanvas(a.symbol, a.label, a.subtitle, a.desc, a.bg),
         text: "",
       }));
       setGalleryItems(items);
@@ -679,14 +708,14 @@ function ImpactSection() {
         </div>
         <div className="rv" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 16, transitionDelay: "0.04s" }}>
           <span style={{ width: 28, height: 1, background: gold }} />
-          <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: gold }}>Every Area of Life</span>
+          <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: gold }}>Vedic Numerology</span>
           <span style={{ width: 28, height: 1, background: gold }} />
         </div>
         <h2 className="rv" style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: HEADING_SIZE, fontWeight: 400, color: dark, lineHeight: 1.1, marginBottom: 14, transitionDelay: "0.08s" }}>
-          How Numerology<br />Impacts Your Life
+          The Significance of<br /><em style={{ color: gold, fontStyle: "italic" }}>Your Key Numbers</em>
         </h2>
         <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 20, color: "#7a6e68", lineHeight: 1.85, maxWidth: 520, margin: "0 auto", transitionDelay: "0.14s" }}>
-          Numbers touch every dimension of your existence — once decoded, nothing feels random again.
+          Every number in your life carries a frequency. Together they form a complete blueprint of who you are.
         </p>
       </div>
 
