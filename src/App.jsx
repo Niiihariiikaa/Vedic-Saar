@@ -13,6 +13,10 @@ import Footer from './components/Footer'
 import MantrasPage from './pages/Mantras'
 import VedicAstrologyPage from './pages/Vedic'
 import NumerologyPage from './pages/Numerology'
+import AboutPage from './pages/About'
+import RudrakshaPage from './pages/Rudraksha'
+import VaastuPage from './pages/Vaastu'
+import LoveMarriagePage from './pages/LoveMarriage'
 gsap.registerPlugin(ScrollTrigger);
 
 function MainLayout() {
@@ -36,9 +40,13 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MainLayout />} />
         <Route path="/gemstones" element={<GemstonesPage />} />
+        <Route path="/rudraksha" element={<RudrakshaPage />} />
         <Route path="/mantra" element={<MantrasPage />} />
         <Route path="/vedic-astrology" element={<VedicAstrologyPage />} />
         <Route path='/numerology' element={<NumerologyPage/>}/>
+        <Route path='/about' element={<AboutPage />} />
+        <Route path='/vaastu' element={<VaastuPage />} />
+        <Route path='/life-solutions/love-marriage' element={<LoveMarriagePage />} />
       </Routes>
       <Footer />  {/* ✅ Renders on every route */}
     </BrowserRouter>

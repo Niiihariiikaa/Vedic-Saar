@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback, useMemo, memo } from 'react'
 import CountUp from 'react-countup'
 import { useInView } from 'react-intersection-observer'
+import { useNavigate } from 'react-router-dom'
 import { useBooking } from '../components/BookingContext'
 
 // ─── Constants outside component — never recreated ───────────────────────────
@@ -145,6 +146,7 @@ export default function Homepage() {
   const heroRef     = useRef(null)
 
   const { openBooking } = useBooking()
+  const navigate = useNavigate()
 
   const rafParallax   = useRef(null)
   const latestY       = useRef(0)
@@ -415,6 +417,7 @@ export default function Homepage() {
                 and practical remedies to restore harmony and balance in life.
               </p>
               <button
+                onClick={() => navigate('/about')}
                 className="mt-6 border border-dashed border-[#1a1206] bg-transparent text-[#1a1206] px-6 py-2.5 text-sm tracking-widest hover:bg-[#1a1206] hover:text-[#f5f0e8] transition-all duration-300 block mx-auto"
                 style={{ fontFamily: "'Glacial Indifference', serif" }}
               >

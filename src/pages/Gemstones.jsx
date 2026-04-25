@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useBooking } from '../components/BookingContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -108,195 +109,6 @@ function FloatingParticles({ color }) {
           }}
         />
       ))}
-    </div>
-  );
-}
-
-// ── PAYPAL MODAL ──────────────────────────────────────────────────────────────
-function PayPalModal({ gem, onClose }) {
-  const overlayRef = useRef(null);
-  const cardRef = useRef(null);
-  const [step, setStep] = useState('details'); // details | processing | success
-  const [email, setEmail] = useState('');
-  const [cardNum, setCardNum] = useState('');
-  const [expiry, setExpiry] = useState('');
-  const [cvv, setCvv] = useState('');
-
-  useEffect(() => {
-    gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3 });
-    gsap.fromTo(cardRef.current,
-      { scale: 0.82, opacity: 0, y: 40 },
-      { scale: 1, opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.4)' }
-    );
-  }, []);
-
-  const handleClose = () => {
-    gsap.to(overlayRef.current, { opacity: 0, duration: 0.2 });
-    gsap.to(cardRef.current, { scale: 0.88, opacity: 0, y: 20, duration: 0.2, onComplete: onClose });
-  };
-
-  const handlePay = (e) => {
-    e.preventDefault();
-    setStep('processing');
-    setTimeout(() => setStep('success'), 2200);
-  };
-
-  return (
-    <div
-      ref={overlayRef}
-      className="fixed inset-0 z-[9999] flex items-center justify-center"
-      style={{ background: 'rgba(10,8,4,0.78)', backdropFilter: 'blur(6px)' }}
-      onClick={(e) => e.target === overlayRef.current && handleClose()}
-    >
-      <div
-        ref={cardRef}
-        className="relative w-full max-w-md mx-4 overflow-hidden"
-        style={{
-          background: 'linear-gradient(160deg, #1c1508 0%, #0f0d07 100%)',
-          border: `1px solid ${gem.color}40`,
-          borderRadius: 8,
-          boxShadow: `0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px ${gem.color}15, inset 0 1px 0 ${gem.color}20`,
-        }}
-      >
-        {/* Glow accent top */}
-        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${gem.color}80, transparent)` }} />
-
-        {/* Header */}
-        <div className="flex items-center justify-between px-7 pt-7 pb-5" style={{ borderBottom: `1px solid ${gem.color}18` }}>
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: `${gem.color}20`, border: `1px solid ${gem.color}40` }}>
-              <span style={{ fontSize: 14 }}>💎</span>
-            </div>
-            <div>
-              <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: gem.color }}>{gem.planet} · {gem.sanskrit}</p>
-              <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 18, color: '#f5ede0', lineHeight: 1 }}>{gem.name}</p>
-            </div>
-          </div>
-          <button onClick={handleClose} style={{ color: '#9a8060', fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}>✕</button>
-        </div>
-
-        {step === 'details' && (
-          <form onSubmit={handlePay} className="px-7 py-6">
-            {/* PayPal badge */}
-            <div className="flex items-center gap-2 mb-6 py-3 px-4 rounded" style={{ background: 'rgba(0,112,186,0.12)', border: '1px solid rgba(0,112,186,0.25)' }}>
-              <svg width="70" height="18" viewBox="0 0 70 18" fill="none">
-                <text x="0" y="14" fontFamily="Arial" fontWeight="bold" fontSize="14" fill="#009CDE">Pay</text>
-                <text x="28" y="14" fontFamily="Arial" fontWeight="bold" fontSize="14" fill="#012169">Pal</text>
-              </svg>
-              <span style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.1em', color: '#7ab3d4', textTransform: 'uppercase' }}>Secure Checkout</span>
-              <span style={{ marginLeft: 'auto', fontSize: 12 }}>🔒</span>
-            </div>
-
-            {/* Amount */}
-            <div className="flex justify-between items-center mb-6 pb-5" style={{ borderBottom: `1px solid ${gem.color}18` }}>
-              <span style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 15, color: '#9a8060' }}>Total Amount</span>
-              <span style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 28, color: '#f5ede0', fontWeight: 300 }}>{gem.price}</span>
-            </div>
-
-            {[
-              { label: 'Email Address', val: email, set: setEmail, type: 'email', ph: 'you@example.com', full: true },
-              { label: 'Card Number', val: cardNum, set: setCardNum, type: 'text', ph: '1234  5678  9012  3456', full: true },
-            ].map(({ label, val, set, type, ph, full }) => (
-              <div key={label} className="mb-4">
-                <label style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', display: 'block', marginBottom: 6 }}>{label}</label>
-                <input
-                  required type={type} placeholder={ph} value={val} onChange={e => set(e.target.value)}
-                  style={{
-                    width: '100%', background: 'rgba(255,255,255,0.04)', border: `1px solid ${gem.color}30`,
-                    borderRadius: 4, padding: '10px 14px', color: '#f5ede0',
-                    fontFamily: "'Ibarra', serif", fontSize: 15,
-                    outline: 'none', boxSizing: 'border-box',
-                  }}
-                />
-              </div>
-            ))}
-
-            <div className="flex gap-4 mb-6">
-              {[
-                { label: 'Expiry Date', val: expiry, set: setExpiry, ph: 'MM / YY' },
-                { label: 'CVV', val: cvv, set: setCvv, ph: '•••' },
-              ].map(({ label, val, set, ph }) => (
-                <div key={label} style={{ flex: 1 }}>
-                  <label style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8060', display: 'block', marginBottom: 6 }}>{label}</label>
-                  <input
-                    required type="text" placeholder={ph} value={val} onChange={e => set(e.target.value)}
-                    style={{
-                      width: '100%', background: 'rgba(255,255,255,0.04)', border: `1px solid ${gem.color}30`,
-                      borderRadius: 4, padding: '10px 14px', color: '#f5ede0',
-                      fontFamily: "'Ibarra', serif", fontSize: 15,
-                      outline: 'none', boxSizing: 'border-box',
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            <button
-              type="submit"
-              style={{
-                width: '100%', background: `linear-gradient(135deg, ${gem.color}, ${gem.color}cc)`,
-                color: '#0f0d07', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11,
-                letterSpacing: '0.2em', textTransform: 'uppercase', padding: '14px',
-                border: 'none', borderRadius: 4, cursor: 'pointer', fontWeight: 600,
-              }}
-            >
-              ✦ Complete Purchase — {gem.price}
-            </button>
-
-            <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, color: '#6b5840', textAlign: 'center', marginTop: 12, letterSpacing: '0.08em' }}>
-              256-bit SSL encrypted · Powered by PayPal
-            </p>
-          </form>
-        )}
-
-        {step === 'processing' && (
-          <div className="px-7 py-14 flex flex-col items-center gap-5">
-            <ProcessingSpinner color={gem.color} />
-            <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 18, color: '#f5ede0' }}>Processing your order…</p>
-            <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.14em', color: '#9a8060', textTransform: 'uppercase' }}>Please wait</p>
-          </div>
-        )}
-
-        {step === 'success' && (
-          <SuccessState gem={gem} onClose={handleClose} />
-        )}
-      </div>
-    </div>
-  );
-}
-
-function ProcessingSpinner({ color }) {
-  const ringRef = useRef(null);
-  useEffect(() => {
-    gsap.to(ringRef.current, { rotation: 360, duration: 1.2, repeat: -1, ease: 'none' });
-  }, []);
-  return (
-    <div ref={ringRef} style={{ width: 56, height: 56, borderRadius: '50%', border: `3px solid ${color}30`, borderTopColor: color }} />
-  );
-}
-
-function SuccessState({ gem, onClose }) {
-  const iconRef = useRef(null);
-  useEffect(() => {
-    gsap.fromTo(iconRef.current, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(2)' });
-  }, []);
-  return (
-    <div className="px-7 py-12 flex flex-col items-center gap-4 text-center">
-      <div ref={iconRef} className="w-16 h-16 rounded-full flex items-center justify-center mb-2"
-        style={{ background: `${gem.color}25`, border: `2px solid ${gem.color}60` }}>
-        <span style={{ fontSize: 28 }}>✓</span>
-      </div>
-      <p style={{ fontFamily: "'Ibarra', serif", fontSize: 26, color: '#f5ede0', fontWeight: 300 }}>Order Confirmed!</p>
-      <p style={{ fontFamily: "'Ibarra', serif", fontSize: 15, color: '#9a8060', lineHeight: 1.7, maxWidth: 280 }}>
-        Your <strong style={{ color: gem.color }}>{gem.name}</strong> will be energised, cleansed, and dispatched within 3–5 days.
-      </p>
-      <button onClick={onClose} style={{
-        marginTop: 8, background: `${gem.color}20`, color: gem.color,
-        fontFamily: "'Glacial Indifference',sans-serif", fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
-        padding: '11px 28px', border: `1px solid ${gem.color}50`, borderRadius: 2, cursor: 'pointer',
-      }}>
-        Continue Shopping
-      </button>
     </div>
   );
 }
@@ -460,7 +272,7 @@ function BookConsultationFixed() {
 }
 
 // ── HERO ──────────────────────────────────────────────────────────────────────
-function GemHero({ gem, onBuy }) {
+function GemHero({ gem, onConsult }) {
   const heroRef   = useRef(null);
   const imgRef    = useRef(null);
   const radialRef = useRef(null);
@@ -544,9 +356,6 @@ function GemHero({ gem, onBuy }) {
           <h1 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 'clamp(36px,5vw,56px)', fontWeight: 400, color: '#1a1206', lineHeight: 1, marginBottom: 10 }}>
             {gem.name}
           </h1>
-          <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 36, fontWeight: 300, color: '#1a1206', marginBottom: 16, letterSpacing: '-0.01em' }}>
-            {gem.price}
-          </p>
           <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 16, color: '#6b5a40', lineHeight: 1.85, marginBottom: 18, maxWidth: 460 }}>
             {gem.description}
           </p>
@@ -573,7 +382,7 @@ function GemHero({ gem, onBuy }) {
 
           <div className="flex gap-3 flex-wrap">
             <button
-              onClick={() => onBuy(gem)}
+              onClick={onConsult}
               className="hover:opacity-90 transition-opacity duration-200"
               style={{
                 background: `linear-gradient(135deg, ${gem.color}, ${gem.color}bb)`,
@@ -582,18 +391,7 @@ function GemHero({ gem, onBuy }) {
                 border: 'none', cursor: 'pointer', fontWeight: 700, borderRadius: 2, border: `1px dashed black`,
               }}
             >
-              ✦ Purchase Now
-            </button>
-            <button
-              onClick={() => onBuy(gem)}
-              className="hover:opacity-90 transition-opacity duration-200"
-              style={{
-                background: 'transparent', color: `${gem.color}`, fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11,
-                letterSpacing: '0.18em', textTransform: 'uppercase', padding: '13px 28px',
-                border: 'none', cursor: 'pointer', borderRadius: 2, border: `2px dashed ${gem.color}50` ,
-              }}
-            >
-              ✦ Add to Cart
+              ✦ Consult Astrologer
             </button>
             <button
               className="transition-all duration-200 hover:opacity-80"
@@ -603,7 +401,7 @@ function GemHero({ gem, onBuy }) {
                 border: `1px solid ${gem.color}60`, cursor: 'pointer', borderRadius: 2, border: `1px dashed white`, boxShadow: `0 4px 16px ${gem.color}30`,
               }}
             >
-              Consult Astrologer
+              ✦ Learn More
             </button>
           </div>
         </div>
@@ -664,15 +462,14 @@ function GemShopCard({ gem, isActive, onClick }) {
         <h3 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 17, fontWeight: 400, color: '#1a1206', marginBottom: 2, lineHeight: 1.2 }}>{gem.name}</h3>
         <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.1em', color: '#9a8060', textTransform: 'uppercase', marginBottom: 10 }}>{gem.sanskrit}</p>
         <div className="flex items-center justify-between">
-          <span style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 20, color: '#1a1206', fontWeight: 300 }}>{gem.price}</span>
-          <button
+            <button
             style={{
               background: isActive ? gem.color : '#1a1206', color: isActive ? '#0f0d07' : '#f5ede0',
               fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase',
               padding: '6px 14px', border: 'none', cursor: 'pointer', borderRadius: 2, transition: 'background 0.2s',
             }}
           >
-            {isActive ? 'Selected' : '+ Cart'}
+            {isActive ? 'Selected' : 'View'}
           </button>
         </div>
       </div>
@@ -683,8 +480,8 @@ function GemShopCard({ gem, isActive, onClick }) {
 // ── MAIN ──────────────────────────────────────────────────────────────────────
 export default function Gemstones() {
   const [active, setActive] = useState(gems[0]);
-  const [paypalGem, setPaypalGem] = useState(null);
   const topRef = useRef(null);
+  const { openBooking } = useBooking();
   const headingRef = useRef(null);
   const gridRef = useRef(null);
 
@@ -747,7 +544,7 @@ export default function Gemstones() {
         </div>
 
         {/* Hero */}
-        <GemHero gem={active} onBuy={(g) => setPaypalGem(g)} />
+        <GemHero gem={active} onConsult={() => openBooking('Gemstone Consultation')} />
 
         {/* Shop label */}
         <div className="max-w-5xl mx-auto px-8 md:px-16 pt-8">
@@ -781,6 +578,7 @@ export default function Gemstones() {
               Unsure which gem is right for you? Let our astrologer recommend one based on your birth chart.
             </p>
             <button
+              onClick={() => openBooking('Gemstone Consultation')}
               className="hover:bg-[#b8860b] transition-all duration-300"
               style={{ background: '#1a1206', color: '#f5ede0', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11, border: '2px dashed white', letterSpacing: '0.2em', textTransform: 'uppercase', padding: '14px 36px', cursor: 'pointer' }}
             >
@@ -793,10 +591,6 @@ export default function Gemstones() {
       {/* Fixed Book Consultation FAB */}
       <BookConsultationFixed />
 
-      {/* PayPal Payment Modal */}
-      {paypalGem && (
-        <PayPalModal gem={paypalGem} onClose={() => setPaypalGem(null)} />
-      )}
     </div>
   );
 }
