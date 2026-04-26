@@ -15,7 +15,7 @@ const navRoutes = {
   'Life Solutions': '/life-solutions',
   'Vaastu':       '/vaastu',
   'Rudraksha':    '/rudraksha',
-  'Therapy':      '/therapy',
+  
   'Remedies':     '/remedies',
   'Gemstones':    '/gemstones',
   'Mantra':      '/mantra',
@@ -52,8 +52,8 @@ const subRoutes = {
 
 const navItems = [
   'Home', 'Life Solutions', 'Vaastu', 'Numerology', 'Vedic Astrology', 'Rudraksha',
-   'Remedies',  'Blogs', 
-   'Testimonials', 'About',   'Gemstones',
+   
+   'About',   'Gemstones',
   'Mantra'
 ]
 

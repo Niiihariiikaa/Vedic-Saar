@@ -233,12 +233,12 @@ function SlidingStrip() {
 
   return (
     <div style={{ overflow: "hidden", position: "relative" }}>
-      <div style={{ position: "relative", background: "rgba(233,228,220,0.65)", borderTop: "1px solid rgba(201,169,110,0.2)", borderBottom: "1px solid rgba(201,169,110,0.15)", WebkitMaskImage: fadeEdge, maskImage: fadeEdge }}>
+      <div style={{ position: "relative", background: "#f0e8dc", borderTop: "1px solid rgba(201,169,110,0.2)", borderBottom: "1px solid rgba(201,169,110,0.15)", WebkitMaskImage: fadeEdge, maskImage: fadeEdge }}>
         <div ref={topRowRef} className="strip-row" style={{ color: "#2a1f1a" }}>
           {topRow.map((t, i) => <span key={i}>{t}</span>)}
         </div>
       </div>
-      <div style={{ position: "relative", background: "rgba(17,17,17,0.78)", borderBottom: "1px solid rgba(201,169,110,0.12)", WebkitMaskImage: fadeEdge, maskImage: fadeEdge }}>
+      <div style={{ position: "relative", background: "#111111", borderBottom: "1px solid rgba(201,169,110,0.12)", WebkitMaskImage: fadeEdge, maskImage: fadeEdge }}>
         <div ref={botRowRef} className="strip-row" style={{ color: "rgba(255,255,255,0.80)" }}>
           {botRow.map((t, i) => <span key={i}>{t}</span>)}
         </div>
