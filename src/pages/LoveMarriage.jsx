@@ -227,7 +227,7 @@ const CSS = `
     padding: 18px 56px;
     background: #0d0a06;
     border: 2px dashed #ffffff;
-    border-radius: 0;
+    
     color: #ffffff;
     font-family: 'Glacial Indifference', sans-serif;
     font-size: 11px;
@@ -1177,7 +1177,7 @@ function NumerologySection() {
   }
 
   return (
-    <section ref={ref} style={{ position: "relative", overflow: "hidden", background: DARK2, paddingBottom: 0 }} onMouseMove={handleFanMove} onMouseLeave={() => setHov(null)} className="grain">
+    <section ref={ref} style={{ position: "relative", overflow: "hidden", background: DARK, paddingBottom: 0 }} onMouseMove={handleFanMove} onMouseLeave={() => setHov(null)} className="grain">
       <WaveTop fill={DARK2} />
       <WaveBottom fill={DARK2} />
       <GlowyParticles count={55} />
