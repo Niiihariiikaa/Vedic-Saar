@@ -1,16 +1,16 @@
-﻿import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useBooking } from "../components/BookingContext";
 
 /* ── Fonts ── */
-if (typeof document !== "undefined" && !document.getElementById("lm-fonts")) {
+if (typeof document !== "undefined" && !document.getElementById("h-fonts")) {
   const l = document.createElement("link");
-  l.id = "lm-fonts"; l.rel = "stylesheet";
+  l.id = "h-fonts"; l.rel = "stylesheet";
   l.href = "https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap";
   document.head.appendChild(l);
 }
-if (typeof document !== "undefined" && !document.getElementById("lm-fonts2")) {
+if (typeof document !== "undefined" && !document.getElementById("h-fonts2")) {
   const l = document.createElement("link");
-  l.id = "lm-fonts2"; l.rel = "stylesheet";
+  l.id = "h-fonts2"; l.rel = "stylesheet";
   l.href = "https://fonts.cdnfonts.com/css/glacial-indifference-2";
   document.head.appendChild(l);
 }
@@ -20,13 +20,11 @@ const GOLD   = "#c9a96e";
 const GOLD2  = "#e8c98a";
 const DARK   = "#0d0a06";
 const DARK2  = "#140f08";
-const DARK3  = "#1c1510";
 const CREAM  = "#f5f0e8";
 const CREAM2 = "#fdf9f3";
 const MUTED  = "#8a7e76";
 const W      = "#ffffff";
 
-/* Typography constants */
 const HEADING_FONT = "'Ibarra Real Nova', serif";
 const BODY_FONT    = "'Glacial Indifference', sans-serif";
 const HEADING_SIZE = "clamp(38px, 5.5vw, 64px)";
@@ -93,17 +91,7 @@ const CSS = `
   @keyframes hero-rise    { from { opacity:0; transform:translateY(60px) } to { opacity:1; transform:none } }
   @keyframes spin-slow    { to { transform: rotate(360deg) } }
   @keyframes spin-rev     { to { transform: rotate(-360deg) } }
-  @keyframes drift-y      { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
-  @keyframes drift-y2     { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
   @keyframes gold-shimmer { 0%{background-position:200% center} 100%{background-position:-200% center} }
-  @keyframes orbit-planet {
-    from { transform: rotate(0deg) translateX(var(--orbit-r)) rotate(0deg); }
-    to   { transform: rotate(360deg) translateX(var(--orbit-r)) rotate(-360deg); }
-  }
-  @keyframes orbit-planet-rev {
-    from { transform: rotate(0deg) translateX(var(--orbit-r)) rotate(0deg); }
-    to   { transform: rotate(-360deg) translateX(var(--orbit-r)) rotate(360deg); }
-  }
   @keyframes shoot {
     0%   { opacity: 0; transform: rotate(var(--rot,28deg)) translate(var(--sx0,-150px), var(--sy0,-80px)); }
     8%   { opacity: 0.9; }
@@ -122,6 +110,16 @@ const CSS = `
     0%,100% { transform: translateY(0px); }
     50%     { transform: translateY(-6px); }
   }
+  @keyframes twinkle-glow {
+    0%,100% { opacity: 0.07; transform: scale(0.72); }
+    50%     { opacity: 0.62; transform: scale(1.12); }
+  }
+  @keyframes sparkFloat {
+    0% { transform: translateY(0) scale(0.8); opacity: 0; }
+    15% { opacity: 0.1; }
+    50% { transform: translateY(-50vh) scale(1.1); opacity: 0.16; }
+    100% { transform: translateY(-110vh) scale(1.4); opacity: 0; }
+  }
 
   .gold-shimmer {
     background: linear-gradient(90deg, #c9a96e 0%, #e8c98a 30%, #fff8e8 50%, #e8c98a 70%, #c9a96e 100%);
@@ -133,82 +131,53 @@ const CSS = `
   }
 
   .eyebrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 16px; margin-bottom: 20px;
   }
   .eyebrow-line { width: 40px; height: 1px; background: rgba(201,169,110,0.45); }
   .eyebrow-line.light { background: rgba(245,240,232,0.25); }
   .eyebrow-text {
     font-family: 'Glacial Indifference', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.8;
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); opacity: 0.8;
   }
   .eyebrow-text.light { color: rgba(245,240,232,0.5); opacity: 1; }
 
-  /* House cards */
   .hcard {
     position: relative;
     background: linear-gradient(145deg, #ffffff, #f9f5ed);
     border: 1px solid rgba(201,169,110,0.2);
-    border-radius: 0;
-    overflow: hidden;
+    border-radius: 0; overflow: hidden;
     transition: transform 0.4s cubic-bezier(.16,1,.3,1), box-shadow 0.4s, border-color 0.4s;
     cursor: default;
   }
   .hcard::before {
-    content: '';
-    position: absolute;
-    inset: 0;
+    content: ''; position: absolute; inset: 0;
     background: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.07) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s;
+    opacity: 0; transition: opacity 0.4s;
   }
-  .hcard:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 24px 60px rgba(28,20,13,0.12), 0 0 0 1px rgba(201,169,110,0.35);
-    border-color: rgba(201,169,110,0.35);
-  }
+  .hcard:hover { transform: translateY(-8px); box-shadow: 0 24px 60px rgba(28,20,13,0.12), 0 0 0 1px rgba(201,169,110,0.35); border-color: rgba(201,169,110,0.35); }
   .hcard:hover::before { opacity: 1; }
   .hcard:hover .hcard-num { color: var(--gold2) !important; }
   .hcard:hover .hcard-orb { opacity: 0.6 !important; transform: scale(1.15) !important; }
 
   .hcard-orb {
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 160px; height: 160px;
-    border-radius: 50%;
+    position: absolute; top: -40px; right: -40px;
+    width: 160px; height: 160px; border-radius: 50%;
     background: radial-gradient(circle, rgba(201,169,110,0.13) 0%, transparent 70%);
-    opacity: 0.18;
-    transition: opacity 0.4s, transform 0.6s;
-    pointer-events: none;
+    opacity: 0.18; transition: opacity 0.4s, transform 0.6s; pointer-events: none;
   }
 
-  /* Problem rows */
   .prob-row {
-    display: flex;
-    gap: 16px;
-    padding: 14px 0;
-    align-items: flex-start;
+    display: flex; gap: 16px; padding: 14px 0; align-items: flex-start;
     border-bottom: 1px solid rgba(201,169,110,0.07);
-    transition: padding-left 0.25s ease, border-color 0.25s;
-    cursor: default;
+    transition: padding-left 0.25s ease, border-color 0.25s; cursor: default;
   }
-  .prob-row:hover {
-    padding-left: 10px;
-    border-bottom-color: rgba(201,169,110,0.2);
-  }
+  .prob-row:hover { padding-left: 10px; border-bottom-color: rgba(201,169,110,0.2); }
   .prob-row:last-child { border-bottom: none; }
 
-  /* Guide items */
   .gitem {
-    border: 1px solid rgba(201,169,110,0.1);
-    border-radius: 0;
+    border: 1px solid rgba(201,169,110,0.1); border-radius: 0;
     transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s, background 0.3s;
     cursor: default;
   }
@@ -219,123 +188,58 @@ const CSS = `
     background: rgba(255,255,255,0.05) !important;
   }
 
-  /* CTA button — no border-radius, rectangle, black bg, white dashed border */
   .cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 18px 56px;
-    background: #0d0a06;
-    border: 2px dashed #ffffff;
-    
-    color: #ffffff;
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 18px 56px; background: #0d0a06;
+    border: 2px dashed #ffffff; border-radius: 0; color: #ffffff;
     font-family: 'Glacial Indifference', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    cursor: pointer;
-    position: relative;
-    transition: opacity 0.3s;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    cursor: pointer; position: relative; transition: opacity 0.3s;
   }
   .cta-btn:hover { opacity: 0.8; }
   .cta-btn span { position: relative; z-index: 1; }
 
-  /* Planet orbital system */
-  .solar-system {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .orbit-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px dashed rgba(201,169,110,0.18);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-  }
-
   .planet-node {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    animation: planet-hover var(--float-dur, 6s) ease-in-out infinite;
-    animation-delay: var(--float-delay, 0s);
-    cursor: default;
+    position: absolute; display: flex; flex-direction: column;
+    align-items: center; cursor: default;
   }
-
   .planet-node:hover .planet-ball { transform: scale(1.12); box-shadow: 0 0 30px rgba(201,169,110,0.45); }
   .planet-node:hover .planet-name { opacity: 1; }
   .planet-node:hover .planet-desc { max-height: 80px; opacity: 1; }
 
   .planet-ball {
-    border-radius: 50%;
-    overflow: visible;
+    border-radius: 50%; overflow: hidden;
     transition: transform 0.4s, box-shadow 0.4s;
     box-shadow: 0 0 20px rgba(201,169,110,0.2);
     background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), #e8dcc6);
     flex-shrink: 0;
-    position: relative;
   }
-
   .planet-glyph {
     font-size: 11px; color: var(--gold); opacity: 0.65;
     line-height: 1; margin-bottom: 2px; text-align: center;
   }
-
   .planet-name {
-    font-family: 'Ibarra Real Nova', serif;
-    font-size: 14px; font-weight: 500;
+    font-family: 'Ibarra Real Nova', serif; font-size: 14px; font-weight: 500;
     color: #1c140d; text-align: center; line-height: 1.25;
     opacity: 0.9; transition: opacity 0.3s; white-space: nowrap;
   }
-
   .planet-sub {
-    font-family: 'Glacial Indifference', sans-serif;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.7;
-    text-align: center;
-    margin-top: 2px;
-    white-space: nowrap;
+    font-family: 'Glacial Indifference', sans-serif; font-size: 9px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); opacity: 0.7; text-align: center;
+    margin-top: 2px; white-space: nowrap;
   }
-
   .planet-desc {
-    font-family: 'Glacial Indifference', sans-serif;
-    font-size: 11px;
-    color: #8a7e76;
-    line-height: 1.7;
-    text-align: center;
-    max-width: 150px;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.4s ease, opacity 0.4s ease;
-    margin-top: 4px;
+    font-family: 'Glacial Indifference', sans-serif; font-size: 11px;
+    color: #8a7e76; line-height: 1.7; text-align: center;
+    max-width: 150px; max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease; margin-top: 4px;
   }
 
-  /* Grain texture overlay */
   .grain::after {
-    content: '';
-    position: absolute;
-    inset: 0;
+    content: ''; position: absolute; inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    opacity: 0.3;
-    mix-blend-mode: overlay;
-    z-index: 0;
-  }
-
-  @keyframes twinkle-glow {
-    0%,100% { opacity: 0.07; transform: scale(0.72); }
-    50%     { opacity: 0.62; transform: scale(1.12); }
+    pointer-events: none; opacity: 0.3; mix-blend-mode: overlay; z-index: 0;
   }
 
   @media (max-width: 900px) {
@@ -344,81 +248,100 @@ const CSS = `
   @media (max-width: 580px) {
     .planets-grid { grid-template-columns: 1fr !important; }
   }
-
-  @keyframes heartsFloat {
-    0% { transform: translateY(0) scale(0.8); opacity: 0; }
-    15% { opacity: 0.12; }
-    50% { transform: translateY(-50vh) scale(1.1); opacity: 0.18; }
-    100% { transform: translateY(-110vh) scale(1.4); opacity: 0; }
-  }
 `;
 
 /* ════════════════════════════════════════════════════════════════ */
 /* DATA */
-const houses = [
-  { num: "VII",  title: "House of Marriage",              sub: "The axis of the other",     desc: "Primary house of your spouse and committed partnerships. The 7th lord and planets placed here shape your entire marriage experience — the texture of union itself." },
-  { num: "V",    title: "House of Romance",               sub: "The garden of desire",      desc: "Governs falling in love, attraction, and the joy of courtship. Indicates past-life romantic karma and whether your relationship will blossom into marriage." },
-  { num: "II",   title: "House of Family",                sub: "The hearth of belonging",   desc: "Represents your family of marriage, domestic happiness, and the wealth accumulated through your union. The home you build together." },
-  { num: "VIII", title: "Transformation Through Love",    sub: "The alchemy of the soul",   desc: "Rules longevity of marriage, in-laws, secrets in relationships, and deeply karmic bonds. Intense 8th house connections create unforgettable, life-changing relationships." },
-  { num: "XII",  title: "Bed Pleasures & Foreign Spouse", sub: "The veiled chamber",        desc: "Governs intimacy, private life in marriage, and indicates possibility of a foreign or distant spouse. What is hidden, sacred, surrendered." },
-  { num: "XI",   title: "Fulfilment of Desires",          sub: "The field of wishes",       desc: "Whether your wishes in love get fulfilled. A strong 11th house connected to the 7th often brings successful love marriages and lasting companionship." },
+
+const healthHouses = [
+  { num: "I",    title: "Body, Vitality & Constitution",     sub: "The physical self",             desc: "The Lagna represents your physical self and overall vitality. The strength of the Lagna lord is the single most important factor in determining your base health and immunity." },
+  { num: "VI",   title: "Disease, Illness & Healing Power",  sub: "The battlefield of health",     desc: "Primary house of illness. Planets here indicate specific recurring health challenges. A strong 6th house also gives the warrior energy to fight disease and recover powerfully." },
+  { num: "VIII", title: "Chronic Illness & Longevity",       sub: "The alchemy of transformation", desc: "Governs longevity, chronic conditions, surgical procedures, and sudden health events. The 8th house reveals the nature of major health crises across your lifetime." },
+  { num: "XII",  title: "Hospitalisation & Hidden Illness",  sub: "The veiled chamber",            desc: "Rules bed-ridden illness, hospitalisation, and conditions difficult to diagnose. Governs sleep quality and rest. Afflictions manifest as mysterious, recurring ailments." },
 ];
 
-const planets = [
-  { glyph: "♀", name: "Venus",       sub: "Karaka of Love & Desire",       desc: "Primary planet for love, romance, and beauty. For men, Venus directly represents the wife and quality of love life." },
-  { glyph: "♃", name: "Jupiter",     sub: "Karaka of Husband & Wisdom",    desc: "For women, Jupiter represents the husband. A strong Jupiter gives a wise, caring, and prosperous spouse." },
-  { glyph: "♂", name: "Mars",        sub: "Passion, Drive & Mangal Dosha", desc: "Mars rules physical attraction. Mars in key houses creates Mangal Dosha — a powerful imbalance requiring careful matching." },
-  { glyph: "☽", name: "Moon",        sub: "Emotional Depth & Bonding",     desc: "Governs emotional compatibility, nurturing in relationships, and the ability to bond deeply." },
-  { glyph: "☊", name: "Rahu & Ketu", sub: "Karmic Connections",            desc: "Rahu-Ketu connections create intensely karmic relationships — passionate and destabilising in equal measure." },
-  { glyph: "♄", name: "Saturn",      sub: "Delays, Duty & Mature Love",    desc: "Saturn's influence delays marriage but brings a stable, long-lasting union — built on responsibility over romance." },
+const healthPlanets = [
+  { glyph: "☉", name: "Sun",     sub: "Heart, Spine, Eyes & Vitality",          desc: "Sun rules the heart, bones, eyes, and overall life force. Afflicted Sun creates cardiovascular issues, eyesight problems, and chronic fatigue." },
+  { glyph: "☽", name: "Moon",    sub: "Mind, Lungs, Blood & Reproductive",      desc: "Moon rules mental health, lungs, and reproductive organs. Afflictions create anxiety, depression, breathing issues, and menstrual disorders." },
+  { glyph: "♂", name: "Mars",    sub: "Blood, Muscles, Liver & Accidents",      desc: "Mars governs blood, muscles, and inflammatory conditions. Afflicted Mars creates fever, infections, accidents, blood disorders, and stress-driven illness." },
+  { glyph: "☿", name: "Mercury", sub: "Nervous System, Skin & Digestion",       desc: "Mercury rules the nervous system, skin, and digestive tract. Afflictions create nerve disorders, skin conditions, IBS, and anxiety-driven symptoms." },
+  { glyph: "♃", name: "Jupiter", sub: "Liver, Fat Metabolism & Growth",         desc: "Jupiter governs the liver, fatty tissue, and growth. Afflictions create liver problems, diabetes, obesity, and cholesterol imbalances." },
+  { glyph: "♀", name: "Venus",   sub: "Kidneys, Reproductive & Hormones",       desc: "Venus rules the kidneys, reproductive system, and hormonal balance. Afflictions create kidney disease, hormonal disruptions, and urinary tract issues." },
+  { glyph: "♄", name: "Saturn",  sub: "Bones, Joints, Teeth & Chronic Illness", desc: "Saturn rules the skeletal system and chronic degenerative diseases. Afflictions create arthritis, joint pain, dental problems, and slow-healing conditions." },
+  { glyph: "☊", name: "Rahu",   sub: "Mysterious & Neurological Conditions",    desc: "Rahu creates bizarre, hard-to-diagnose conditions, phobias, and neurological issues. Rahu illness often has a psychosomatic or hidden root cause." },
+  { glyph: "☋", name: "Ketu",   sub: "Fevers, Accidents & Spiritual Illness",   desc: "Ketu brings sudden, explosive health events — high fevers, accidents, and conditions linked to past-life karma. Associated with healing through spiritual practices." },
 ];
 
-const loveNumbers = [
-  { num: "2", title: "The Lover",        ruler: "Moon",   color: "#b8d4f0", desc: "Deeply romantic, emotionally sensitive, and partnership-oriented. Compatibility best with 1, 6, and 9. The number of eternal togetherness." },
-  { num: "6", title: "The Nurturer",     ruler: "Venus",  color: "#f0b8c8", desc: "Ruled by Venus — the planet of love itself. Natural partners, deeply devoted, the most marriage-oriented of all numbers. Home is sacred." },
-  { num: "9", title: "Karmic Love",      ruler: "Mars",   color: "#f0c8b8", desc: "Intense, passionate connections with strong past-life undertones. Relationships feel destined but require conscious work. The number of completion." },
-  { num: "8", title: "Love as a Lesson", ruler: "Saturn", color: "#c8c8d0", desc: "Love comes late, with tests and delays, but when it arrives — it is built to last a lifetime. Saturn's gift: depth over speed." },
+const healthNumbers = [
+  { num: "2", title: "The Sensitive Healer",  ruler: "Moon & Ketu",  color: "#b8d4f0", desc: "Numbers 2 & 7. Highly sensitive nervous system, prone to emotional illness and sleep disorders. Meditation and deep rest are the essential medicine for this constitution." },
+  { num: "1", title: "The Vital Force",       ruler: "Sun & Rahu",   color: "#f5e6c8", desc: "Numbers 1 & 4. Cardiovascular vulnerability and hypertension risk. Need to manage ego-driven stress. Regular sunlight and heart-healthy routines are vital." },
+  { num: "8", title: "The Endurer",           ruler: "Saturn",       color: "#c8c8d0", desc: "Number 8. Joint and bone vulnerability. Prone to chronic, slow-developing conditions. Discipline in diet and daily routine prevents most issues from forming." },
+  { num: "9", title: "The Warrior",           ruler: "Mars",         color: "#f0c8b8", desc: "Number 9. Prone to inflammatory conditions, blood pressure spikes, and accidents. Channel physical energy constructively to avoid burnout and explosive illness." },
 ];
 
-const problems = [
-  "Marriage keeps getting delayed despite being the right age — why?",
-  "I love someone my family disapproves of — what does my chart say?",
-  "Constant arguments and fights in marriage — is this permanent?",
-  "Spouse is emotionally distant, cold, or unfaithful — planetary cause?",
-  "I keep attracting the wrong people — what is my karmic pattern?",
-  "We separated — is there any chance of reconciliation?",
-  "I want to know my future spouse's personality and timing of marriage",
-  "Is a love marriage or arranged marriage better for my chart?",
-  "Second marriage — will it succeed?",
-  "Mangal Dosha — do I have it, and how serious is it?",
+const healthProblems = [
+  "I have been sick repeatedly for years despite treatment — what is the planetary cause?",
+  "A family member has a serious illness — when will there be recovery?",
+  "I suffer from anxiety, depression, or insomnia — can astrology help?",
+  "I want to schedule a surgery — which time is most auspicious?",
+  "Mysterious symptoms doctors cannot diagnose — could this be Rahu or Ketu?",
+  "I am recovering from an accident or serious illness — when will I fully heal?",
+  "My child has chronic health issues — what does their chart indicate?",
+  "What are the most vulnerable health periods in my life coming up?",
+  "Hormonal imbalances, PCOD, or reproductive health challenges",
+  "Weight issues and metabolic disorders — planetary influences on the body",
 ];
 
-const hiddenIssues = [
-  "Mangal Dosha — degree of severity and matching requirements",
-  "Shukra Ashtama — Venus in the 8th causing love disappointments",
-  "Darakaraka analysis — the planet that represents your actual spouse",
-  "Navamsha (D9) chart — the soul chart of marriage, revealing hidden truths",
-  "Dasha timing — the exact planetary period when marriage is most likely",
-  "Saturn or Rahu transit over 7th house — causing current relationship delays",
+const healthHiddenIssues = [
+  "Lagna lord in 6th, 8th, or 12th — weakened constitutional vitality and immunity",
+  "Saturn or Mars afflicting the Moon — mental health and emotional instability patterns",
+  "Sun-Saturn conjunction or opposition — cardiovascular stress and bone density concerns",
+  "Mercury-Rahu combination — neurological disorders and autoimmune vulnerabilities",
+  "Jupiter affliction in 6th or 8th — liver, metabolism, and endocrine disruptions",
+  "Ketu in the 1st house — mysterious, past-life health karma requiring spiritual remedies",
 ];
 
-const guideItems = [
-  { n: "01", text: "Identify your ideal spouse's qualities based on your Darakaraka and 7th house" },
-  { n: "02", text: "Pinpoint the exact Dasha and transit windows when marriage is most likely" },
-  { n: "03", text: "Provide Mangal Dosha compatibility assessment and required matching criteria" },
-  { n: "04", text: "Offer specific mantras — Om Shukraya Namah, Katyayani Mantra for delayed marriage" },
-  { n: "05", text: "Recommend fasting days, gemstones (Diamond/White Sapphire for Venus), and rituals" },
-  { n: "06", text: "Guide on Kundli matching — going beyond the 36 points to check real compatibility" },
+const healthGuideItems = [
+  { n: "01", text: "Assess the strength of your Lagna lord — your foundational vitality and constitutional immunity" },
+  { n: "02", text: "Identify your most vulnerable organ systems based on planetary placements and afflictions" },
+  { n: "03", text: "Map Dasha periods that trigger health challenges so you can prepare proactively" },
+  { n: "04", text: "Check Saturn and Rahu transits over health-sensitive houses (1st, 6th, 8th, 12th)" },
+  { n: "05", text: "Recommend Mahamrityunjaya Mantra and Dhanvantari Mantra for health protection" },
+  { n: "06", text: "Determine auspicious timing for surgeries, medical treatments, and health procedures" },
 ];
 
-const houseLogos = ["23.png","24.png","25.png","26.png","27.png","28.png"];
+const houseLogos = ["h1.png", "h2.png", "h3.png", "h4.png"];
 const planetImgs = [
-  "/assets/lovelogos/planets/venus.png",
-  "/assets/lovelogos/planets/jupiter.png",
-  "/assets/lovelogos/planets/mars.png",
-  "/assets/lovelogos/planets/moon.png",
-  "/assets/lovelogos/planets/rahu.png",
-  "/assets/lovelogos/planets/saturn.png",
+  "/assets/healthlogos/planets/sun.png",
+  "/assets/healthlogos/planets/moon.png",
+  "/assets/healthlogos/planets/mars.png",
+  "/assets/healthlogos/planets/mercury.png",
+  "/assets/healthlogos/planets/jupiter.png",
+  "/assets/healthlogos/planets/venus.png",
+  "/assets/healthlogos/planets/saturn.png",
+  "/assets/healthlogos/planets/rahu.png",
+  "/assets/healthlogos/planets/ketu.png",
+];
+
+/* ════════════════════════════════════════════════════════════════ */
+/* PLANETS — 3 orbit rings for 9 planets */
+
+const H_INNER_R  = 140;
+const H_MIDDLE_R = 230;
+const H_OUTER_R  = 320;
+const H_SYS_DIM  = (H_OUTER_R + 150) * 2; // 940
+const H_SYS_CTR  = H_SYS_DIM / 2;          // 470
+
+const H_PLANET_CFG = [
+  { orbitR: H_INNER_R,  angleDeg: 270, ballSize: 58, duration: 55,  dir: "cw"  }, // Sun
+  { orbitR: H_INNER_R,  angleDeg: 30,  ballSize: 58, duration: 68,  dir: "cw"  }, // Moon
+  { orbitR: H_INNER_R,  angleDeg: 150, ballSize: 58, duration: 62,  dir: "cw"  }, // Mars
+  { orbitR: H_MIDDLE_R, angleDeg: 90,  ballSize: 65, duration: 80,  dir: "ccw" }, // Mercury
+  { orbitR: H_MIDDLE_R, angleDeg: 210, ballSize: 65, duration: 95,  dir: "ccw" }, // Jupiter
+  { orbitR: H_MIDDLE_R, angleDeg: 330, ballSize: 65, duration: 88,  dir: "ccw" }, // Venus
+  { orbitR: H_OUTER_R,  angleDeg: 270, ballSize: 72, duration: 110, dir: "cw"  }, // Saturn
+  { orbitR: H_OUTER_R,  angleDeg: 30,  ballSize: 72, duration: 130, dir: "cw"  }, // Rahu
+  { orbitR: H_OUTER_R,  angleDeg: 150, ballSize: 72, duration: 120, dir: "cw"  }, // Ketu
 ];
 
 /* ════════════════════════════════════════════════════════════════ */
@@ -436,12 +359,12 @@ function Eyebrow({ label, light }) {
 
 function GlowyParticles({ count = 55 }) {
   const [pts] = useState(() => Array.from({ length: count }, () => ({
-    top:    `${(Math.random() * 92 + 2).toFixed(1)}%`,
-    left:   `${(Math.random() * 96 + 1).toFixed(1)}%`,
-    sz:     (Math.random() * 5 + 3).toFixed(1),
-    delay:  (Math.random() * 10).toFixed(2),
-    dur:    (Math.random() * 4 + 3).toFixed(2),
-    heart:  Math.random() > 0.68,
+    top:   `${(Math.random() * 92 + 2).toFixed(1)}%`,
+    left:  `${(Math.random() * 96 + 1).toFixed(1)}%`,
+    sz:    (Math.random() * 5 + 3).toFixed(1),
+    delay: (Math.random() * 10).toFixed(2),
+    dur:   (Math.random() * 4 + 3).toFixed(2),
+    cross: Math.random() > 0.68,
   })));
   return (
     <>
@@ -449,13 +372,13 @@ function GlowyParticles({ count = 55 }) {
         <span key={i} style={{
           position: "absolute", top: p.top, left: p.left,
           fontSize: `${p.sz}px`, lineHeight: 1,
-          color: p.heart ? "rgba(210,155,95,0.72)" : "rgba(242,218,162,0.78)",
-          textShadow: p.heart
+          color: p.cross ? "rgba(210,155,95,0.72)" : "rgba(242,218,162,0.78)",
+          textShadow: p.cross
             ? "0 0 7px rgba(201,169,110,0.9), 0 0 18px rgba(201,169,110,0.45)"
             : "0 0 5px rgba(245,225,165,0.95), 0 0 14px rgba(201,169,110,0.5)",
           animation: `twinkle-glow ${p.dur}s ${p.delay}s ease-in-out infinite`,
           pointerEvents: "none", zIndex: 0, userSelect: "none",
-        }}>{p.heart ? "♥" : "✦"}</span>
+        }}>{p.cross ? "✚" : "✦"}</span>
       ))}
     </>
   );
@@ -463,8 +386,8 @@ function GlowyParticles({ count = 55 }) {
 
 function WaveTop({ fill, h = 88 }) {
   return (
-    <div style={{ position:"absolute", top:0, left:0, right:0, lineHeight:0, zIndex:1, pointerEvents:"none" }}>
-      <svg viewBox={`0 0 1440 ${h}`} preserveAspectRatio="none" style={{ display:"block", width:"100%", height:h }}>
+    <div style={{ position: "absolute", top: 0, left: 0, right: 0, lineHeight: 0, zIndex: 1, pointerEvents: "none" }}>
+      <svg viewBox={`0 0 1440 ${h}`} preserveAspectRatio="none" style={{ display: "block", width: "100%", height: h }}>
         <path d={`M0,0 C480,${h} 960,${h} 1440,0 L1440,0 L0,0 Z`} fill={fill} />
       </svg>
     </div>
@@ -472,8 +395,8 @@ function WaveTop({ fill, h = 88 }) {
 }
 function WaveBottom({ fill, h = 88 }) {
   return (
-    <div style={{ position:"absolute", bottom:0, left:0, right:0, lineHeight:0, zIndex:1, pointerEvents:"none" }}>
-      <svg viewBox={`0 0 1440 ${h}`} preserveAspectRatio="none" style={{ display:"block", width:"100%", height:h }}>
+    <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, lineHeight: 0, zIndex: 1, pointerEvents: "none" }}>
+      <svg viewBox={`0 0 1440 ${h}`} preserveAspectRatio="none" style={{ display: "block", width: "100%", height: h }}>
         <path d={`M0,${h} C480,0 960,0 1440,${h} L1440,${h} L0,${h} Z`} fill={fill} />
       </svg>
     </div>
@@ -486,7 +409,6 @@ const SHOT_DATA = [
   { delay: 4.9, dur: 8,   top: "62%", left: "4%",  rot: 24, x0: "-130px", y0: "-75px",  x1: "450px", y1: "240px", len: 155 },
   { delay: 1.3, dur: 6.5, top: "14%", left: "78%", rot: 34, x0: "-85px",  y0: "-50px",  x1: "310px", y1: "175px", len: 88  },
   { delay: 3.7, dur: 7.5, top: "77%", left: "38%", rot: 26, x0: "-120px", y0: "-70px",  x1: "430px", y1: "235px", len: 120 },
-  { delay: 6.1, dur: 5.5, top: "45%", left: "22%", rot: 30, x0: "-95px",  y0: "-55px",  x1: "360px", y1: "200px", len: 105 },
 ];
 function ShootingStars() {
   return (
@@ -509,25 +431,25 @@ function ShootingStars() {
 function NebulaBg() {
   return (
     <>
-      <div style={{ position:"absolute", top:"12%", left:"3%", width:580, height:580, borderRadius:"50%", background:"radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 68%)", animation:"nebula-pulse 14s ease-in-out infinite", pointerEvents:"none", zIndex:0 }} />
-      <div style={{ position:"absolute", bottom:"8%", right:"5%", width:460, height:460, borderRadius:"50%", background:"radial-gradient(circle, rgba(180,130,80,0.065) 0%, transparent 68%)", animation:"nebula-pulse 18s 5s ease-in-out infinite", pointerEvents:"none", zIndex:0 }} />
-      <div style={{ position:"absolute", top:"48%", left:"48%", transform:"translate(-50%,-50%)", width:700, height:320, borderRadius:"50%", background:"radial-gradient(ellipse, rgba(201,169,110,0.04) 0%, transparent 68%)", animation:"nebula-pulse 22s 9s ease-in-out infinite", pointerEvents:"none", zIndex:0 }} />
+      <div style={{ position: "absolute", top: "12%", left: "3%", width: 580, height: 580, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 68%)", animation: "nebula-pulse 14s ease-in-out infinite", pointerEvents: "none", zIndex: 0 }} />
+      <div style={{ position: "absolute", bottom: "8%", right: "5%", width: 460, height: 460, borderRadius: "50%", background: "radial-gradient(circle, rgba(180,130,80,0.065) 0%, transparent 68%)", animation: "nebula-pulse 18s 5s ease-in-out infinite", pointerEvents: "none", zIndex: 0 }} />
+      <div style={{ position: "absolute", top: "48%", left: "48%", transform: "translate(-50%,-50%)", width: 700, height: 320, borderRadius: "50%", background: "radial-gradient(ellipse, rgba(201,169,110,0.04) 0%, transparent 68%)", animation: "nebula-pulse 22s 9s ease-in-out infinite", pointerEvents: "none", zIndex: 0 }} />
     </>
   );
 }
 
-function HeartsBg({ count = 56 }) {
+function SparksBg({ count = 60 }) {
   return (
     <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
       {Array.from({ length: count }).map((_, i) => {
-        const size = Math.random() * 8 + 6;
+        const size = Math.random() * 8 + 5;
         const left = Math.random() * 100;
-        const duration = Math.random() * 25 + 20;
+        const duration = Math.random() * 28 + 20;
         const delay = Math.random() * 20;
         return (
-          <div key={i} style={{ position: "absolute", left: `${left}%`, bottom: "-20px", width: size, height: size, opacity: 0.4, animation: `heartsFloat ${duration}s linear infinite`, animationDelay: `${delay}s` }}>
-            <svg viewBox="0 0 24 24" style={{ width: "100%", height: "100%", filter: "drop-shadow(0 0 6px rgba(255,255,255,0.6))" }}>
-              <path d="M12 21s-6-4.35-9-8.28C-1 7.5 3.5 2 8.5 5.5 10 6.5 12 9 12 9s2-2.5 3.5-3.5C20.5 2 25 7.5 21 12.72 18 16.65 12 21 12 21z" fill="rgba(255,255,255,0.9)" />
+          <div key={i} style={{ position: "absolute", left: `${left}%`, bottom: "-20px", width: size, height: size, opacity: 0.35, animation: `sparkFloat ${duration}s linear infinite`, animationDelay: `${delay}s` }}>
+            <svg viewBox="0 0 24 24" style={{ width: "100%", height: "100%", filter: "drop-shadow(0 0 5px rgba(255,255,255,0.5))" }}>
+              <path d="M12 2 L13.5 9 L20 7 L15 12 L20 17 L13.5 15 L12 22 L10.5 15 L4 17 L9 12 L4 7 L10.5 9 Z" fill="rgba(255,255,255,0.85)" />
             </svg>
           </div>
         );
@@ -539,7 +461,7 @@ function HeartsBg({ count = 56 }) {
 /* ════════════════════════════════════════════════════════════════ */
 /* HERO */
 function Hero() {
-  const bgRef   = useRef(null);
+  const bgRef = useRef(null);
   const { openBooking } = useBooking();
 
   useEffect(() => {
@@ -558,17 +480,17 @@ function Hero() {
           Vedic Saar · Sacred Services
         </div>
         <h1 style={{ fontFamily: HEADING_FONT, fontSize: "clamp(52px,9vw,100px)", fontWeight: 400, color: DARK, margin: "0 0 22px", lineHeight: 0.95, letterSpacing: -1 }}>
-          Love &amp;<br />Marriage
+          Health &amp;<br />Healing
         </h1>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 18, margin: "0 auto 32px", maxWidth: 660 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 18, margin: "0 auto 32px", maxWidth: 700 }}>
           <span style={{ flex: 1, height: "0.5px", background: `linear-gradient(to right, transparent, ${GOLD})` }} />
           <span style={{ fontFamily: HEADING_FONT, fontStyle: "italic", fontSize: 16, color: MUTED, whiteSpace: "nowrap" }}>
-            ✦ &nbsp; Love is not a coincidence. It is a cosmic contract. &nbsp; ✦
+            ✦ &nbsp; Your body is a temple written in the stars. Know it. Protect it. Heal it. &nbsp; ✦
           </span>
           <span style={{ flex: 1, height: "0.5px", background: `linear-gradient(to left, transparent, ${GOLD})` }} />
         </div>
         <p style={{ fontFamily: BODY_FONT, fontSize: BODY_SIZE, color: MUTED, maxWidth: 380, margin: "0 auto 48px", lineHeight: 2, letterSpacing: 0.5 }}>
-          Astrology &amp; Numerology Consultation
+          Astrology &amp; Ayurveda Consultation
         </p>
         <button onClick={openBooking} className="cta-btn">
           <span>Book Consultation</span>
@@ -580,15 +502,14 @@ function Hero() {
 }
 
 /* ════════════════════════════════════════════════════════════════ */
-/* INTRO — FIX: WaveTop filled by hero background color (white) not CREAM2 */
+/* INTRO */
 function IntroSection() {
   const ref = useRef(null);
   useReveal(ref);
 
   return (
     <section ref={ref} style={{ background: CREAM2, position: "relative", overflow: "hidden" }}>
-      {/* FIX 1: Hero section is white — so top wave fill = white to blend into hero */}
-      <WaveTop fill={CREAM2} />
+      <WaveTop fill={W} />
       <WaveBottom fill={DARK2} />
       <img src="/assets/wheel.png" alt="" style={{ position: "absolute", right: "-8%", top: "50%", transform: "translateY(-50%)", width: "clamp(480px,60vw,800px)", opacity: 0.13, pointerEvents: "none", animation: "spin-slow 180s linear infinite", filter: "sepia(0.3) saturate(0.7)", userSelect: "none" }} />
 
@@ -596,25 +517,22 @@ function IntroSection() {
         <Eyebrow label="Vedic Wisdom" />
 
         <h2 className="r" style={{ fontFamily: HEADING_FONT, fontWeight: 400, fontStyle: "italic", fontSize: HEADING_SIZE, color: DARK, lineHeight: 1.1, margin: "0 0 48px", letterSpacing: "-0.01em" }}>
-          A Sacred Samskara<br />
-          <span style={{ color: GOLD }}>Across Lifetimes</span>
+          Cosmic Constitution<br />
+          <span style={{ color: GOLD }}>Your Body's Blueprint</span>
         </h2>
 
         <div className="r d1" style={{ borderLeft: `2px solid ${GOLD}`, paddingLeft: 28, marginBottom: 40, textAlign: "left", maxWidth: 680, margin: "0 auto 40px" }}>
           <p style={{ fontFamily: HEADING_FONT, fontStyle: "italic", fontSize: 22, color: DARK, lineHeight: 1.7, margin: 0, opacity: 0.8 }}>
-            "In Vedic tradition, marriage is not a social contract — it is a sacred samskara, a rite of passage that shapes your soul's journey across lifetimes."
+            "Ayurveda and Vedic astrology share a common root — both see the human body as a microcosm of the cosmos. Every planet governs specific organs, tissues, and physiological systems."
           </p>
         </div>
 
         <p className="r d2" style={{ fontFamily: BODY_FONT, fontSize: BODY_SIZE, color: MUTED, lineHeight: 2.1, marginBottom: 24 }}>
-          Whether you are waiting for love to arrive, trying to fix a troubled relationship, or seeking clarity after heartbreak — your birth chart carries the most honest, unbiased answer about your relationship destiny.
-        </p>
-        <p className="r d3" style={{ fontFamily: BODY_FONT, fontSize: BODY_SIZE, color: MUTED, lineHeight: 2.1, marginBottom: 52 }}>
-          At Vedic Saar, we decode your relationship karma with precision and compassion — helping you understand not just <em>when</em> love will come, but what kind of love your soul truly seeks.
+          The birth chart is, in essence, your body's cosmic constitution — a map of your inherent strengths, your vulnerable systems, and the timing of health challenges across your lifetime. Astrology does not replace medicine. But it gives you something medicine alone cannot — the <em>why</em>, the <em>when</em>, and the preventive wisdom to protect your body before illness strikes.
         </p>
 
-        <div className="r d4" style={{ display: "flex", gap: 2, justifyContent: "center", flexWrap: "wrap" }}>
-          {["7 Key Houses Decoded", "6 Planetary Influences", "Navamsha Soul Chart"].map((s, i) => (
+        <div className="r d3" style={{ display: "flex", gap: 2, justifyContent: "center", flexWrap: "wrap" }}>
+          {["4 Key Houses Decoded", "9 Planetary Body Systems", "Dasha Health Timing"].map((s, i) => (
             <div key={i} style={{ padding: "11px 22px", background: DARK, color: CREAM, fontFamily: BODY_FONT, fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase" }}>
               {s}
             </div>
@@ -637,7 +555,7 @@ function HousesSection() {
       <WaveBottom fill={DARK2} />
       <GlowyParticles count={55} />
       <NebulaBg />
-      <HeartsBg count={100} />
+      <SparksBg count={80} />
       <img src="/assets/costelation.png" alt="" style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: 1000, opacity: 0.04, pointerEvents: "none", animation: "spin-slow 200s linear infinite" }} />
 
       <div style={{ maxWidth: 1240, margin: "0 auto", padding: "100px 48px 90px", position: "relative", zIndex: 1 }}>
@@ -646,21 +564,22 @@ function HousesSection() {
           Houses That Govern
         </h2>
         <p className="r d1" style={{ fontFamily: HEADING_FONT, fontStyle: "italic", fontSize: 26, color: GOLD, textAlign: "center", margin: "0 0 16px" }}>
-          Love &amp; Marriage
+          Health &amp; Healing
         </p>
         <p className="r d2" style={{ fontFamily: BODY_FONT, fontSize: 10, color: "rgba(201,169,110,0.38)", textAlign: "center", letterSpacing: "0.22em", margin: "0 0 60px", textTransform: "uppercase" }}>
           Hover to awaken each house
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
-          {houses.map((h, i) => (
-            <div key={i} className={`r d${(i % 3) + 1} hcard`}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20 }}>
+          {healthHouses.map((h, i) => (
+            <div key={i} className={`r d${(i % 2) + 1} hcard`}>
               <div className="hcard-orb" />
               <div style={{ position: "absolute", top: 0, right: 10, fontFamily: HEADING_FONT, fontSize: 86, fontWeight: 600, color: DARK, opacity: 0.06, lineHeight: 1, pointerEvents: "none", userSelect: "none" }}>{h.num}</div>
               <div style={{ height: 2, background: `linear-gradient(90deg, transparent, rgba(201,169,110,0.55), transparent)` }} />
               <div style={{ padding: "38px 30px 34px" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 26, height: 88 }}>
-                  <img src={`/assets/lovelogos/${houseLogos[i]}`} alt={h.title} style={{ height: 78, objectFit: "contain", opacity: 0.84, filter: "brightness(1.1) sepia(0.08)" }} />
+                  <img src={`/assets/healthlogos/${houseLogos[i]}`} alt={h.title} style={{ height: 78, objectFit: "contain", opacity: 0.84, filter: "brightness(1.1) sepia(0.08)" }}
+                    onError={e => { e.target.style.display = "none"; }} />
                 </div>
                 <div className="hcard-num" style={{ fontFamily: BODY_FONT, fontSize: 10, letterSpacing: "0.22em", color: GOLD, marginBottom: 10, textTransform: "uppercase", transition: "color 0.4s" }}>
                   {h.num} House
@@ -686,34 +605,16 @@ function HousesSection() {
 
 /* ════════════════════════════════════════════════════════════════ */
 /* PLANETS */
-
-const INNER_R = 170;
-const OUTER_R = 280;
-const SYS_DIM = 680;
-const SYS_CTR = SYS_DIM / 2;
-
-/* angleDeg: 0=right, 90=down, 180=left, 270=up (screen coords)
-   dir: "cw" = spin-slow (0→360°), "ccw" = spin-rev (0→-360°) */
-const PLANET_CFG = [
-  { orbitR: INNER_R, angleDeg: 270, ballSize: 62, duration: 60,  dir: "cw"  },
-  { orbitR: INNER_R, angleDeg: 30,  ballSize: 62, duration: 75,  dir: "cw"  },
-  { orbitR: INNER_R, angleDeg: 150, ballSize: 62, duration: 68,  dir: "cw"  },
-  { orbitR: OUTER_R, angleDeg: 90,  ballSize: 72, duration: 90,  dir: "ccw" },
-  { orbitR: OUTER_R, angleDeg: 210, ballSize: 72, duration: 110, dir: "ccw" },
-  { orbitR: OUTER_R, angleDeg: 330, ballSize: 72, duration: 100, dir: "ccw" },
-];
-
 function PlanetsSection() {
-  const ref    = useRef(null);
-  const sysRef = useRef(null);
+  const ref        = useRef(null);
+  const sysRef     = useRef(null);
   const [scale, setScale] = useState(1);
   useReveal(ref);
 
-  /* Scale down on narrow viewports */
   useEffect(() => {
     if (!sysRef.current) return;
     const parent = sysRef.current.parentElement;
-    const update = () => setScale(Math.min(1, (parent?.offsetWidth ?? SYS_DIM) / SYS_DIM));
+    const update = () => setScale(Math.min(1, (parent?.offsetWidth ?? H_SYS_DIM) / H_SYS_DIM));
     update();
     const ro = new ResizeObserver(update);
     ro.observe(parent);
@@ -726,17 +627,15 @@ function PlanetsSection() {
       <WaveBottom fill={DARK2} />
 
       <div style={{ maxWidth: 1300, margin: "0 auto", padding: "100px 48px 120px", position: "relative", zIndex: 1 }}>
-
-        {/* Header */}
         <Eyebrow label="Planetary Influences" />
         <h2 className="r" style={{ fontFamily: HEADING_FONT, fontWeight: 400, fontSize: HEADING_SIZE, color: DARK, textAlign: "center", margin: "0 0 8px" }}>
-          Planets That Shape
+          Planets That Govern
         </h2>
         <p className="r d1" style={{ fontFamily: HEADING_FONT, fontStyle: "italic", fontSize: 26, color: GOLD, textAlign: "center", margin: "0 0 16px" }}>
-          Your Love Life
+          Your Body &amp; Health
         </p>
         <p className="r d2" style={{ fontFamily: BODY_FONT, fontSize: 10, color: MUTED, textAlign: "center", letterSpacing: "0.22em", textTransform: "uppercase", margin: "0 0 56px" }}>
-          Hover each planet to reveal its influence
+          Hover each planet to reveal its body system
         </p>
 
         {/* ── Solar System ── */}
@@ -746,28 +645,28 @@ function PlanetsSection() {
             className="r d3"
             style={{
               position: "relative",
-              width: SYS_DIM, height: SYS_DIM,
+              width: H_SYS_DIM, height: H_SYS_DIM,
               flexShrink: 0,
               transform: `scale(${scale})`,
               transformOrigin: "top center",
-              marginBottom: `${-(SYS_DIM * (1 - scale))}px`,
+              marginBottom: `${-(H_SYS_DIM * (1 - scale))}px`,
             }}
           >
-            {/* Orbit rings */}
-            {[INNER_R, OUTER_R].map((r, i) => (
+            {/* Orbit rings — 3 rings */}
+            {[H_INNER_R, H_MIDDLE_R, H_OUTER_R].map((r, i) => (
               <div key={`ring-${i}`} style={{
                 position: "absolute", borderRadius: "50%",
                 top: "50%", left: "50%",
                 width: r * 2, height: r * 2,
                 marginLeft: -r, marginTop: -r,
-                border: `1px solid rgba(201,169,110,${i === 0 ? 0.45 : 0.35})`,
-                boxShadow: "0 0 10px rgba(201,169,110,0.1)",
+                border: `1px solid rgba(201,169,110,${[0.45, 0.35, 0.28][i]})`,
+                boxShadow: "0 0 10px rgba(201,169,110,0.08)",
                 pointerEvents: "none",
               }} />
             ))}
 
             {/* Decorative sub-rings */}
-            {[INNER_R - 20, OUTER_R + 20].map((r, i) => (
+            {[H_INNER_R - 18, H_MIDDLE_R + 18, H_OUTER_R + 18].map((r, i) => (
               <div key={`deco-${i}`} style={{
                 position: "absolute", borderRadius: "50%",
                 top: "50%", left: "50%",
@@ -780,8 +679,7 @@ function PlanetsSection() {
 
             {/* Sun */}
             <div style={{
-              position: "absolute",
-              top: "50%", left: "50%",
+              position: "absolute", top: "50%", left: "50%",
               transform: "translate(-50%, -50%)",
               width: 88, height: 88, borderRadius: "50%",
               background: "radial-gradient(circle at 38% 35%, #fffbe8, #f0c84a 48%, #c9902a)",
@@ -789,32 +687,25 @@ function PlanetsSection() {
               zIndex: 10,
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
-              <div style={{ position: "absolute", inset: -9,  borderRadius: "50%", border: "1px solid rgba(201,169,110,0.35)" }} />
+              <div style={{ position: "absolute", inset: -9, borderRadius: "50%", border: "1px solid rgba(201,169,110,0.35)" }} />
               <div style={{ position: "absolute", inset: -18, borderRadius: "50%", border: "1px solid rgba(201,169,110,0.18)" }} />
-              <span style={{ fontFamily: BODY_FONT, fontSize: 9, letterSpacing: "0.25em", color: "#3a2a06", textTransform: "uppercase", fontWeight: 600 }}>Love</span>
+              <span style={{ fontFamily: BODY_FONT, fontSize: 9, letterSpacing: "0.25em", color: "#3a2a06", textTransform: "uppercase", fontWeight: 600 }}>Body</span>
             </div>
 
-            {/* ── Orbiting planets ──
-                3-level wrapper technique:
-                  L1: rotates around system center (spin-slow CW or spin-rev CCW)
-                  L2: static translate to orbit radius
-                  L3: counter-rotates to keep planet upright
-                Negative animationDelay sets the starting angular position. */}
-            {planets.map((p, i) => {
-              const cfg = PLANET_CFG[i];
+            {/* Orbiting planets */}
+            {healthPlanets.map((p, i) => {
+              const cfg = H_PLANET_CFG[i];
               const { ballSize, duration, dir } = cfg;
               const spinAnim    = dir === "cw" ? "spin-slow" : "spin-rev";
               const counterAnim = dir === "cw" ? "spin-rev"  : "spin-slow";
-              // CW: planet is at angleDeg after (angleDeg/360)*duration seconds
-              // CCW: planet is at angleDeg after ((360-angleDeg)/360)*duration seconds
-              const startDelay = dir === "cw"
+              const startDelay  = dir === "cw"
                 ? -(cfg.angleDeg / 360) * duration
                 : -((360 - cfg.angleDeg) / 360) * duration;
 
               return (
                 <div key={i} style={{
                   position: "absolute",
-                  top: SYS_CTR, left: SYS_CTR,
+                  top: H_SYS_CTR, left: H_SYS_CTR,
                   width: 0, height: 0,
                   animation: `${spinAnim} ${duration}s linear infinite ${startDelay}s`,
                   willChange: "transform",
@@ -834,8 +725,10 @@ function PlanetsSection() {
                       >
                         <div className="planet-ball" style={{ width: ballSize, height: ballSize }}>
                           {planetImgs[i]
-                            ? <img src={planetImgs[i]} alt={p.name} style={{ width: "130%", height: "130%", objectFit: "contain", display: "block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
-                            : <span style={{ fontSize: Math.round(ballSize * 0.38), color: GOLD }}>{p.glyph}</span>
+                            ? <img src={planetImgs[i]} alt={p.name}
+                                style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%", display: "block" }}
+                                onError={e => { e.target.style.display = "none"; }} />
+                            : <span style={{ fontSize: Math.round(ballSize * 0.38), color: GOLD, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>{p.glyph}</span>
                           }
                         </div>
                         <div style={{ textAlign: "center", marginTop: 8 }}>
@@ -850,21 +743,17 @@ function PlanetsSection() {
                 </div>
               );
             })}
-
           </div>
         </div>
-        {/* END solar system */}
 
-        {/* ── Detail cards ── */}
-        <div className="r d4" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginTop: 48 }}>
-          {planets.map((p, i) => (
+        {/* Detail cards — 3 columns × 3 rows for 9 planets */}
+        <div className="r d4 planets-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginTop: 48 }}>
+          {healthPlanets.map((p, i) => (
             <div
               key={i}
               style={{
-                padding: "22px 20px",
-                background: W,
-                border: "1px solid rgba(201,169,110,0.16)",
-                borderRadius: 2,
+                padding: "22px 20px", background: W,
+                border: "1px solid rgba(201,169,110,0.16)", borderRadius: 2,
                 display: "flex", gap: 14, alignItems: "flex-start",
                 transition: "border-color 0.3s, transform 0.3s, box-shadow 0.3s",
                 cursor: "default",
@@ -888,7 +777,8 @@ function PlanetsSection() {
                 fontSize: 20, color: GOLD,
               }}>
                 {planetImgs[i]
-                  ? <img src={planetImgs[i]} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  ? <img src={planetImgs[i]} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      onError={e => { e.target.style.display = "none"; }} />
                   : p.glyph
                 }
               </div>
@@ -900,13 +790,13 @@ function PlanetsSection() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
 }
+
 /* ════════════════════════════════════════════════════════════════ */
-/* NUMEROLOGY FAN */
+/* NUMEROLOGY */
 function NumerologySection() {
   const ref    = useRef(null);
   const fanRef = useRef(null);
@@ -933,12 +823,12 @@ function NumerologySection() {
   }
 
   return (
-    <section ref={ref} style={{ position: "relative", overflow: "hidden", background: DARK, paddingBottom: 0 }} onMouseMove={handleFanMove} onMouseLeave={() => setHov(null)} className="grain">
+    <section ref={ref} style={{ position: "relative", overflow: "hidden", background: DARK2, paddingBottom: 0 }} onMouseMove={handleFanMove} onMouseLeave={() => setHov(null)} className="grain">
       <WaveTop fill={DARK2} />
       <WaveBottom fill={DARK2} />
       <GlowyParticles count={55} />
       <ShootingStars />
-      <HeartsBg count={20} />
+      <SparksBg count={20} />
       <NebulaBg />
       <div style={{ position: "absolute", top: "28%", left: "50%", transform: "translate(-50%,-50%)", opacity: 0.04, pointerEvents: "none" }}>
         <img src="/assets/wheel.png" alt="" style={{ width: 680, animation: "spin-slow 130s linear infinite", filter: "sepia(1) hue-rotate(20deg) brightness(1.4)" }} />
@@ -948,10 +838,10 @@ function NumerologySection() {
         <div style={{ textAlign: "center", marginBottom: 64 }}>
           <Eyebrow label="Vedic Numerology" light />
           <h2 className="r" style={{ fontFamily: HEADING_FONT, fontWeight: 400, fontSize: HEADING_SIZE, color: CREAM, lineHeight: 1.05, marginBottom: 14 }}>
-            Numbers &amp; <em style={{ color: GOLD, fontStyle: "italic" }}>Love</em>
+            Numbers &amp; <em style={{ color: GOLD, fontStyle: "italic" }}>Health</em>
           </h2>
           <p className="r d1" style={{ fontFamily: BODY_FONT, fontSize: BODY_SIZE, color: "rgba(245,240,232,0.42)", maxWidth: 500, margin: "0 auto", lineHeight: 1.9 }}>
-            In Vedic numerology, your Life Path Number reveals deep truths about love, timing, and relationship karma. Hover each card to discover your cosmic vibration.
+            In Vedic numerology, your Birth Number reveals your body's natural constitution and the organ systems most vulnerable to stress throughout your life.
           </p>
         </div>
       </div>
@@ -960,7 +850,7 @@ function NumerologySection() {
       <div ref={fanRef} className="r d2" style={{ position: "relative", top: -160, width: "100%", height: 560, overflow: "visible" }}>
         <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "50%", height: 1, background: `linear-gradient(90deg, transparent, rgba(201,169,110,0.15), transparent)`, zIndex: 0 }} />
 
-        {loveNumbers.map((n, i) => {
+        {healthNumbers.map((n, i) => {
           const isHov = hov === i;
           const angle = ANGLES[i];
           const baseZ = i < 2 ? i + 1 : 4 - i;
@@ -1016,7 +906,7 @@ function NumerologySection() {
                   transform: "rotateY(180deg)",
                   background: `linear-gradient(145deg, #0d0a06, #1c140a)`,
                   border: "1px solid rgba(201,169,110,0.38)",
-                  boxShadow: `0 30px 80px rgba(0,0,0,0.72), 0 0 60px rgba(201,169,110,0.05)`,
+                  boxShadow: `0 30px 80px rgba(0,0,0,0.72)`,
                   padding: "24px 20px",
                   display: "flex", flexDirection: "column",
                 }}>
@@ -1071,10 +961,10 @@ function ProblemsSection() {
             <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
               <div style={{ width: 3, height: 28, background: GOLD, borderRadius: 2 }} />
               <h3 style={{ fontFamily: HEADING_FONT, fontSize: 26, fontWeight: 500, color: DARK, margin: 0, lineHeight: 1.2 }}>
-                Love &amp; Marriage Problems
+                Health Problems We Address
               </h3>
             </div>
-            {problems.map((p, i) => (
+            {healthProblems.map((p, i) => (
               <div key={i} className="prob-row">
                 <span style={{ fontFamily: BODY_FONT, fontSize: 9, color: GOLD, marginTop: 3, flexShrink: 0, opacity: 0.65 }}>{String(i + 1).padStart(2, "0")}</span>
                 <span style={{ fontFamily: BODY_FONT, fontSize: BODY_SIZE, color: MUTED, lineHeight: 1.75 }}>{p}</span>
@@ -1090,17 +980,17 @@ function ProblemsSection() {
               </h3>
             </div>
             <p style={{ fontFamily: BODY_FONT, fontSize: BODY_SIZE, color: MUTED, marginBottom: 28, lineHeight: 1.9 }}>
-              Certain planetary combinations create invisible barriers in love and marriage. Our reading specifically checks for:
+              Certain planetary combinations create invisible health vulnerabilities. Our reading specifically checks for:
             </p>
-            {hiddenIssues.map((h, i) => (
-              <div key={i} className="prob-row" style={{ borderBottomColor: i < hiddenIssues.length - 1 ? "rgba(28,20,13,0.07)" : "transparent" }}>
+            {healthHiddenIssues.map((h, i) => (
+              <div key={i} className="prob-row" style={{ borderBottomColor: i < healthHiddenIssues.length - 1 ? "rgba(28,20,13,0.07)" : "transparent" }}>
                 <span style={{ color: GOLD, fontSize: 8, marginTop: 5, flexShrink: 0 }}>◆</span>
                 <span style={{ fontFamily: BODY_FONT, fontSize: BODY_SIZE, color: DARK, lineHeight: 1.75 }}>{h}</span>
               </div>
             ))}
             <div style={{ marginTop: 36, padding: "24px 28px", background: DARK, borderLeft: `3px solid ${GOLD}` }}>
               <div style={{ fontFamily: HEADING_FONT, fontStyle: "italic", fontSize: 16, color: CREAM, lineHeight: 1.75, opacity: 0.82 }}>
-                "Every chart tells a complete love story — from first attraction to lifelong union. We read all chapters."
+                "Prevention is divine grace. Your chart shows you exactly where to protect yourself."
               </div>
             </div>
           </div>
@@ -1117,9 +1007,9 @@ function GuideSection() {
   useReveal(ref);
 
   return (
-    <section ref={ref} style={{ background: '#faf8f5', position: "relative", overflow: "hidden" }} className="grain">
+    <section ref={ref} style={{ background: "#faf8f5", position: "relative", overflow: "hidden" }} className="grain">
       <WaveTop fill={CREAM2} />
-      <img src="/assets/wheel.png" alt="" style={{ position: "absolute", left: "-100px", bottom: "35px", width: 650, opacity: 0.2, pointerEvents: "none", animation: "spin-slow 160s linear infinite" }} />
+      <img src="/assets/wheel.png" alt="" style={{ position: "absolute", left: "-100px", bottom: "40px", width: 800, opacity: 0.2, pointerEvents: "none", animation: "spin-slow 160s linear infinite" }} />
 
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "100px 48px 100px", position: "relative", zIndex: 1 }}>
         <Eyebrow label="Our Approach" />
@@ -1127,11 +1017,11 @@ function GuideSection() {
           How We Guide You
         </h2>
         <p className="r d1" style={{ fontFamily: HEADING_FONT, fontStyle: "italic", fontSize: 26, color: GOLD, textAlign: "center", margin: "0 0 64px" }}>
-          Towards Love
+          Towards Health &amp; Healing
         </p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
-          {guideItems.map((g, i) => (
+          {healthGuideItems.map((g, i) => (
             <div key={i} className={`r d${(i % 3) + 1} gitem`} style={{ padding: "32px 28px", background: "white", display: "flex", gap: 20, alignItems: "flex-start" }}>
               <span style={{ fontFamily: HEADING_FONT, fontSize: 26, color: GOLD, lineHeight: 1, flexShrink: 0, paddingTop: 2, fontWeight: 400 }}>{g.n}</span>
               <span style={{ fontFamily: BODY_FONT, fontSize: BODY_SIZE, color: "black", lineHeight: 1.9 }}>{g.text}</span>
@@ -1163,14 +1053,15 @@ function CTASection() {
 
   return (
     <section ref={ref} style={{ backgroundImage: 'url("/assets/Testimonialsbg.png")', marginTop: -120, backgroundSize: "cover", backgroundPosition: "top center", padding: "130px 48px 150px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <div ref={moonRef} style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none" }} />
       <div style={{ position: "relative", zIndex: 2, marginTop: 500 }}>
         <div className="r" style={{ fontFamily: HEADING_FONT, fontStyle: "italic", fontSize: 16, color: "black", marginBottom: 52, letterSpacing: "0.03em" }}>
-          ✦ &nbsp; Your person exists. Your chart shows you how to find them — and when. &nbsp; ✦
+          ✦ &nbsp; Prevention is divine grace. Your chart shows you exactly where to protect yourself. &nbsp; ✦
         </div>
 
         <h2 className="r d1" style={{ fontFamily: HEADING_FONT, fontWeight: 400, fontSize: HEADING_SIZE, color: "black", margin: 0, lineHeight: 0.92, letterSpacing: "-0.02em" }}>
           Book Your<br />
-          <span className="gold-shimmer">Love &amp; Marriage</span><br />
+          <span className="gold-shimmer">Health &amp; Healing</span><br />
           Consultation
         </h2>
 
@@ -1181,7 +1072,7 @@ function CTASection() {
         </div>
 
         <p className="r d3" style={{ fontFamily: BODY_FONT, fontSize: 10, color: "black", maxWidth: 360, margin: "0 auto 60px", lineHeight: 2, letterSpacing: "0.18em", textTransform: "uppercase" }}>
-          Transform Your Relationship Destiny
+          Protect Your Body With Cosmic Wisdom
         </p>
 
         <div className="r d4">
@@ -1196,7 +1087,7 @@ function CTASection() {
 }
 
 /* ════════════════════════════════════════════════════════════════ */
-export default function LoveMarriagePage() {
+export default function HealthPage() {
   return (
     <>
       <style>{CSS}</style>

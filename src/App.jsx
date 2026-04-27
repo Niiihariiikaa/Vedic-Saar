@@ -17,6 +17,7 @@ import AboutPage from './pages/About'
 import RudrakshaPage from './pages/Rudraksha'
 import VaastuPage from './pages/Vaastu'
 import LoveMarriagePage from './pages/LoveMarriage'
+import HealthPage from './pages/Health'
 gsap.registerPlugin(ScrollTrigger);
 
 function MainLayout() {
@@ -47,6 +48,7 @@ export default function App() {
         <Route path='/about' element={<AboutPage />} />
         <Route path='/vaastu' element={<VaastuPage />} />
         <Route path='/life-solutions/love-marriage' element={<LoveMarriagePage />} />
+        <Route path='/life-solutions/health' element={<HealthPage />} />
       </Routes>
       <Footer />  {/* ✅ Renders on every route */}
     </BrowserRouter>
