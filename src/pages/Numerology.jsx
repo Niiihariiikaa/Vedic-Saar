@@ -288,86 +288,147 @@ function SlidingStrip() {
   );
 }
 
-/* ── WHAT IS NUMEROLOGY ──────────────────────────────────────────────────────── */
 function WhatIsSection() {
   const sectionRef = useRef(null);
-  const wheelRef   = useRef(null);
   const bodyRef    = useRef(null);
   const { openBooking } = useBooking();
   useReveal(bodyRef);
 
-  useEffect(() => {
-    const s = sectionRef.current;
-    const w = wheelRef.current;
-    if (!s || !w) return;
-    let topOffset = s.getBoundingClientRect().top + window.scrollY;
-    const onResize = () => { topOffset = s.getBoundingClientRect().top + window.scrollY; };
-    window.addEventListener("resize", onResize, { passive: true });
-    const sHeight = s.offsetHeight;
-    const unsub = subscribeScroll((y) => {
-      if (y > topOffset + sHeight || y + window.innerHeight < topOffset) return;
-      const scrolledPast = y - topOffset;
-      w.style.transform = `translate3d(-200px, 0, 0) rotateZ(${Math.max(0, scrolledPast) / 4}deg)`;
-    });
-    return () => { unsub(); window.removeEventListener("resize", onResize); };
-  }, []);
-
   return (
-    <section ref={sectionRef} style={{
-      padding: "130px 80px 140px", overflow: "hidden", position: "relative", contain: "paint",
-      background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%)",
-    }}>
-      <div ref={bodyRef} style={{
-        maxWidth: 1200, marginTop: -100,
-        display: "grid", gridTemplateColumns: "1fr 1.25fr",
-        gap: 200, alignItems: "center", position: "relative", zIndex: 50,
-      }}>
-        {/* LEFT — wheel */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
-          <img
-            ref={wheelRef}
-            src="/assets/num.png"
-            alt="Numerology Wheel"
-            style={{ width: "250%", maxWidth: "none", height: "auto", display: "block", transformOrigin: "center", willChange: "transform", transform: "translate3d(-200px, 0, 0)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", position: "relative", zIndex: 1, opacity: 0.2 }}
+    <section
+      ref={sectionRef}
+      style={{
+        padding: "140px 80px",
+        overflow: "hidden",
+        position: "relative",
+        background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%)",
+      }}
+    >
+      <div
+        ref={bodyRef}
+        style={{
+          maxWidth: 1000,
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+        }}
+      >
+        {/* TOP LABEL */}
+        <div className="rv" style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          marginBottom: 28
+        }}>
+          <span style={{ width: 28, height: 1, background: gold }} />
+          <span style={{
+            fontFamily: "'Glacial Indifference', sans-serif",
+            fontSize: 11,
+            letterSpacing: 3,
+            textTransform: "uppercase",
+            color: gold
+          }}>
+            Ancient Vedic Science
+          </span>
+        </div>
+
+        {/* HEADING */}
+        <h2 className="rv" style={{
+          fontFamily: "'Ibarra Real Nova', serif",
+          fontSize: HEADING_SIZE,
+          fontWeight: 400,
+          color: dark,
+          lineHeight: 1.1,
+          marginBottom: 16
+        }}>
+          What is Numerology?
+        </h2>
+
+        {/* SUBTITLE */}
+        <p className="rv" style={{
+          fontFamily: "'Ibarra Real Nova', serif",
+          fontSize: 37,
+          color: gold,
+          fontStyle: "italic",
+          marginBottom: 36
+        }}>
+          The Language of Numbers
+        </p>
+
+        {/* CONTENT */}
+        <p className="rv" style={{
+          fontFamily: "'Glacial Indifference', sans-serif",
+          fontSize: 22,
+          color: "#6b5f5e",
+          lineHeight: 1.95,
+          marginBottom: 20
+        }}>
+          Rooted in thousands of years of Indian wisdom, numerology is the study of the mystical relationship between numbers and the events that govern your life. Every letter in your name and every digit in your birth date carries a vibrational signature.
+        </p>
+
+        <p className="rv" style={{
+          fontFamily: "'Glacial Indifference', sans-serif",
+          fontSize: 22,
+          color: "#6b5f5e",
+          lineHeight: 1.95,
+          marginBottom: 40
+        }}>
+          When decoded together, these vibrations reveal your personality, strengths, hidden challenges, and soul's true purpose — with remarkable precision.
+        </p>
+
+        {/* QUOTE BOX */}
+        <div className="rv" style={{
+          borderLeft: `3px solid ${gold}`,
+          padding: "20px 26px",
+          background: `${gold}0a`,
+          marginBottom: 44
+        }}>
+          <p style={{
+            fontFamily: "'Ibarra Real Nova', serif",
+            fontSize: 20,
+            color: "#7a6460",
+            lineHeight: 1.85,
+            fontStyle: "italic"
+          }}>
+            Every number around you — your name, birth date, phone number, house number — carries a cosmic frequency that shapes your entire life.
+          </p>
+        </div>
+
+        {/* ACCORDION */}
+        <div className="rv">
+          <AccItem
+            title="Birth & Life Path Numbers"
+            body="Derived from your date of birth, these reveal your natural personality, life's overarching purpose, and why certain phases feel effortless while others feel like a struggle."
+          />
+          <AccItem
+            title="Name & Mobile Number Vibration"
+            body="Every alphabet carries a numerical value. A name or mobile number misaligned with your core numbers creates invisible resistance — even when you're doing everything right."
           />
         </div>
 
-        {/* RIGHT */}
-        <div style={{ paddingTop: 8 }}>
-          <div className="rv" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
-            <span style={{ width: 28, height: 1, background: gold }} />
-            <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: gold }}>Ancient Vedic Science</span>
-          </div>
-          <h2 className="rv" style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: HEADING_SIZE, fontWeight: 400, color: dark, lineHeight: 1.1, marginBottom: 16, transitionDelay: "0.08s" }}>
-            What is<br />Numerology?
-          </h2>
-          <p className="rv" style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 37, color: gold, fontStyle: "italic", marginBottom: 36, transitionDelay: "0.12s" }}>
-            The Language of Numbers
-          </p>
-          <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 22, color: "#6b5f5e", lineHeight: 1.95, marginBottom: 20, transitionDelay: "0.16s" }}>
-            Rooted in thousands of years of Indian wisdom, numerology is the study of the mystical relationship between numbers and the events that govern your life. Every letter in your name and every digit in your birth date carries a vibrational signature.
-          </p>
-          <p className="rv" style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 22, color: "#6b5f5e", lineHeight: 1.95, marginBottom: 40, transitionDelay: "0.2s" }}>
-            When decoded together, these vibrations reveal your personality, strengths, hidden challenges, and soul's true purpose — with remarkable precision.
-          </p>
-          <div className="rv" style={{ borderLeft: `3px solid ${gold}`, padding: "20px 26px", background: `${gold}0a`, marginBottom: 44, transitionDelay: "0.24s" }}>
-            <p style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 20, color: "#7a6460", lineHeight: 1.85, fontStyle: "italic" }}>
-              Every number around you — your name, birth date, phone number, house number — carries a cosmic frequency that shapes your entire life.
-            </p>
-          </div>
-          <div className="rv" style={{ transitionDelay: "0.28s" }}>
-            <AccItem title="Birth & Life Path Numbers" body="Derived from your date of birth, these reveal your natural personality, life's overarching purpose, and why certain phases feel effortless while others feel like a struggle." />
-            <AccItem title="Name & Mobile Number Vibration" body="Every alphabet carries a numerical value. A name or mobile number misaligned with your core numbers creates invisible resistance — even when you're doing everything right." />
-          </div>
-          <div className="rv" style={{ marginTop: 44, transitionDelay: "0.32s" }}>
-              <button
-              onClick={() => openBooking("Numerology")}
-              style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
-              Book Your Numerology Consultation →
-            </button>
-          </div>
+        {/* CTA */}
+        <div className="rv" style={{ marginTop: 44 }}>
+          <button
+            onClick={() => openBooking("Numerology")}
+            style={{
+              ...dashedBtn("#fff"),
+              background: dark,
+              border: "2px dashed #fff"
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = "translateY(-3px)";
+              e.currentTarget.style.background = "#2e2620";
+              e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = "none";
+              e.currentTarget.style.background = dark;
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            Book Your Numerology Consultation →
+          </button>
         </div>
       </div>
     </section>

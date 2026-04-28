@@ -606,29 +606,52 @@ function WhySection() {
   );
 }
 
+
+const ELEM_IMAGES = {
+  air: "assets/vaastu/wind.png",
+  water: "assets/vaastu/jal.png",
+  fire: "assets/vaastu/agni.png",
+  earth: "assets/vaastu/prithvi.png",
+  space: "assets/vaastu/akash.png",
+};
 /* ── FIVE ELEMENTS (PANCHABHUTA) ─────────────────────────────────────────────── */
 
 function ElemSymbol({ type }) {
   const sv = { viewBox: "0 0 100 100", fill: "none", xmlns: "http://www.w3.org/2000/svg", style: { width: "100%", height: "100%" } };
-  if (type === "earth") return (
-    <svg {...sv}>
-      <rect x="13" y="13" width="74" height="74" stroke={gold} strokeWidth="1"/>
-      <rect x="24" y="24" width="52" height="52" stroke={gold} strokeWidth="0.5" opacity="0.6"/>
-      <rect x="35" y="35" width="30" height="30" stroke={gold} strokeWidth="0.4" opacity="0.35"/>
-      <line x1="13" y1="50" x2="87" y2="50" stroke={gold} strokeWidth="0.5" opacity="0.4"/>
-      <line x1="50" y1="13" x2="50" y2="87" stroke={gold} strokeWidth="0.5" opacity="0.4"/>
-      <circle cx="50" cy="50" r="3.5" fill={gold} opacity="0.75"/>
-    </svg>
-  );
-  if (type === "water") return (
-    <svg {...sv}>
-      <path d="M50 16 Q70 38 70 54 A20 20 0 0 1 30 54 Q30 38 50 16Z" stroke={gold} strokeWidth="1" opacity="0.85"/>
-      <path d="M50 30 Q63 47 63 54 A13 13 0 0 1 37 54 Q37 47 50 30Z" stroke={gold} strokeWidth="0.5" opacity="0.5"/>
-      <path d="M20 84 Q32 76 44 84 Q56 92 68 84 Q76 78 80 84" stroke={gold} strokeWidth="1" opacity="0.6"/>
-      <path d="M16 76 Q30 68 46 76 Q60 84 74 76" stroke={gold} strokeWidth="0.5" opacity="0.35"/>
-      <circle cx="50" cy="56" r="4" stroke={gold} strokeWidth="0.5" opacity="0.4"/>
-    </svg>
-  );
+ 
+if (type === "earth") return (
+  <svg {...sv}>
+    {/* base square (stability) */}
+    <rect x="12" y="12" width="76" height="76" stroke={gold} strokeWidth="1"/>
+
+    {/* alchemical earth symbol */}
+    <path d="M30 40 L50 70 L70 40 Z" stroke={gold} strokeWidth="0.8"/>
+    <line x1="35" y1="50" x2="65" y2="50" stroke={gold} strokeWidth="0.6"/>
+
+    {/* subtle grid */}
+    <line x1="50" y1="12" x2="50" y2="88" stroke={gold} strokeWidth="0.4" opacity="0.3"/>
+    <line x1="12" y1="50" x2="88" y2="50" stroke={gold} strokeWidth="0.4" opacity="0.3"/>
+
+    {/* bindu */}
+    <circle cx="50" cy="50" r="3" fill={gold}/>
+  </svg>
+);
+ 
+if (type === "water") return (
+  <svg {...sv}>
+    {/* droplet */}
+    <path d="M50 18 Q68 40 68 54 A18 18 0 0 1 32 54 Q32 40 50 18Z"
+      stroke={gold} strokeWidth="1"/>
+
+    {/* ripples */}
+    <ellipse cx="50" cy="70" rx="22" ry="6" stroke={gold} strokeWidth="0.5" opacity="0.5"/>
+    <ellipse cx="50" cy="78" rx="14" ry="4" stroke={gold} strokeWidth="0.4" opacity="0.3"/>
+
+    {/* inner flow */}
+    <path d="M50 30 Q60 45 50 55 Q40 45 50 30Z"
+      stroke={gold} strokeWidth="0.4" opacity="0.4"/>
+  </svg>
+);
   if (type === "fire") return (
     <svg {...sv}>
       <path d="M50 10 L86 76 L14 76 Z" stroke={gold} strokeWidth="1" opacity="0.85"/>
@@ -817,9 +840,27 @@ function ElementsSection() {
                 padding: "0 12px",
               }}
             >
-              <div style={{ width: 42, height: 42, marginBottom: 9, opacity: isHov ? 1 : 0.6, transition: "opacity 0.3s, transform 0.35s", transform: isHov ? "scale(1.1)" : "scale(1)" }}>
-                <ElemSymbol type={el.type} />
-              </div>
+              <div style={{
+  width: 42,
+  height: 42,
+  marginBottom: 9,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center"
+}}>
+  <img
+    src={ELEM_IMAGES[el.type]}
+    alt={el.name}
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "contain",
+      opacity: isHov ? 1 : 0.6,
+      transition: "opacity 0.3s, transform 0.35s",
+      transform: isHov ? "scale(1.1)" : "scale(1)"
+    }}
+  />
+</div>
               <div style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 15, color: "#fff", letterSpacing: 0.4, textAlign: "center", lineHeight: 1.2, marginBottom: 4 }}>
                 {el.name}
               </div>

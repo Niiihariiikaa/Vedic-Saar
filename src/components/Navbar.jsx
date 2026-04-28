@@ -52,7 +52,7 @@ const subRoutes = {
 
 const navItems = [
   'Home', 'Life Solutions', 'Vaastu', 'Numerology', 'Vedic Astrology', 'Rudraksha',   'About',   'Gemstones',
-  'Mantra'
+  'Mantra', 'Remedies'
 ]
 
 export default function Navbar() {

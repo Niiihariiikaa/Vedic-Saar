@@ -326,7 +326,6 @@ const houses = [
 ];
 
 const planets = [
-  { glyph: "☉", name: "Sun",     sub: "Leadership, Government & Authority",    desc: "Government jobs, politics, administration, senior management, medicine. Weak Sun creates difficulty with authority and recognition at work." },
   { glyph: "☽", name: "Moon",    sub: "Hospitality, Nursing & Public Relations", desc: "Healthcare, hospitality, food, fashion, public-facing roles. Moon rules careers that involve nurturing and serving the public." },
   { glyph: "♂", name: "Mars",    sub: "Engineering, Military & Sports",         desc: "Technical fields, defence, police, surgery, construction, real estate, sports. Mars gives competitive drive and physical courage." },
   { glyph: "☿", name: "Mercury", sub: "Commerce, IT & Communication",           desc: "Banking, accounting, writing, journalism, IT, teaching, marketing. Strongest planet for business acumen and analytical professions." },
@@ -375,16 +374,16 @@ const guideItems = [
   { n: "06", text: "Provide mantras and gemstone guidance — Surya Mantra, Blue Sapphire, Ruby, Emerald" },
 ];
 
-const houseLogos = ["c1.png", "c2.png", "c3.png", "c4.png", "c5.png", "c6.png"];
+const houseLogos = [ "c1.png", "c2.png", "c3.png", "c4.png", "c5.png"];
 const planetImgs = [
-  "/assets/careerlogos/planets/sun.png",
-  "/assets/careerlogos/planets/moon.png",
-  "/assets/careerlogos/planets/mars.png",
-  "/assets/careerlogos/planets/mercury.png",
-  "/assets/careerlogos/planets/jupiter.png",
-  "/assets/careerlogos/planets/venus.png",
-  "/assets/careerlogos/planets/saturn.png",
-  "/assets/careerlogos/planets/rahu.png",
+  "/assets/lovelogos/planets/sun.png",
+  "/assets/lovelogos/planets/moon.png",
+  "/assets/lovelogos/planets/mars.png",
+  "/assets/lovelogos/planets/mercury.png",
+  "/assets/lovelogos/planets/jupiter.png",
+  "/assets/lovelogos/planets/venus.png",
+  "/assets/lovelogos/planets/saturn.png",
+  "/assets/lovelogos/planets/rahu.png",
 ];
 
 /* ════════════════════════════════════════════════════════════════ */
