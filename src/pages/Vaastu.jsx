@@ -208,27 +208,177 @@ function SlidingStrip() {
   );
 }
 
+function VaastuCompass() {
+  useEffect(() => {
+    const needle = document.getElementById("vaastu-needle");
+    if (!needle) return;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const section = needle.closest("section");
+        const scrolledPast = Math.max(0, window.scrollY - (section?.offsetTop ?? 0));
+        needle.style.transform = `rotateZ(${scrolledPast / 2}deg)`;
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const ticks = Array.from({ length: 72 }).map((_, i) => {
+    const rad = (i * 5 * Math.PI) / 180;
+    const isMajor = i % 9 === 0, isMid = i % 3 === 0;
+    const r1 = 232, r2 = isMajor ? 200 : isMid ? 212 : 222;
+    return (
+      <line key={i}
+        x1={250 + r1 * Math.sin(rad)} y1={250 - r1 * Math.cos(rad)}
+        x2={250 + r2 * Math.sin(rad)} y2={250 - r2 * Math.cos(rad)}
+        stroke="#c8a97a" strokeWidth={isMajor ? 2.2 : isMid ? 1.4 : 0.7}
+      />
+    );
+  });
+
+  const cardinals = [
+    ["N", 250, 58],
+    ["S", 250, 448],
+    ["E", 448, 256],
+    ["W", 52,  256],
+  ];
+
+  const intercardinals = [
+    ["NE", 368, 134],
+    ["NW", 132, 134],
+    ["SE", 368, 374],
+    ["SW", 132, 374],
+  ];
+
+  return (
+    <svg
+      viewBox="0 0 500 500"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{
+        width: "120%",
+        maxWidth: "700px",
+        height: "auto",
+        display: "block",
+        position: "relative",
+        zIndex: 1,
+        opacity: 0.6,
+        transform: "scale(1.6) translateX(-25%)",
+        transformOrigin: "center",
+        willChange: "auto",
+      }}
+    >
+      {/* ── Outer rings (static) ── */}
+      <circle cx="250" cy="250" r="245" fill="#f5eedf" stroke="#c8a97a" strokeWidth="5"/>
+      <circle cx="250" cy="250" r="232" fill="none"    stroke="#c8a97a" strokeWidth="2"/>
+      <circle cx="250" cy="250" r="220" fill="none"    stroke="#e8dcc0" strokeWidth="1"/>
+
+      {/* ── Tick marks ── */}
+      {ticks}
+
+      {/* ── Inner rings ── */}
+      <circle cx="250" cy="250" r="175" fill="none" stroke="#c8a97a" strokeWidth="1" strokeDasharray="4 5"/>
+      <circle cx="250" cy="250" r="150" fill="none" stroke="#d9c99a" strokeWidth="0.8"/>
+
+      {/* ── Rose lines (behind needle) ── */}
+      {[
+        [250,175,250,78],[250,325,250,422],
+        [175,250,78,250],[325,250,422,250],
+        [196,196,142,142],[304,196,358,142],
+        [196,304,142,358],[304,304,358,358],
+      ].map(([x1,y1,x2,y2],i) => (
+        <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
+          stroke="#a07840" strokeWidth="1" opacity="0.4"/>
+      ))}
+
+      {/* ── Cardinal labels with knockout circle behind ── */}
+      {cardinals.map(([l, x, y]) => (
+        <g key={l}>
+          <circle cx={x} cy={y} r="20" fill="#f5eedf"/>
+          <text
+            x={x} y={y}
+            textAnchor="middle" dominantBaseline="middle"
+            fontFamily="'Ibarra Real Nova', Georgia, serif"
+            fontSize="24" fontWeight="bold" fill="#7a5c2e"
+          >
+            {l}
+          </text>
+        </g>
+      ))}
+
+      {/* ── Intercardinal labels with knockout circle behind ── */}
+      {intercardinals.map(([l, x, y]) => (
+        <g key={l}>
+          <circle cx={x} cy={y} r="17" fill="#f5eedf"/>
+          <text
+            x={x} y={y}
+            textAnchor="middle" dominantBaseline="middle"
+            fontFamily="'Glacial Indifference', sans-serif"
+            fontSize="13" fill="#a07840" letterSpacing="1"
+          >
+            {l}
+          </text>
+        </g>
+      ))}
+
+      {/* ── NEEDLE — only this rotates on scroll ── */}
+      <g
+        id="vaastu-needle"
+        style={{ transformOrigin: "250px 250px", willChange: "transform" }}
+      >
+        {/* North tip — dark walnut */}
+        <polygon points="250,55  236,250 264,250" fill="#3d2b0e"/>
+        {/* South tip — muted gold */}
+        <polygon points="250,445 236,250 264,250" fill="#b09060"/>
+        {/* Center pivot */}
+        <circle cx="250" cy="250" r="14" fill="#2c1f0a"/>
+        <circle cx="250" cy="250" r="8"  fill="#c8a97a"/>
+        <circle cx="250" cy="250" r="3"  fill="#f5eedf"/>
+      </g>
+
+      {/* ── Decorative ring over needle center ── */}
+      <circle cx="250" cy="250" r="36" fill="none" stroke="#c8a97a" strokeWidth="1.5"/>
+    </svg>
+  );
+}
 /* ── WHAT IS VAASTU ──────────────────────────────────────────────────────────── */
 function WhatIsSection() {
-  const sectionRef = useRef(null);
-  const wheelRef   = useRef(null);
-  const bodyRef    = useRef(null);
+  const sectionRef  = useRef(null);
+  const compassRef  = useRef(null);   // ← replaces wheelRef
+  const needleRef   = useRef(null);
+  const bodyRef     = useRef(null);
   const { openBooking } = useBooking();
   useReveal(bodyRef);
 
   useEffect(() => {
     const s = sectionRef.current;
-    const w = wheelRef.current;
-    if (!s || !w) return;
+    const c = compassRef.current;
+    if (!s || !c) return;
+
     let topOffset = s.getBoundingClientRect().top + window.scrollY;
     const onResize = () => { topOffset = s.getBoundingClientRect().top + window.scrollY; };
     window.addEventListener("resize", onResize, { passive: true });
+
+    const needle = c.querySelector("#compass-needle");
     const sHeight = s.offsetHeight;
+
     const unsub = subscribeScroll((y) => {
       if (y > topOffset + sHeight || y + window.innerHeight < topOffset) return;
-      const scrolledPast = y - topOffset;
-      w.style.transform = `translate3d(-200px, 0, 0) rotateZ(${Math.max(0, scrolledPast) / 4}deg)`;
+
+      const scrolledPast = Math.max(0, y - topOffset);
+
+      // Whole compass drifts in (same as before)
+      c.style.transform = `translate3d(-200px, 0, 0) rotateZ(${scrolledPast / 4}deg)`;
+
+      // Needle rotates independently — faster, oscillating feel
+      if (needle) {
+        needle.style.transform = `rotateZ(${scrolledPast / 1.8}deg)`;
+      }
     });
+
     return () => { unsub(); window.removeEventListener("resize", onResize); };
   }, []);
 
@@ -237,20 +387,34 @@ function WhatIsSection() {
       padding: "130px 80px 140px", overflow: "hidden", position: "relative", contain: "paint",
       background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%)",
     }}>
-      <div ref={bodyRef} style={{
-        maxWidth: 1200, marginTop: -100,
-        display: "grid", gridTemplateColumns: "1fr 1.25fr",
-        gap: 200, alignItems: "center", position: "relative", zIndex: 50,
-      }}>
-        {/* LEFT — rotating vastu diagram */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
-          <img
-            ref={wheelRef}
-            src="/assets/vastu-wheel.svg"
-            alt="Vaastu Diagram"
-            style={{ width: "250%", maxWidth: "none", height: "auto", display: "block", transformOrigin: "center", willChange: "transform", transform: "translate3d(-200px, 0, 0)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", position: "relative", zIndex: 1, opacity: 0.25 }}
-          />
-        </div>
+      {/* grid wrapper — reduce gap */}
+<div ref={bodyRef} style={{
+  maxWidth: 1200,
+  marginTop: -100,
+  display: "grid",
+  gridTemplateColumns: "1fr 1.25fr",
+  gap: 80,                          // ✅ was 200
+  alignItems: "center",
+  position: "relative",
+  zIndex: 50,
+}}>
+
+  {/* LEFT — compass */}
+  <div style={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",   // ✅ was center
+    position: "relative",
+    overflow: "visible",            // ✅ let it breathe
+  }}>
+    <VaastuCompass />
+  </div>
+
+  {/* RIGHT — unchanged */}
+ 
+
+        {/* RIGHT — unchanged … */}
+    
 
         {/* RIGHT */}
         <div style={{ paddingTop: 8 }}>

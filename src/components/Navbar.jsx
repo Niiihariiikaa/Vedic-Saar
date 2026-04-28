@@ -43,7 +43,7 @@ const subRoutes = {
   'Child & Progeny':       '/life-solutions/child-progeny',
   'Education':            '/life-solutions/education',
   'House & Property':     '/life-solutions/house-property',
-   'Court & Litigation':     '/life-solutions/court-litigation',
+  'Court & Litigation':     '/life-solutions/court-litigation',
   // Remedies
   'Pooja':              '/remedies/pooja',
   'Lal Kitab':          '/remedies/lal-kitab',
@@ -51,9 +51,7 @@ const subRoutes = {
 }
 
 const navItems = [
-  'Home', 'Life Solutions', 'Vaastu', 'Numerology', 'Vedic Astrology', 'Rudraksha',
-   
-   'About',   'Gemstones',
+  'Home', 'Life Solutions', 'Vaastu', 'Numerology', 'Vedic Astrology', 'Rudraksha',   'About',   'Gemstones',
   'Mantra'
 ]
 
