@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const services = [
   {
@@ -6,18 +7,21 @@ const services = [
     title: "Vedic\nAstrology",
     body: "Discover the ancient science of Jyotish Shastra. Our detailed birth chart analysis reveals the cosmic influences shaping your personality, relationships, career, and spiritual journey.",
     img: "/assets/vedic.webp",
+    route: "/vedic-astrology",
   },
   {
     tag: "Numbers",
     title: "Numerology",
     body: "Numbers hold the key to understanding your life's purpose. Through Vedic numerology, uncover hidden patterns in your name and birth date that influence your destiny.",
     img: "/assets/numerology.webp",
+    route: "/numerology",
   },
   {
     tag: "Architecture",
     title: "Vastu\nShastra",
     body: "Harmonize your living and working spaces with the ancient science of Vastu. Align your environment with cosmic energies to attract abundance, health, and happiness.",
     img: "/assets/vastu.webp",
+    route: "/vaastu",
   },
 ];
 
@@ -140,7 +144,7 @@ export default function MysticalServices() {
 
         <div className="relative z-[9999] grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto -mt-10" style={{isolation: 'isolate'}}>
           {services.map((s, i) => (
-            <div
+            <Link to={s.route}
               key={i}
               ref={(el) => (cardRefs.current[i] = el)}
               data-index={i}
@@ -184,14 +188,14 @@ export default function MysticalServices() {
               <div className="ms-card__hover absolute inset-0 flex flex-col justify-center px-7 py-8 z-30">
                 <p
                   className="text-[10px] tracking-[0.18em] uppercase text-[#9a7b6a] mb-3"
-                  style={{ fontFamily: "'Jost', sans-serif" }}
+                  style={{ fontFamily: "'Glacial Indifference', sans-serif" }}
                 >
                   {s.tag}
                 </p>
                 <h3
                   className="font-normal text-[#1a1a1a] leading-tight whitespace-pre-line mb-4"
                   style={{
-                    fontFamily: "'Cormorant Garamond', serif",
+                    fontFamily: "'Ibarra Real Nova', serif",
                     fontSize: "clamp(24px,2.6vw,32px)",
                   }}
                 >
@@ -199,7 +203,7 @@ export default function MysticalServices() {
                 </h3>
                 <p
                   className="text-[13.5px] font-light leading-loose text-[#555] mb-6"
-                  style={{ fontFamily: "'Jost', sans-serif" }}
+                  style={{ fontFamily: "'Glacial Indifference', sans-serif" }}
                 >
                   {s.body}
                 </p>
@@ -207,12 +211,12 @@ export default function MysticalServices() {
                   className="ms-learn-after flex items-center gap-2 text-[11px] font-medium
                     tracking-[0.14em] uppercase text-[#1a1a1a] bg-transparent border-none
                     p-0 cursor-pointer w-fit"
-                  style={{ fontFamily: "'Jost', sans-serif" }}
+                  style={{ fontFamily: "'Glacial Indifference', sans-serif" }}
                 >
                   Learn More
                 </button>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         </div>

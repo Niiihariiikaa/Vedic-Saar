@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const services = [
   {
@@ -16,6 +17,7 @@ const services = [
     title: "Love & Marriage",
     body: "Find cosmic compatibility, auspicious timing for marriage, and remedies to strengthen bonds with your life partner.",
     img: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&auto=format",
+    route: "/life-solutions/love-marriage"
   },
   {
     slug: "business-career",
@@ -33,6 +35,7 @@ const services = [
     title: "Business & Career",
     body: "Identify favorable periods for career shifts, business ventures, and professional growth aligned with your planetary positions.",
     img: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&auto=format",
+    route: "/life-solutions/career"
   },
   {
     slug: "wealth-finance",
@@ -51,6 +54,7 @@ const services = [
     title: "Wealth & Finance",
     body: "Understand the cosmic patterns governing your financial destiny and discover pathways to prosperity and abundance.",
     img: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=600&auto=format",
+    route: "/life-solutions/finance"
   },
   {
     slug: "children-progeny",
@@ -69,6 +73,7 @@ const services = [
     title: "Children & Progeny",
     body: "Gain insights into the timing and blessings related to children, their well-being, and your bond with them.",
     img: "https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=600&auto=format",
+    route: "/life-solutions/child-progeny"
   },
   {
     slug: "education",
@@ -87,6 +92,7 @@ const services = [
     title: "Education",
     body: "Discover ideal fields of study, favorable academic periods, and planetary support for intellectual growth.",
     img: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&auto=format",
+    route: "/life-solutions/education"
   },
   {
     slug: "house-property",
@@ -106,6 +112,7 @@ const services = [
     title: "House & Property",
     body: "Align property decisions with auspicious planetary transits for acquiring land, building homes, or real estate investments.",
     img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&auto=format",
+    route: "/life-solutions/house-property"
   },
   {
     slug: "health",
@@ -123,6 +130,7 @@ const services = [
     title: "Health",
     body: "Identify health vulnerabilities through your birth chart and adopt preventive measures with Vedic remedies.",
     img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&auto=format",
+    route: "/life-solutions/health"
   },
   {
     slug: "foreign-travel",
@@ -143,6 +151,7 @@ const services = [
     title: "Foreign Travel",
     body: "Know the planetary combinations that favor international opportunities, relocations, and successful overseas ventures.",
     img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&auto=format",
+    route: "/life-solutions/foreign-travel"
   },
   {
     slug: "court-litigation",
@@ -163,7 +172,8 @@ const services = [
     title: "Court & Litigation",
     body: "Navigate legal matters with astrological guidance on favorable timings and outcomes for court cases and disputes.",
     img: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&auto=format",
-  },
+    route: "/life-solutions/court-litigation"
+  }
 ];
 
 const tags = ["Vastu", "Numerology", "Vedic Astrology", "Spiritual Guidance"];
@@ -606,8 +616,9 @@ export default function ServicesGrid() {
               data-index={i}
               className="sg-card"
             >
-              <a
-                href={`/services/${s.slug}`}
+              <Link
+                to={s.route}
+                key={i}
                 className="sg-card-link"
                 aria-label={`Learn more about ${s.title}`}
               >
@@ -652,7 +663,7 @@ export default function ServicesGrid() {
                     </span>
                   </div>
                 </div>
-              </a>
+              </Link>
             </div>
           ))}
         </div>

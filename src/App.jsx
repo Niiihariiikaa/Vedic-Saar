@@ -25,6 +25,8 @@ import ChildProgenyPage from './pages/ChildProgeny'
 import EducationPage from './pages/Education'
 import HousePropertyPage from './pages/HouseProperty'
 import CourtLitigationPage from './pages/CourtLitigation'
+import ScrollToTop from "./components/ScrollToTop";
+
 gsap.registerPlugin(ScrollTrigger);
 
 function MainLayout() {
@@ -44,6 +46,7 @@ function MainLayout() {
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Navbar />  {/* ✅ Renders on every route */}
       <Routes>
         <Route path="/" element={<MainLayout />} />

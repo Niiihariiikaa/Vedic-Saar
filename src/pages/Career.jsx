@@ -376,14 +376,13 @@ const guideItems = [
 
 const houseLogos = [ "c1.png", "c2.png", "c3.png", "c4.png", "c5.png"];
 const planetImgs = [
-  "/assets/lovelogos/planets/sun.png",
-  "/assets/lovelogos/planets/moon.png",
-  "/assets/lovelogos/planets/mars.png",
-  "/assets/lovelogos/planets/mercury.png",
-  "/assets/lovelogos/planets/jupiter.png",
-  "/assets/lovelogos/planets/venus.png",
-  "/assets/lovelogos/planets/saturn.png",
-  "/assets/lovelogos/planets/rahu.png",
+  "/assets/moon.webp",    // Moon
+  "/assets/lovelogos/planets/mars.png",    // Mars
+  "/assets/lovelogos/planets/mercury.png",                                       // Mercury — glyph ☿ (no asset)
+  "/assets/lovelogos/planets/jupiter.png", // Jupiter
+  "/assets/lovelogos/planets/venus.png",   // Venus
+  "/assets/lovelogos/planets/saturn.png",  // Saturn
+  "/assets/lovelogos/planets/rahu.png",    // Rahu
 ];
 
 /* ════════════════════════════════════════════════════════════════ */
@@ -606,6 +605,9 @@ function IntroSection() {
     </section>
   );
 }
+
+/* ════════════════════════════════════════════════════════════════ */
+/* HOUSE SVG ICONS — Career themed, stroke-only, gold */
 
 /* ════════════════════════════════════════════════════════════════ */
 /* HOUSES */
