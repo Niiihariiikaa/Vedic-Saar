@@ -286,7 +286,6 @@ const planets = [
   { glyph: "☿", name: "Mercury", sub: "Intellect, Memory & Logic",           desc: "Primary karaka for all forms of study. Strong Mercury gives photographic memory, sharp analytical ability, quick learning, and linguistic mastery. Rules commerce, science, IT, writing, and all communication-based education." },
   { glyph: "♃", name: "Jupiter", sub: "Wisdom, Higher Learning & Philosophy", desc: "Governs philosophical depth, higher education, law, teaching, and spiritual wisdom. Strong Jupiter individuals are lifelong learners who eventually become teachers, guides, or professors themselves." },
   { glyph: "☽", name: "Moon",    sub: "Memory, Emotional Learning & Intuition", desc: "Governs memory retention, emotional intelligence, and intuitive understanding. Children with a strong Moon are fast learners who retain information deeply through emotional association and vivid imagination." },
-  { glyph: "☉", name: "Sun",     sub: "Confidence, Authority & Academic Leadership", desc: "The Sun governs education in administration, government, medicine, and fields requiring authority and leadership. A strong Sun gives academic confidence and the ability to shine and be recognized for scholarly achievements." },
   { glyph: "♄", name: "Saturn",  sub: "Discipline, Endurance & Deep Mastery",  desc: "Saturn's students are slow but unstoppable. They may not be the fastest learners, but they master whatever they commit to with sheer persistence and discipline — often surpassing faster learners in depth and expertise." },
   { glyph: "☋", name: "Ketu",    sub: "Technical Mastery & Laser Focus",       desc: "Ketu is surprisingly powerful for education in highly specialised technical fields — mathematics, astrology, engineering, and spiritual sciences. Ketu students go where others find too complex or too esoteric." },
 ];
@@ -331,12 +330,12 @@ const guideItems = [
 ];
 
 const planetImgs = [
-  "",                                          /* Mercury — glyph ☿ */
+  "/assets/lovelogos/planets/mercury.png",                                          /* Mercury — glyph ☿ */
   "/assets/lovelogos/planets/jupiter.png",
   "/assets/lovelogos/planets/moon.png",
-  "",                                          /* Sun — glyph ☉ */
+                                         /* Sun — glyph ☉ */
   "/assets/lovelogos/planets/saturn.png",
-  "",                                          /* Ketu — glyph ☋ */
+  "/assets/lovelogos/planets/Ketu.png",                                          /* Ketu — glyph ☋ */
 ];
 
 /* ════════════════════════════════════════════════════════════════ */

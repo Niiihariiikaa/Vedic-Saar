@@ -374,7 +374,15 @@ const guideItems = [
   { n: "06", text: "Provide mantras and gemstone guidance — Surya Mantra, Blue Sapphire, Ruby, Emerald" },
 ];
 
-const houseLogos = [ "c1.png", "c2.png", "c3.png", "c4.png", "c5.png"];
+
+const houseLogos = [
+  "34.png", // 10th house
+  "35.png", // 6th
+  "36.png", // 2nd
+  "37.png", // 11th
+  "38.png", // 3rd
+  "39.png", // 9th
+];
 const planetImgs = [
   "/assets/moon.webp",    // Moon
   "/assets/lovelogos/planets/mars.png",    // Mars

@@ -238,7 +238,6 @@ const planets = [
   { glyph: "♃", name: "Jupiter", sub: "Legal Wisdom & Righteous Victory",        desc: "Jupiter governs judges, advocates, and righteous outcomes. Jupiter's Dasha or strong transit often marks the period when truth prevails in a court case. A strong 9th house Jupiter is the most auspicious indicator." },
   { glyph: "☿", name: "Mercury", sub: "Documents, Contracts & Legal Strategy",   desc: "Mercury governs contracts, agreements, paperwork, and the communication strategy in legal cases. A strong Mercury helps you present your case with clarity and persuasive force." },
   { glyph: "☊", name: "Rahu",    sub: "Conspiracy, Hidden Enemies & Surprise",   desc: "Rahu in legal houses creates complex, murky cases involving deception, hidden opponents, and unexpected twists. Rahu Dasha cases often involve fraud, conspiracy, or unusual legal proceedings." },
-  { glyph: "☉", name: "Sun",     sub: "Government Cases & Authority in Law",     desc: "Sun governs government bodies, high courts, and cases involving authority. A strong Sun in a legal chart helps when dealing with government institutions, regulatory bodies, or high-profile cases." },
 ];
 
 const litigationNumbers = [
@@ -285,7 +284,7 @@ const planetImgs = [
   "/assets/lovelogos/planets/jupiter.png",
   "/assets/lovelogos/planets/mercury.png",
   "/assets/lovelogos/planets/rahu.png",
-  "/assets/lovelogos/planets/sun.png",
+  
 ];
 
 /* ════════════════════════════════════════════════════════════════ */

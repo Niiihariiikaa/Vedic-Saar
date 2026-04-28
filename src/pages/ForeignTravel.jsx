@@ -373,14 +373,14 @@ const guideItems = [
   { n: "06", text: "Provide numerological guidance — auspicious departure dates, lucky direction, and destination number alignment" },
 ];
 
-const houseLogos = ["t1.png", "t2.png", "t3.png", "t4.png", "t5.png", "t6.png"];
+const houseLogos = ["50.png", "51.png", "52.png", "53.png", "54.png", "55.png"];
 const planetImgs = [
-  "/assets/careerlogos/planets/rahu.png",
-  "/assets/careerlogos/planets/moon.png",
-  "/assets/careerlogos/planets/saturn.png",
-  "/assets/careerlogos/planets/venus.png",
-  "/assets/careerlogos/planets/mercury.png",
-  "/assets/careerlogos/planets/ketu.png",
+  "/assets/lovelogos/planets/rahu.png",
+  "/assets/lovelogos/planets/moon.png",
+  "/assets/lovelogos/planets/saturn.png",
+  "/assets/lovelogos/planets/venus.png",
+  "/assets/lovelogos/planets/mercury.png",
+  "/assets/lovelogos/planets/Ketu.png",
 ];
 
 /* ════════════════════════════════════════════════════════════════ */

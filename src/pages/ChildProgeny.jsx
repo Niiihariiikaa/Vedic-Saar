@@ -287,7 +287,7 @@ const planetImgs = [
   "/assets/lovelogos/planets/mars.png",
   "/assets/lovelogos/planets/saturn.png",
   "/assets/lovelogos/planets/rahu.png",
-  "",
+  "/assets/lovelogos/planets/Ketu.png",
 ];
 
 /* ════════════════════════════════════════════════════════════════ */

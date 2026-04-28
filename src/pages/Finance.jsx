@@ -373,14 +373,14 @@ const guideItems = [
   { n: "06", text: "Recommend Lakshmi mantras, Kubera Stotram, gemstones, and numerological lucky numbers for financial alignment" },
 ];
 
-const houseLogos = ["f1.png", "f2.png", "f3.png", "f4.png", "f5.png", "f6.png"];
+const houseLogos = ["40.png", "41.png", "42.png", "43.png", "44.png", "45.png"];
 const planetImgs = [
-  "/assets/careerlogos/planets/jupiter.png",
-  "/assets/careerlogos/planets/venus.png",
-  "/assets/careerlogos/planets/mercury.png",
-  "/assets/careerlogos/planets/saturn.png",
-  "/assets/careerlogos/planets/rahu.png",
-  "/assets/careerlogos/planets/moon.png",
+  "/assets/lovelogos/planets/jupiter.png",
+  "/assets/lovelogos/planets/venus.png",
+  "/assets/lovelogos/planets/mercury.png",
+  "/assets/lovelogos/planets/saturn.png",
+  "/assets/lovelogos/planets/rahu.png",
+  "/assets/lovelogos/planets/moon.png",
 ];
 
 /* ════════════════════════════════════════════════════════════════ */

@@ -261,7 +261,6 @@ const healthHouses = [
 ];
 
 const healthPlanets = [
-  { glyph: "☉", name: "Sun",     sub: "Heart, Spine, Eyes & Vitality",          desc: "Sun rules the heart, bones, eyes, and overall life force. Afflicted Sun creates cardiovascular issues, eyesight problems, and chronic fatigue." },
   { glyph: "☽", name: "Moon",    sub: "Mind, Lungs, Blood & Reproductive",      desc: "Moon rules mental health, lungs, and reproductive organs. Afflictions create anxiety, depression, breathing issues, and menstrual disorders." },
   { glyph: "♂", name: "Mars",    sub: "Blood, Muscles, Liver & Accidents",      desc: "Mars governs blood, muscles, and inflammatory conditions. Afflicted Mars creates fever, infections, accidents, blood disorders, and stress-driven illness." },
   { glyph: "☿", name: "Mercury", sub: "Nervous System, Skin & Digestion",       desc: "Mercury rules the nervous system, skin, and digestive tract. Afflictions create nerve disorders, skin conditions, IBS, and anxiety-driven symptoms." },
@@ -310,17 +309,17 @@ const healthGuideItems = [
   { n: "06", text: "Determine auspicious timing for surgeries, medical treatments, and health procedures" },
 ];
 
-const houseLogos = ["h1.png", "h2.png", "h3.png", "h4.png"];
+const houseLogos = ["46.png", "47.png", "48.png", "49.png"];
 const planetImgs = [
-  "/assets/healthlogos/planets/sun.png",
-  "/assets/healthlogos/planets/moon.png",
-  "/assets/healthlogos/planets/mars.png",
-  "/assets/healthlogos/planets/mercury.png",
-  "/assets/healthlogos/planets/jupiter.png",
-  "/assets/healthlogos/planets/venus.png",
-  "/assets/healthlogos/planets/saturn.png",
-  "/assets/healthlogos/planets/rahu.png",
-  "/assets/healthlogos/planets/ketu.png",
+ 
+  "/assets/lovelogos/planets/moon.png",
+  "/assets/lovelogos/planets/mars.png",
+  "/assets/lovelogos/planets/mercury.png",
+  "/assets/lovelogos/planets/jupiter.png",
+  "/assets/lovelogos/planets/venus.png",
+  "/assets/lovelogos/planets/saturn.png",
+  "/assets/lovelogos/planets/rahu.png",
+  "/assets/lovelogos/planets/Ketu.png",
 ];
 
 /* ════════════════════════════════════════════════════════════════ */
