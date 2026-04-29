@@ -451,22 +451,19 @@ function RudraHero({ bead, onConsult }) {
           <div className="flex gap-3 flex-wrap">
             <button
               onClick={onConsult}
-              className="hover:opacity-90 transition-opacity duration-200"
               style={{
-                background: `linear-gradient(135deg, ${bead.color}, ${bead.color}bb)`,
-                color: '#0f0d07', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11,
+                background: 'black', color: 'white', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11,
                 letterSpacing: '0.18em', textTransform: 'uppercase', padding: '13px 28px',
-                border: 'none', cursor: 'pointer', fontWeight: 700, borderRadius: 2, border: `1px dashed black`,
+                border: '2px dashed white', borderRadius: 0, cursor: 'pointer',
               }}
             >
               ✦ Consult Astrologer
             </button>
             <button
-              className="transition-all duration-200 hover:opacity-80"
               style={{
                 background: 'black', color: 'white', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11,
                 letterSpacing: '0.18em', textTransform: 'uppercase', padding: '13px 28px',
-                border: `1px solid ${bead.color}60`, cursor: 'pointer', borderRadius: 2, border: `1px dashed white`, boxShadow: `0 4px 16px ${bead.color}30`,
+                border: '2px dashed white', borderRadius: 0, cursor: 'pointer',
               }}
             >
               ✦ Explore More

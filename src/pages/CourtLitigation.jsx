@@ -145,79 +145,79 @@ const CSS = `
 const houseIcons = [
   /* VI — Primary house of disputes: scales of justice */
   <svg key="vi" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="32" y1="10" x2="32" y2="60" stroke="#c9a96e" strokeWidth="1.4" strokeLinecap="round"/>
-    <line x1="18" y1="22" x2="46" y2="22" stroke="#c9a96e" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="18" y1="22" x2="12" y2="38" stroke="#c9a96e" strokeWidth="1.1" strokeLinecap="round"/>
-    <line x1="46" y1="22" x2="52" y2="38" stroke="#c9a96e" strokeWidth="1.1" strokeLinecap="round"/>
-    <path d="M8 38 Q12 44 16 38" stroke="#c9a96e" strokeWidth="1.1" fill="rgba(201,169,110,0.12)" strokeLinecap="round"/>
-    <path d="M48 38 Q52 44 56 38" stroke="#c9a96e" strokeWidth="1.1" fill="rgba(201,169,110,0.12)" strokeLinecap="round"/>
-    <line x1="24" y1="60" x2="40" y2="60" stroke="#c9a96e" strokeWidth="1.2" strokeLinecap="round"/>
-    <circle cx="32" cy="22" r="2.5" fill="rgba(201,169,110,0.4)" stroke="#c9a96e" strokeWidth="0.8"/>
-    <circle cx="32" cy="9"  r="2"   fill="rgba(201,169,110,0.6)" stroke="#c9a96e" strokeWidth="0.7"/>
+    <line x1="32" y1="10" x2="32" y2="60" stroke="black" strokeWidth="1.4" strokeLinecap="round"/>
+    <line x1="18" y1="22" x2="46" y2="22" stroke="black" strokeWidth="1.2" strokeLinecap="round"/>
+    <line x1="18" y1="22" x2="12" y2="38" stroke="black" strokeWidth="1.1" strokeLinecap="round"/>
+    <line x1="46" y1="22" x2="52" y2="38" stroke="black" strokeWidth="1.1" strokeLinecap="round"/>
+    <path d="M8 38 Q12 44 16 38" stroke="black" strokeWidth="1.1" fill="rgba(201,169,110,0.12)" strokeLinecap="round"/>
+    <path d="M48 38 Q52 44 56 38" stroke="black" strokeWidth="1.1" fill="rgba(201,169,110,0.12)" strokeLinecap="round"/>
+    <line x1="24" y1="60" x2="40" y2="60" stroke="black" strokeWidth="1.2" strokeLinecap="round"/>
+    <circle cx="32" cy="22" r="2.5" fill="rgba(201,169,110,0.4)" stroke="black" strokeWidth="0.8"/>
+    <circle cx="32" cy="9"  r="2"   fill="rgba(201,169,110,0.6)" stroke="black" strokeWidth="0.7"/>
   </svg>,
 
   /* VII — The opponent: two figures facing each other */
   <svg key="vii" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="16" cy="18" r="6" fill="rgba(201,169,110,0.1)" stroke="#c9a96e" strokeWidth="1.2"/>
-    <path d="M10 32 Q16 26 22 32 L22 50 L10 50 Z" stroke="#c9a96e" strokeWidth="1.1" fill="rgba(201,169,110,0.07)" strokeLinejoin="round"/>
-    <circle cx="48" cy="18" r="6" fill="rgba(201,169,110,0.1)" stroke="rgba(201,169,110,0.65)" strokeWidth="1.2"/>
-    <path d="M42 32 Q48 26 54 32 L54 50 L42 50 Z" stroke="rgba(201,169,110,0.65)" strokeWidth="1.1" fill="rgba(201,169,110,0.05)" strokeLinejoin="round"/>
-    <line x1="26" y1="39" x2="38" y2="39" stroke="rgba(201,169,110,0.5)" strokeWidth="1.4" strokeLinecap="round"/>
-    <line x1="28" y1="35" x2="28" y2="43" stroke="rgba(201,169,110,0.35)" strokeWidth="0.9"/>
-    <line x1="36" y1="35" x2="36" y2="43" stroke="rgba(201,169,110,0.35)" strokeWidth="0.9"/>
-    <line x1="22" y1="60" x2="42" y2="60" stroke="rgba(201,169,110,0.2)" strokeWidth="0.8" strokeDasharray="2 2"/>
+    <circle cx="16" cy="18" r="6" fill="rgba(201,169,110,0.1)" stroke="black" strokeWidth="1.2"/>
+    <path d="M10 32 Q16 26 22 32 L22 50 L10 50 Z" stroke="black" strokeWidth="1.1" fill="rgba(201,169,110,0.07)" strokeLinejoin="round"/>
+    <circle cx="48" cy="18" r="6" fill="rgba(201,169,110,0.1)" stroke="black" strokeWidth="1.2"/>
+    <path d="M42 32 Q48 26 54 32 L54 50 L42 50 Z" stroke="black" strokeWidth="1.1" fill="rgba(201,169,110,0.05)" strokeLinejoin="round"/>
+    <line x1="26" y1="39" x2="38" y2="39" stroke="black" strokeWidth="1.4" strokeLinecap="round"/>
+    <line x1="28" y1="35" x2="28" y2="43" stroke="black" strokeWidth="0.9"/>
+    <line x1="36" y1="35" x2="36" y2="43" stroke="black" strokeWidth="0.9"/>
+    <line x1="22" y1="60" x2="42" y2="60" stroke="black" strokeWidth="0.8" strokeDasharray="2 2"/>
   </svg>,
 
   /* VIII — Sudden events / hidden truth: eye with lightning */
   <svg key="viii" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 38 Q20 22 32 22 Q44 22 58 38 Q44 54 32 54 Q20 54 6 38Z" stroke="#c9a96e" strokeWidth="1.2" fill="rgba(201,169,110,0.06)"/>
-    <circle cx="32" cy="38" r="8" stroke="#c9a96e" strokeWidth="1.1" fill="rgba(201,169,110,0.12)"/>
-    <circle cx="32" cy="38" r="3.5" fill="rgba(201,169,110,0.45)" stroke="#c9a96e" strokeWidth="0.9"/>
-    <line x1="38" y1="12" x2="32" y2="24" stroke="#c9a96e" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="32" y1="24" x2="37" y2="24" stroke="#c9a96e" strokeWidth="1.1" strokeLinecap="round"/>
-    <line x1="37" y1="24" x2="31" y2="36" stroke="#c9a96e" strokeWidth="1.2" strokeLinecap="round"/>
-    <circle cx="38" cy="10" r="2" fill="rgba(201,169,110,0.5)" stroke="#c9a96e" strokeWidth="0.7"/>
+    <path d="M6 38 Q20 22 32 22 Q44 22 58 38 Q44 54 32 54 Q20 54 6 38Z" stroke="black" strokeWidth="1.2" fill="rgba(201,169,110,0.06)"/>
+    <circle cx="32" cy="38" r="8" stroke="black" strokeWidth="1.1" fill="rgba(201,169,110,0.12)"/>
+    <circle cx="32" cy="38" r="3.5" fill="rgba(201,169,110,0.45)" stroke="black" strokeWidth="0.9"/>
+    <line x1="38" y1="12" x2="32" y2="24" stroke="black" strokeWidth="1.2" strokeLinecap="round"/>
+    <line x1="32" y1="24" x2="37" y2="24" stroke="black" strokeWidth="1.1" strokeLinecap="round"/>
+    <line x1="37" y1="24" x2="31" y2="36" stroke="black" strokeWidth="1.2" strokeLinecap="round"/>
+    <circle cx="38" cy="10" r="2" fill="rgba(201,169,110,0.5)" stroke="black" strokeWidth="0.7"/>
   </svg>,
 
   /* IX — Justice / dharma: temple pillars with gavel */
   <svg key="ix" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="10" y1="28" x2="54" y2="28" stroke="#c9a96e" strokeWidth="1.4" strokeLinecap="round"/>
-    <line x1="8"  y1="24" x2="56" y2="24" stroke="rgba(201,169,110,0.5)" strokeWidth="0.9" strokeLinecap="round"/>
-    <line x1="16" y1="28" x2="16" y2="58" stroke="#c9a96e" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="32" y1="28" x2="32" y2="58" stroke="#c9a96e" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="48" y1="28" x2="48" y2="58" stroke="#c9a96e" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="10" y1="58" x2="54" y2="58" stroke="#c9a96e" strokeWidth="1.4" strokeLinecap="round"/>
-    <line x1="8"  y1="62" x2="56" y2="62" stroke="rgba(201,169,110,0.4)" strokeWidth="0.9" strokeLinecap="round"/>
-    <circle cx="32" cy="20" r="4" fill="rgba(201,169,110,0.2)" stroke="#c9a96e" strokeWidth="1"/>
-    <line x1="28" y1="20" x2="36" y2="20" stroke="#c9a96e" strokeWidth="1.1" strokeLinecap="round"/>
-    <line x1="32" y1="16" x2="32" y2="24" stroke="#c9a96e" strokeWidth="1.1" strokeLinecap="round"/>
+    <line x1="10" y1="28" x2="54" y2="28" stroke="black" strokeWidth="1.4" strokeLinecap="round"/>
+    <line x1="8"  y1="24" x2="56" y2="24" stroke="black" strokeWidth="0.9" strokeLinecap="round"/>
+    <line x1="16" y1="28" x2="16" y2="58" stroke="black" strokeWidth="1.2" strokeLinecap="round"/>
+    <line x1="32" y1="28" x2="32" y2="58" stroke="black" strokeWidth="1.2" strokeLinecap="round"/>
+    <line x1="48" y1="28" x2="48" y2="58" stroke="black" strokeWidth="1.2" strokeLinecap="round"/>
+    <line x1="10" y1="58" x2="54" y2="58" stroke="black" strokeWidth="1.4" strokeLinecap="round"/>
+    <line x1="8"  y1="62" x2="56" y2="62" stroke="black" strokeWidth="0.9" strokeLinecap="round"/>
+    <circle cx="32" cy="20" r="4" fill="rgba(201,169,110,0.2)" stroke="black" strokeWidth="1"/>
+    <line x1="28" y1="20" x2="36" y2="20" stroke="black" strokeWidth="1.1" strokeLinecap="round"/>
+    <line x1="32" y1="16" x2="32" y2="24" stroke="black" strokeWidth="1.1" strokeLinecap="round"/>
   </svg>,
 
   /* XII — Imprisonment / loss: bars */
   <svg key="xii" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="10" y="16" width="44" height="44" rx="1" stroke="#c9a96e" strokeWidth="1.2" fill="rgba(201,169,110,0.04)"/>
-    <line x1="22" y1="16" x2="22" y2="60" stroke="#c9a96e" strokeWidth="1.1"/>
-    <line x1="32" y1="16" x2="32" y2="60" stroke="#c9a96e" strokeWidth="1.1"/>
-    <line x1="42" y1="16" x2="42" y2="60" stroke="#c9a96e" strokeWidth="1.1"/>
-    <line x1="10" y1="30" x2="54" y2="30" stroke="rgba(201,169,110,0.35)" strokeWidth="0.8"/>
-    <line x1="10" y1="44" x2="54" y2="44" stroke="rgba(201,169,110,0.35)" strokeWidth="0.8"/>
-    <circle cx="32" cy="8" r="4" fill="rgba(201,169,110,0.15)" stroke="rgba(201,169,110,0.6)" strokeWidth="1"/>
-    <line x1="32" y1="12" x2="32" y2="16" stroke="rgba(201,169,110,0.5)" strokeWidth="1" strokeLinecap="round"/>
+    <rect x="10" y="16" width="44" height="44" rx="1" stroke="black" strokeWidth="1.2" fill="rgba(201,169,110,0.04)"/>
+    <line x1="22" y1="16" x2="22" y2="60" stroke="black" strokeWidth="1.1"/>
+    <line x1="32" y1="16" x2="32" y2="60" stroke="black" strokeWidth="1.1"/>
+    <line x1="42" y1="16" x2="42" y2="60" stroke="black" strokeWidth="1.1"/>
+    <line x1="10" y1="30" x2="54" y2="30" stroke="black" strokeWidth="0.8"/>
+    <line x1="10" y1="44" x2="54" y2="44" stroke="black" strokeWidth="0.8"/>
+    <circle cx="32" cy="8" r="4" fill="rgba(201,169,110,0.15)" stroke="black" strokeWidth="1"/>
+    <line x1="32" y1="12" x2="32" y2="16" stroke="black" strokeWidth="1" strokeLinecap="round"/>
   </svg>,
 
   /* XI — Victory after litigation: trophy */
   <svg key="xi" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 14 Q20 42 32 42 Q44 42 44 14 Z" stroke="#c9a96e" strokeWidth="1.3" fill="rgba(201,169,110,0.08)"/>
-    <line x1="12" y1="14" x2="20" y2="14" stroke="#c9a96e" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="44" y1="14" x2="52" y2="14" stroke="#c9a96e" strokeWidth="1.2" strokeLinecap="round"/>
-    <path d="M12 14 Q10 22 16 28 Q18 30 20 30" stroke="#c9a96e" strokeWidth="1.1" fill="none" strokeLinecap="round"/>
-    <path d="M52 14 Q54 22 48 28 Q46 30 44 30" stroke="#c9a96e" strokeWidth="1.1" fill="none" strokeLinecap="round"/>
-    <line x1="32" y1="42" x2="32" y2="54" stroke="#c9a96e" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="20" y1="54" x2="44" y2="54" stroke="#c9a96e" strokeWidth="1.3" strokeLinecap="round"/>
-    <line x1="18" y1="58" x2="46" y2="58" stroke="rgba(201,169,110,0.45)" strokeWidth="0.9" strokeLinecap="round"/>
-    <circle cx="32" cy="28" r="4" fill="rgba(201,169,110,0.25)" stroke="#c9a96e" strokeWidth="0.9"/>
-    <line x1="30" y1="28" x2="34" y2="28" stroke="#c9a96e" strokeWidth="1" strokeLinecap="round"/>
-    <line x1="32" y1="26" x2="32" y2="30" stroke="#c9a96e" strokeWidth="1" strokeLinecap="round"/>
+    <path d="M20 14 Q20 42 32 42 Q44 42 44 14 Z" stroke="black" strokeWidth="1.3" fill="rgba(201,169,110,0.08)"/>
+    <line x1="12" y1="14" x2="20" y2="14" stroke="black" strokeWidth="1.2" strokeLinecap="round"/>
+    <line x1="44" y1="14" x2="52" y2="14" stroke="black" strokeWidth="1.2" strokeLinecap="round"/>
+    <path d="M12 14 Q10 22 16 28 Q18 30 20 30" stroke="black" strokeWidth="1.1" fill="none" strokeLinecap="round"/>
+    <path d="M52 14 Q54 22 48 28 Q46 30 44 30" stroke="black" strokeWidth="1.1" fill="none" strokeLinecap="round"/>
+    <line x1="32" y1="42" x2="32" y2="54" stroke="black" strokeWidth="1.2" strokeLinecap="round"/>
+    <line x1="20" y1="54" x2="44" y2="54" stroke="black" strokeWidth="1.3" strokeLinecap="round"/>
+    <line x1="18" y1="58" x2="46" y2="58" stroke="black" strokeWidth="0.9" strokeLinecap="round"/>
+    <circle cx="32" cy="28" r="4" fill="rgba(201,169,110,0.25)" stroke="black" strokeWidth="0.9"/>
+    <line x1="30" y1="28" x2="34" y2="28" stroke="black" strokeWidth="1" strokeLinecap="round"/>
+    <line x1="32" y1="26" x2="32" y2="30" stroke="black" strokeWidth="1" strokeLinecap="round"/>
   </svg>,
 ];
 

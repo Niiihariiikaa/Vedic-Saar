@@ -161,16 +161,16 @@ export default function Footer() {
          
             <button
               style={{
-                background: '#b8860b',
-                color: '#0e0a04',
+                background: 'black',
+                color: 'white',
                 fontFamily: "'Glacial Indifference', sans-serif",
                 fontSize: 10,
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 padding: '12px 24px',
-                border: 'none',
+                border: '2px dashed white',
+                borderRadius: 0,
                 cursor: 'pointer',
-                fontWeight: 500,
               }}
             >
               Get Prediction

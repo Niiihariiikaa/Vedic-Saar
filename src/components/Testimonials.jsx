@@ -241,8 +241,7 @@ const Testimonials = () => {
 
           {/* CTA */}
           <button
-            className="border border-dashed  border-[#b8860b]/60 text-[#b8860b] px-8 py-3 text-[11px] mt-6 tracking-[0.2em] uppercase hover:bg-[#b8860b] hover:text-[#0e0a04] transition-all duration-300"
-            style={{ fontFamily: "'Glacial Indifference', sans-serif" }}
+            style={{ fontFamily: "'Glacial Indifference', sans-serif", background: 'black', color: 'white', border: '2px dashed white', borderRadius: 0, padding: '12px 32px', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', marginTop: 24, cursor: 'pointer' }}
           >
             Read All Reviews
           </button>

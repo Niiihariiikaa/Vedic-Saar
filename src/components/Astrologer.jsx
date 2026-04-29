@@ -403,16 +403,16 @@ export default function KnowYourAstrologer() {
             </div>
 
             <button
-              className="flex-shrink-0 hover:bg-[#b8860b] transition-all duration-300"
               style={{
-                background: '#1a1206',
-                color: '#f5ede0',
+                background: 'black',
+                color: 'white',
                 fontFamily: "'Glacial Indifference', sans-serif",
                 fontSize: 11,
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 padding: '14px 32px',
-                border: 'none',
+                border: '2px dashed white',
+                borderRadius: 0,
                 cursor: 'pointer',
               }}
             >

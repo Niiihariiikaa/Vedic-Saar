@@ -208,10 +208,8 @@ export default function MysticalServices() {
                   {s.body}
                 </p>
                 <button
-                  className="ms-learn-after flex items-center gap-2 text-[11px] font-medium
-                    tracking-[0.14em] uppercase text-[#1a1a1a] bg-transparent border-none
-                    p-0 cursor-pointer w-fit"
-                  style={{ fontFamily: "'Glacial Indifference', sans-serif" }}
+                  className="ms-learn-after"
+                  style={{ fontFamily: "'Glacial Indifference', sans-serif", background: 'black', color: 'white', border: '2px dashed white', borderRadius: 0, padding: '10px 24px', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 8 }}
                 >
                   Learn More
                 </button>

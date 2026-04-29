@@ -26,6 +26,7 @@ import EducationPage from './pages/Education'
 import HousePropertyPage from './pages/HouseProperty'
 import CourtLitigationPage from './pages/CourtLitigation'
 import ScrollToTop from "./components/ScrollToTop";
+import LalKitab from './pages/LalKitab'
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,6 +67,8 @@ export default function App() {
         <Route path='/life-solutions/education' element={<EducationPage />} />
         <Route path='/life-solutions/house-property' element={<HousePropertyPage />} />
         <Route path="/life-solutions/court-litigation" element={<CourtLitigationPage />} />
+        <Route path="/remedies/pooja" element={<div className="p-8">Pooja Services Coming Soon...</div>} />
+        <Route path="/remedies/lal-kitab" element={<LalKitab />} />
       </Routes>
       <Footer />  {/* ✅ Renders on every route */}
     </BrowserRouter>
