@@ -436,24 +436,27 @@ const PillarIcons = {
       </defs>
     </svg>
   ),
-  Mantra: () => (
-    <svg viewBox="0 0 64 64" fill="none" style={{ width: 64, height: 64 }}>
-      {/* bell body with fill */}
-      <path d="M32 9 C32 9 32 12 32 14 C23 16 16 23 16 33 L16 40 C16 41.1 16.9 42 18 42 L46 42 C47.1 42 48 41.1 48 40 L48 33 C48 23 41 16 32 14 Z" fill="rgba(201,169,110,0.12)" stroke={GOLD} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-      {/* clapper */}
-      <line x1="32" y1="42" x2="32" y2="49" stroke={GOLD} strokeWidth="1.4" strokeLinecap="round"/>
-      <circle cx="32" cy="51" r="2.8" fill={GOLD}/>
-      {/* handle ring */}
-      <path d="M27 9 C27 5.5 37 5.5 37 9" stroke={GOLD} strokeWidth="1.4" strokeLinecap="round" fill="none"/>
-      {/* inner shine */}
-      <path d="M23 22 C21 26 21 30 23 34" stroke="rgba(255,245,200,.45)" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-      {/* sound arcs */}
-      <path d="M9 26 C6 31 6 37 9 42" stroke={GOLD} strokeWidth="1.2" strokeLinecap="round" fill="none" opacity=".5"/>
-      <path d="M55 26 C58 31 58 37 55 42" stroke={GOLD} strokeWidth="1.2" strokeLinecap="round" fill="none" opacity=".5"/>
-      <path d="M3 22 C-1 29 -1 39 3 46" stroke={GOLD} strokeWidth="0.9" strokeLinecap="round" fill="none" opacity=".25"/>
-      <path d="M61 22 C65 29 65 39 61 46" stroke={GOLD} strokeWidth="0.9" strokeLinecap="round" fill="none" opacity=".25"/>
-    </svg>
-  ),
+
+Mantra: () => (
+  <div
+    style={{
+      width: 64,
+      height: 64,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontFamily: "'Ibarra Real Nova', serif",
+      fontSize: 42,
+      color: GOLD,
+      
+      borderRadius: "50%",
+      
+    }}
+  >
+    ॐ
+  </div>
+),
+
   Offering: () => (
     <svg viewBox="0 0 64 64" fill="none" style={{ width: 64, height: 64 }}>
       {/* 5 lotus petals */}

@@ -300,7 +300,7 @@ export default function LalKitab() {
             }}>
               <div style={{ position:"absolute",top:0,left:0,right:0,height:2,background:`linear-gradient(90deg,transparent,${GOLD},transparent)` }} />
               <div style={{ fontFamily:B,fontSize:9,letterSpacing:".28em",textTransform:"uppercase",color:GOLD,marginBottom:14,opacity:.85 }}>
-                Lal Kitab Kundali Reading
+                Lal Kitab Remedies
               </div>
               <p style={{ fontFamily:B,fontSize:13.5,lineHeight:2,color:"rgba(245,240,232,.75)",marginBottom:10 }}>
                 Our experts prepare a dedicated Lal Kitab Kundali mapping your karmic debts (rin), sleeping planets, year-by-year forecasts, and personalised annual remedy prescriptions.
