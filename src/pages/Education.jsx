@@ -338,6 +338,15 @@ const planetImgs = [
   "/assets/lovelogos/planets/Ketu.png",                                          /* Ketu — glyph ☋ */
 ];
 
+
+const houseImages = [
+  "/assets/educationlogos/62.png",
+  "/assets/educationlogos/63.png",
+  "/assets/educationlogos/64.png",
+  "/assets/educationlogos/65.png",
+  "/assets/educationlogos/66.png",
+  "/assets/educationlogos/67.png",
+];
 /* ════════════════════════════════════════════════════════════════ */
 /* ORBITAL CONFIG — 3 inner + 3 outer */
 const INNER_R = 160;
@@ -552,7 +561,18 @@ function HousesSection() {
               <div style={{padding:"38px 30px 34px"}}>
                 {/* SVG icon centred in the card */}
                 <div style={{display:"flex",alignItems:"center",justifyContent:"center",marginBottom:26,height:88}}>
-                  <div style={{width:72,height:72,opacity:0.82,transition:"opacity 0.3s"}}>{houseIcons[i]}</div>
+                            <div style={{width:72,height:72,opacity:0.82,transition:"opacity 0.3s"}}>
+                                <img
+              src={houseImages[i]}
+              alt={h.title}
+              style={{
+                width:"100%",
+                height:"100%",
+                objectFit:"contain",
+                opacity:0.85
+              }}
+  />
+                  </div>
                 </div>
                 <div className="hcard-num" style={{fontFamily:BODY_FONT,fontSize:10,letterSpacing:"0.22em",color:GOLD,marginBottom:10,textTransform:"uppercase",transition:"color 0.4s"}}>{h.num} House</div>
                 <h3 style={{fontFamily:HEADING_FONT,fontWeight:400,fontSize:22,color:DARK,margin:"0 0 6px",lineHeight:1.2}}>{h.title}</h3>

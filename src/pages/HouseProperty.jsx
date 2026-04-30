@@ -281,6 +281,15 @@ const planetImgs = [
   "/assets/lovelogos/planets/rahu.png",
 ];
 
+const houseImages = [
+  "/assets/houselogos/68.png",
+  "/assets/houselogos/69.png",
+  "/assets/houselogos/70.png",
+  "/assets/houselogos/71.png",
+  "/assets/houselogos/72.png",
+  "/assets/houselogos/73.png",
+];
+
 /* ════════════════════════════════════════════════════════════════ */
 /* PLANET ORBITAL CONFIG */
 const INNER_R = 160, OUTER_R = 280, SYS_DIM = 700, SYS_CTR = SYS_DIM / 2;
@@ -506,7 +515,18 @@ function HousesSection() {
               <div style={{ height:2,background:`linear-gradient(90deg,transparent,rgba(201,169,110,0.55),transparent)` }} />
               <div style={{ padding:"38px 30px 34px" }}>
                 <div style={{ display:"flex",alignItems:"center",justifyContent:"center",marginBottom:26,height:88 }}>
-                  <div style={{ width:72,height:72 }}>{houseIcons[i]}</div>
+                  <div style={{ width:72,height:72 }}>  <img
+    src={houseImages[i]}
+    alt={h.title}
+    style={{
+      width:"100%",
+      height:"100%",
+      objectFit:"contain",
+      opacity:0.85,
+      transition:"all 0.3s ease"
+    }}
+  />
+</div>
                 </div>
                 <div className="hcard-num" style={{ fontFamily:BODY_FONT,fontSize:10,letterSpacing:"0.22em",color:GOLD,marginBottom:10,textTransform:"uppercase",transition:"color 0.4s" }}>
                   {h.num} House

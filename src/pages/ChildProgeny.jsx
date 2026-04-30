@@ -290,6 +290,16 @@ const planetImgs = [
   "/assets/lovelogos/planets/Ketu.png",
 ];
 
+const houseImages = [
+  "/assets/childlogos/56.png",
+  "/assets/childlogos/57.png",
+  "/assets/childlogos/58.png",
+  "/assets/childlogos/59.png",
+  "/assets/childlogos/60.png",
+  "/assets/childlogos/61.png",
+];
+/* ══
+
 /* ════════════════════════════════════════════════════════════════ */
 /* PLANET ORBITAL CONFIG — 3 inner + 3 outer */
 const INNER_R = 160;
@@ -520,7 +530,16 @@ function HousesSection() {
               <div style={{ height:2,background:`linear-gradient(90deg,transparent,rgba(201,169,110,0.55),transparent)` }} />
               <div style={{ padding:"38px 30px 34px" }}>
                 <div style={{ display:"flex",alignItems:"center",justifyContent:"center",marginBottom:26,height:88 }}>
-                  <div style={{ width:72,height:72 }}>{houseIcons[i]}</div>
+                  <div style={{ width:72,height:72 }}>  <img
+    src={houseImages[i]}
+    alt={h.title}
+    style={{
+      width:"100%",
+      height:"100%",
+      objectFit:"contain",
+      opacity:0.85
+    }}
+  /></div>
                 </div>
                 <div className="hcard-num" style={{ fontFamily:BODY_FONT,fontSize:10,letterSpacing:"0.22em",color:GOLD,marginBottom:10,textTransform:"uppercase",transition:"color 0.4s" }}>
                   {h.num} House
