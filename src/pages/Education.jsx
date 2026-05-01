@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { useBooking } from "../components/BookingContext";
 
 /* ── Fonts ── */
@@ -483,7 +483,7 @@ function Hero() {
         </h1>
         <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:18,margin:"0 auto 32px",maxWidth:700}}>
           <span style={{flex:1,height:"0.5px",background:`linear-gradient(to right,transparent,${GOLD})`}}/>
-          <span style={{fontFamily:HEADING_FONT,fontStyle:"italic",fontSize:16,color:MUTED,whiteSpace:"nowrap"}}>
+          <span style={{fontFamily:HEADING_FONT,fontStyle:"italic",fontSize:22,color:MUTED,whiteSpace:"nowrap"}}>
             ✦ &nbsp; Your intelligence has a cosmic source. Your chart reveals where it shines brightest. &nbsp; ✦
           </span>
           <span style={{flex:1,height:"0.5px",background:`linear-gradient(to left,transparent,${GOLD})`}}/>
@@ -726,7 +726,7 @@ function NumerologySection() {
             <div key={i} style={{position:"absolute",bottom:-RADIUS+20,left:"50%",marginLeft:-108,width:216,height:360,transformOrigin:"center bottom",transform:isHov?`rotate(0deg) translateY(-${RADIUS+80}px) scale(1.07)`:`rotate(${angle}deg) translateY(-${RADIUS}px)`,transition:"transform 0.55s cubic-bezier(.16,1,.3,1)",zIndex:isHov?30:baseZ,pointerEvents:"none"}}>
               <div style={{width:"100%",height:"100%",transformStyle:"preserve-3d",transform:isHov?"rotateY(180deg)":"rotateY(0deg)",transition:"transform 0.65s cubic-bezier(.16,1,.3,1)",position:"relative"}}>
                 {/* FRONT */}
-                <div style={{position:"absolute",inset:0,borderRadius:0,overflow:"hidden",backfaceVisibility:"hidden",WebkitBackfaceVisibility:"hidden",background:"linear-gradient(160deg,#1c150e,#140e08)",border:"1px solid rgba(201,169,110,0.32)",boxShadow:isHov?"0 30px 80px rgba(0,0,0,0.65),0 0 0 1px rgba(201,169,110,0.38)":`0 ${8+baseZ*2}px ${24+baseZ*6}px rgba(0,0,0,0.42)`,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
+                <div style={{position:"absolute",inset:0,borderRadius:0,overflow:"hidden",backfaceVisibility:"hidden",WebkitBackfaceVisibility:"hidden",background:"linear-gradient(160deg,#ffffff,#faf6ef)",border:"1px solid rgba(201,169,110,0.32)",boxShadow:isHov?"0 20px 52px rgba(0,0,0,0.18),0 0 0 1px rgba(201,169,110,0.5)":`0 ${4+baseZ*2}px ${12+baseZ*4}px rgba(0,0,0,0.12)`,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
                   <div style={{position:"absolute",inset:10,border:"1px solid rgba(201,169,110,0.15)"}}/>
                   <div style={{position:"absolute",inset:13,border:"0.5px solid rgba(201,169,110,0.07)"}}/>
                   {[["top","left"],["top","right"],["bottom","left"],["bottom","right"]].map(([v,h],ci)=>(
@@ -736,20 +736,20 @@ function NumerologySection() {
                   <span style={{position:"relative",zIndex:1,fontFamily:BODY_FONT,fontSize:7,letterSpacing:"0.3em",textTransform:"uppercase",color:GOLD,marginBottom:20,opacity:0.55}}>Numerology</span>
                   <span style={{position:"relative",zIndex:1,fontFamily:HEADING_FONT,fontWeight:400,fontSize:94,color:GOLD,lineHeight:1,textShadow:"0 0 40px rgba(201,169,110,0.22)"}}>{n.num}</span>
                   <div style={{position:"relative",zIndex:1,width:36,height:1,background:`linear-gradient(90deg,transparent,${GOLD},transparent)`,margin:"16px 0"}}/>
-                  <span style={{position:"relative",zIndex:1,fontFamily:HEADING_FONT,fontStyle:"italic",fontSize:14,color:CREAM,textAlign:"center",padding:"0 18px",lineHeight:1.4,opacity:0.78}}>{n.title}</span>
+                  <span style={{position:"relative",zIndex:1,fontFamily:HEADING_FONT,fontStyle:"italic",fontSize:14,color:DARK,textAlign:"center",padding:"0 18px",lineHeight:1.4,opacity:0.78}}>{n.title}</span>
                 </div>
                 {/* BACK */}
-                <div style={{position:"absolute",inset:0,borderRadius:0,overflow:"hidden",backfaceVisibility:"hidden",WebkitBackfaceVisibility:"hidden",transform:"rotateY(180deg)",background:"linear-gradient(145deg,#0d0a06,#1c140a)",border:"1px solid rgba(201,169,110,0.38)",boxShadow:"0 30px 80px rgba(0,0,0,0.72),0 0 60px rgba(201,169,110,0.05)",padding:"24px 20px",display:"flex",flexDirection:"column"}}>
-                  <div style={{position:"absolute",top:0,left:0,right:0,height:3,background:`linear-gradient(90deg,transparent,${n.color},transparent)`,opacity:0.55}}/>
-                  <div style={{position:"absolute",inset:10,border:"1px solid rgba(201,169,110,0.09)"}}/>
+                <div style={{position:"absolute",inset:0,borderRadius:0,overflow:"hidden",backfaceVisibility:"hidden",WebkitBackfaceVisibility:"hidden",transform:"rotateY(180deg)",background:"linear-gradient(145deg,#ffffff,#faf6ef)",border:"1px solid rgba(201,169,110,0.55)",boxShadow:"0 20px 52px rgba(0,0,0,0.18),0 0 0 1px rgba(201,169,110,0.45)",padding:"24px 20px",display:"flex",flexDirection:"column"}}>
+                  <div style={{position:"absolute",top:0,left:0,right:0,height:3,background:`linear-gradient(90deg,transparent,${n.color},transparent)`,opacity:0.85}}/>
+                  <div style={{position:"absolute",inset:10,border:"1px solid rgba(201,169,110,0.2)"}}/>
                   <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12,position:"relative",zIndex:1}}>
                     <span style={{fontFamily:HEADING_FONT,fontWeight:400,fontSize:42,color:GOLD,lineHeight:1,opacity:0.52}}>{n.num}</span>
                     <span style={{fontSize:8,color:GOLD,opacity:0.22,marginTop:8}}>✦</span>
                   </div>
-                  <h3 style={{position:"relative",zIndex:1,fontFamily:HEADING_FONT,fontStyle:"italic",fontSize:17,fontWeight:400,color:CREAM,marginBottom:4,lineHeight:1.2}}>{n.title}</h3>
+                  <h3 style={{position:"relative",zIndex:1,fontFamily:HEADING_FONT,fontStyle:"italic",fontSize:17,fontWeight:400,color:DARK,marginBottom:4,lineHeight:1.2}}>{n.title}</h3>
                   <div style={{position:"relative",zIndex:1,fontFamily:BODY_FONT,fontSize:8,color:GOLD,letterSpacing:"0.22em",textTransform:"uppercase",opacity:0.52,marginBottom:10}}>Ruled by {n.ruler}</div>
                   <div style={{position:"relative",zIndex:1,height:1,background:"rgba(201,169,110,0.13)",marginBottom:14}}/>
-                  <p style={{position:"relative",zIndex:1,fontFamily:BODY_FONT,fontSize:10,color:"rgba(245,240,232,0.48)",lineHeight:1.9,flex:1}}>{n.desc}</p>
+                  <p style={{position:"relative",zIndex:1,fontFamily:BODY_FONT,fontSize:10,color:MUTED,lineHeight:1.9,flex:1}}>{n.desc}</p>
                   <div style={{position:"relative",zIndex:1,display:"flex",justifyContent:"center",marginTop:14}}>
                     <span style={{fontSize:7,color:GOLD,opacity:0.22,letterSpacing:"0.4em"}}>✦ ✦ ✦</span>
                   </div>

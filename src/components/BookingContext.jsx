@@ -1,11 +1,13 @@
 import { createContext, useContext, useState, useCallback } from "react";
 import BookingModal from "./BookingModal";
+import VaastuBookingModal from "./VaastuBookingModal";
 
 const BookingContext = createContext(null);
 
 export function BookingProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
   const [preselectedService, setPreselectedService] = useState("");
+  const [isVaastuOpen, setIsVaastuOpen] = useState(false);
 
   const openBooking = useCallback((service = "") => {
     setPreselectedService(service);
@@ -17,13 +19,25 @@ export function BookingProvider({ children }) {
     setPreselectedService("");
   }, []);
 
+  const openVaastuBooking = useCallback(() => {
+    setIsVaastuOpen(true);
+  }, []);
+
+  const closeVaastuBooking = useCallback(() => {
+    setIsVaastuOpen(false);
+  }, []);
+
   return (
-    <BookingContext.Provider value={{ openBooking }}>
+    <BookingContext.Provider value={{ openBooking, openVaastuBooking }}>
       {children}
       <BookingModal
         isOpen={isOpen}
         onClose={closeBooking}
         preselectedService={preselectedService}
+      />
+      <VaastuBookingModal
+        isOpen={isVaastuOpen}
+        onClose={closeVaastuBooking}
       />
     </BookingContext.Provider>
   );

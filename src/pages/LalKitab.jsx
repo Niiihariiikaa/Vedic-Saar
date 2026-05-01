@@ -237,7 +237,7 @@ export default function LalKitab() {
             </div>
 
             {/* ── Heading ── */}
-            <h1 style={{ fontFamily:H,fontWeight:400,fontSize:"clamp(34px,5vw,54px)",color:DARK,textAlign:"center",margin:"0 0 6px",lineHeight:1.05,letterSpacing:"-.01em" }}>
+            <h1 style={{ fontFamily:H,fontWeight:400,fontSize:"clamp(34px,5vw,70px)",color:DARK,textAlign:"center",margin:"0 0 6px",lineHeight:1.05,letterSpacing:"-.01em" }}>
               Lal Kitab
             </h1>
             <p style={{ fontFamily:H,fontStyle:"italic",fontSize:20,color:GOLD,textAlign:"center",margin:"0 0 14px" }}>
@@ -265,7 +265,6 @@ export default function LalKitab() {
                   onMouseLeave={e => { e.currentTarget.style.transform=""; e.currentTarget.style.boxShadow=""; e.currentTarget.style.borderColor="rgba(201,169,110,.2)"; }}
                 >
                   {/* top gold rule */}
-                  <div style={{ position:"absolute",top:0,left:0,right:0,height:2,background:`linear-gradient(90deg,transparent,${GOLD},transparent)` }} />
                   {/* corner star */}
                   <div style={{ position:"absolute",top:14,right:16,fontFamily:H,fontSize:13,color:GOLD,opacity:.28,lineHeight:1 }}>✦</div>
 

@@ -139,7 +139,7 @@ const globalCss = `
     bottom: 0;
     left: 50%;
     width: 205px;
-    height: 350px;
+    height: 390px;
     transform-origin: bottom center;
     cursor: pointer;
     transition: transform 0.5s cubic-bezier(.22,1,.36,1), z-index 0s;
@@ -482,13 +482,13 @@ function NumberFlipSection() {
     <section ref={ref} style={{
       position: "relative", overflow: "hidden",
       background: "linear-gradient(180deg, #f5f0e8 0%, #fdf8f0 40%, #faf8f5 100%)",
-      paddingBottom: 0,
+      paddingBottom: 60,
     }}
       onMouseMove={handleFanMove}
       onMouseLeave={() => setHov(null)}
     >
-      <div style={{ maxWidth: 1160, margin: "0 auto", padding: "100px 72px 0", position: "relative", zIndex: 1 }}>
-        <div style={{ textAlign: "center", marginBottom: 64 }}>
+      <div style={{ maxWidth: 1160, margin: "0 auto", padding: "100px 72px 0", position: "relative", zIndex: 12 }}>
+        <div style={{ textAlign: "center", marginBottom: 32 }}>
           <div className="rv" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 16 }}>
             <span style={{ width: 28, height: 1, background: gold }} />
             <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: gold }}>Numerological Blueprint</span>
@@ -508,10 +508,10 @@ function NumberFlipSection() {
         ref={fanRef}
         className="rv"
         style={{
-          top: -160,
+          top: -90,
           position: "relative",
           width: "100%",
-          height: 560,
+          height: 600,
           transitionDelay: "0.2s",
           overflow: "visible",
         }}
@@ -530,7 +530,7 @@ function NumberFlipSection() {
           const zi = isHov ? 30 : baseZ;
 
           const arcTransform = isHov
-            ? `rotate(0deg) translateY(-${RADIUS + 75}px) scale(1.08)`
+            ? `rotate(0deg) translateY(-${RADIUS + 50}px) scale(1.22)`
             : `rotate(${angle}deg) translateY(-${RADIUS}px)`;
 
           return (
@@ -542,7 +542,7 @@ function NumberFlipSection() {
                 left: "50%",
                 marginLeft: -102,
                 width: 205,
-                height: 350,
+                height: 390,
                 transformOrigin: "center bottom",
                 perspective: "1000px",
                 transform: arcTransform,
@@ -629,9 +629,9 @@ function NumberFlipSection() {
 
                   <div style={{ position: "relative", zIndex: 1, height: 1, background: "rgba(201,169,110,0.2)", marginBottom: 10 }} />
 
-                  <p style={{ position: "relative", zIndex: 1, fontFamily: "'Ibarra Real Nova',serif", fontSize: 10, color: gold, fontStyle: "italic", marginBottom: 10, lineHeight: 1.6 }}>{n.traits}</p>
+                  <p style={{ position: "relative", zIndex: 1, fontFamily: "'Ibarra Real Nova',serif", fontSize: 13, color: gold, fontStyle: "italic", marginBottom: 10, lineHeight: 1.5 }}>{n.traits}</p>
 
-                  <p style={{ position: "relative", zIndex: 1, fontFamily: "'Glacial Indifference',sans-serif", fontSize: 9.5, color: "rgba(250,248,245,0.55)", lineHeight: 1.8, flex: 1 }}>{n.desc}</p>
+                  <p style={{ position: "relative", zIndex: 1, fontFamily: "'Glacial Indifference',sans-serif", fontSize: 12, color: "rgba(250,248,245,0.75)", lineHeight: 1.7, flex: 1 }}>{n.desc}</p>
 
                   {/* Bottom accent */}
                   <div style={{ position: "relative", zIndex: 1, display: "flex", justifyContent: "center", marginTop: 12 }}>
@@ -759,7 +759,7 @@ function ImpactSection() {
 
   return (
     <section style={{
-      overflow: "hidden", position: "relative",
+      overflow: "hidden", position: "relative", marginTop: "00px", padding: "0 0 100px",
       background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 60%, #faf8f5 100%)",
     }}>
       {/* ── HEADING ── */}

@@ -114,7 +114,7 @@ function AccItem({ title, body }) {
 function Hero() {
   const crystalRef = useRef(null);
   const moonRef    = useRef(null);
-  const { openBooking } = useBooking();
+  const { openVaastuBooking } = useBooking();
 
   useEffect(() => {
     return subscribeScroll((y) => {
@@ -155,7 +155,7 @@ function Hero() {
           Your space is a living energy field — let us help you align it.
         </p>
         <button
-          onClick={() => openBooking("Vaastu")}
+          onClick={() => openVaastuBooking()}
           style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
           onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
           onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
@@ -350,7 +350,7 @@ function WhatIsSection() {
   const compassRef  = useRef(null);   // ← replaces wheelRef
   const needleRef   = useRef(null);
   const bodyRef     = useRef(null);
-  const { openBooking } = useBooking();
+  const { openVaastuBooking } = useBooking();
   useReveal(bodyRef);
 
   useEffect(() => {
@@ -445,7 +445,7 @@ function WhatIsSection() {
           </div>
           <div className="rv" style={{ marginTop: 44, transitionDelay: "0.32s" }}>
             <button
-              onClick={() => openBooking("Vaastu")}
+              onClick={() => openVaastuBooking()}
               style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
@@ -1031,7 +1031,7 @@ function ApproachSection() {
 function WhoAndCTASection() {
   const ref       = useRef(null);
   const mantraRef = useRef(null);
-  const { openBooking } = useBooking();
+  const { openVaastuBooking } = useBooking();
   useReveal(ref);
 
   useEffect(() => {
@@ -1115,7 +1115,7 @@ function WhoAndCTASection() {
               Limited slots available — book early to secure your session.
             </p>
             <button
-              onClick={() => openBooking("Vaastu")}
+              onClick={() => openVaastuBooking()}
               style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>

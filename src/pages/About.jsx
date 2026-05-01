@@ -39,9 +39,6 @@ function FU({ children, delay = 0, style = {} }) {
   );
 }
 
-const DOME_A = "/assets/section1.webp";
-const DOME_B = "/assets/vastu.webp";
-
 const WHY_BULLETS = [
   "It uses the sidereal zodiac — aligned with actual star positions, making it astronomically precise.",
   "It accounts for your Ascendant, Moon sign, and planetary periods (Dashas) for a complete life reading.",
@@ -52,36 +49,6 @@ const WHY_BULLETS = [
 
 
 export default function AboutVedicSaar() {
-  const imgARef      = useRef(null);
-  const imgBRef      = useRef(null);
-  const mysteriesRef = useRef(null);
-
-  useEffect(() => {
-    const sec = mysteriesRef.current;
-    if (!sec) return;
-    let secTop = sec.getBoundingClientRect().top + window.scrollY;
-    const updateTop = () => { secTop = sec.getBoundingClientRect().top + window.scrollY; };
-    window.addEventListener("resize", updateTop, { passive: true });
-
-    let raf;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const sy = window.scrollY;
-        const rel = sy - secTop + window.innerHeight;
-        if (rel < 0 || rel > sec.offsetHeight + window.innerHeight) return;
-        const shift = (rel / window.innerHeight) * 48;
-        if (imgARef.current) imgARef.current.style.transform = `translateY(${-shift}px)`;
-        if (imgBRef.current) imgBRef.current.style.transform = `translateY(${shift * 0.7}px)`;
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", updateTop);
-    };
-  }, []);
 
   return (
     <>
@@ -115,7 +82,6 @@ export default function AboutVedicSaar() {
 
       {/* ── WHO WE ARE ── */}
       <section
-        ref={mysteriesRef}
         className="bg-white pt-[90px] pb-20 z-2"
         style={{ position: "relative", overflow: "visible" }}
       >
@@ -127,7 +93,7 @@ export default function AboutVedicSaar() {
             position: "absolute",
             top: "55%", left: "20%",
             transform: "translate(-50%, -50%)",
-            width: "920px", height: "920px",
+            width: "720px", height: "680px",
             objectFit: "contain",
             opacity: 0.2,
             pointerEvents: "none",
@@ -136,73 +102,29 @@ export default function AboutVedicSaar() {
           }}
         />
         <div
-          className="max-w-[1140px] mx-auto px-10 grid grid-cols-2 max-[960px]:grid-cols-1 gap-[70px] items-center"
+          className="max-w-[860px] mx-auto px-10"
           style={{ position: "relative", zIndex: 1 }}
         >
           <FU>
-            <div className="relative h-[520px]" style={{ overflow: "visible" }}>
-              <div
-                ref={imgARef}
-                style={{
-                  position: "absolute",
-                  left: "-20%",
-                  top: "30px",
-                  width: "56%",
-                  height: "400px",
-                  overflow: "hidden",
-                  borderRadius: "50% 50% 0 0 / 50% 50% 0 0",
-                  willChange: "transform",
-                }}
-              >
-                <img
-                  src={DOME_A}
-                  alt="Vedic wisdom"
-                  style={{ width: "100%", height: "115%", objectFit: "cover", display: "block", objectPosition: "center top" }}
-                />
-              </div>
-              <div
-                ref={imgBRef}
-                style={{
-                  position: "absolute",
-                  right: "1%",
-                  top: "60px",
-                  width: "56%",
-                  height: "400px",
-                  overflow: "hidden",
-                  borderRadius: "0 0 50% 50% / 0 0 50% 50%",
-                  willChange: "transform",
-                }}
-              >
-                <img
-                  src={DOME_B}
-                  alt="Astrology guidance"
-                  style={{ width: "100%", height: "115%", objectFit: "cover", display: "block", objectPosition: "center bottom" }}
-                />
-              </div>
-            </div>
-          </FU>
-
-          <FU delay={120}>
-            <div>
-              <span className="block text-[10px] tracking-[3px] uppercase text-[#a8865c] mb-[14px] font-normal">
-                Ancient Wisdom. Modern Clarity.
-              </span>
-              <h2 className="font-ibarra text-[42px] font-normal leading-[1.2] text-[#2a2017] mb-5">
-                Who We Are
-              </h2>
-              <p className="text-[22px] leading-[1.9] text-[#666] mb-5" style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 16 }}>
-                Welcome to Vedic Saar — a sacred space where ancient Vedic wisdom meets the
-                questions of your modern life. We are not just astrologers. We are guides who have
-                spent years studying the cosmic language of the planets, the nuances of your birth
-                chart, and the timeless principles of Jyotish — the 'Eye of the Vedas.'
-              </p>
-              <p className="text-[18px] leading-[1.9] text-[#666]" style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 16 }}>
-                At Vedic Saar, every consultation is treated as a deeply personal conversation
-                between the cosmos and you. We believe that the moment you were born, the universe
-                encoded a unique blueprint of your life into the sky above. Our mission is to decode
-                that blueprint — with precision, compassion, and clarity.
-              </p>
-            </div>
+            <span className="block text-[10px] tracking-[3px] uppercase text-[#a8865c] mb-[14px] font-normal text-center">
+              Ancient Wisdom. Modern Clarity.
+            </span>
+            <h2 className="font-ibarra text-[42px] font-normal leading-[1.2] text-[#2a2017] mb-8 text-center">
+              Who We Are
+            </h2>
+            <div style={{ width: 48, height: 1, background: "rgba(168,134,92,0.5)", margin: "0 auto 36px" }} />
+            <p className="text-[22px] leading-[1.9] text-[#666] mb-5" style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 16 }}>
+              Welcome to Vedic Saar — a sacred space where ancient Vedic wisdom meets the
+              questions of your modern life. We are not just astrologers. We are guides who have
+              spent years studying the cosmic language of the planets, the nuances of your birth
+              chart, and the timeless principles of Jyotish — the 'Eye of the Vedas.'
+            </p>
+            <p className="text-[18px] leading-[1.9] text-[#666]" style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 16 }}>
+              At Vedic Saar, every consultation is treated as a deeply personal conversation
+              between the cosmos and you. We believe that the moment you were born, the universe
+              encoded a unique blueprint of your life into the sky above. Our mission is to decode
+              that blueprint — with precision, compassion, and clarity.
+            </p>
           </FU>
         </div>
       </section>
@@ -281,10 +203,6 @@ export default function AboutVedicSaar() {
           <div className="border border-[#e8e2d8] bg-[#faf7f2] flex flex-col items-center justify-center px-10 py-14 text-center">
             <div className="mb-7">
               <svg viewBox="0 0 200 250" width="160" height="200" fill="none" stroke="#3a2c1a" strokeWidth="0.9">
-                {/* Gothic arch frame */}
-                <path d="M100,10 C68,10 22,55 22,108 L22,188 Q22,240 100,244 Q178,240 178,188 L178,108 C178,55 132,10 100,10 Z"/>
-                {/* Outer wheel */}
-                <circle cx="100" cy="152" r="60" strokeWidth="0.8"/>
                 {/* 12 spokes */}
                 <line x1="100" y1="92"  x2="100" y2="122" strokeWidth="0.7" opacity="0.6"/>
                 <line x1="130" y1="97"  x2="115" y2="123" strokeWidth="0.7" opacity="0.6"/>
@@ -298,13 +216,11 @@ export default function AboutVedicSaar() {
                 <line x1="40"  y1="152" x2="70"  y2="152" strokeWidth="0.7" opacity="0.6"/>
                 <line x1="49"  y1="122" x2="72"  y2="137" strokeWidth="0.7" opacity="0.6"/>
                 <line x1="70"  y1="97"  x2="85"  y2="123" strokeWidth="0.7" opacity="0.6"/>
-                {/* Middle ring */}
-                <circle cx="100" cy="152" r="34" strokeWidth="0.8"/>
                 {/* Inner 6-point star */}
                 <polygon points="100,120 117,148 100,152 83,148" strokeWidth="0.9" opacity="0.6"/>
                 <polygon points="100,184 117,156 100,152 83,156" strokeWidth="0.9" opacity="0.6"/>
                 <circle cx="100" cy="152" r="7" fill="#3a2c1a" fillOpacity="0.15" strokeWidth="0.8"/>
-                {/* Tiny rim dots at 12 spoke tips */}
+                {/* Tiny rim dots */}
                 <circle cx="100" cy="90"  r="2.5" fill="#3a2c1a" opacity="0.4"/>
                 <circle cx="130" cy="95"  r="2"   fill="#3a2c1a" opacity="0.35"/>
                 <circle cx="153" cy="120" r="2"   fill="#3a2c1a" opacity="0.35"/>
@@ -317,10 +233,6 @@ export default function AboutVedicSaar() {
                 <circle cx="38"  cy="152" r="2.5" fill="#3a2c1a" opacity="0.4"/>
                 <circle cx="47"  cy="120" r="2"   fill="#3a2c1a" opacity="0.35"/>
                 <circle cx="70"  cy="95"  r="2"   fill="#3a2c1a" opacity="0.35"/>
-                {/* Arch crown ornament */}
-                <path d="M88,36 Q100,26 112,36" strokeWidth="0.9"/>
-                <circle cx="100" cy="30" r="5" strokeWidth="0.9"/>
-                <circle cx="100" cy="30" r="2" fill="#3a2c1a" opacity="0.4"/>
               </svg>
             </div>
             <span className="text-[11px] tracking-[2px] uppercase text-[#a8865c] mb-3 block font-normal">Readings</span>
@@ -341,8 +253,6 @@ export default function AboutVedicSaar() {
           <div className="border border-[#e8e2d8] bg-[#faf7f2] flex flex-col items-center justify-center px-10 py-14 text-center">
             <div className="mb-7">
               <svg viewBox="0 0 200 250" width="160" height="200" fill="none" stroke="#3a2c1a" strokeWidth="0.9">
-                {/* Gothic arch frame */}
-                <path d="M100,10 C68,10 22,55 22,108 L22,188 Q22,240 100,244 Q178,240 178,188 L178,108 C178,55 132,10 100,10 Z"/>
                 {/* Crescent moon body */}
                 <path d="M80,105 A52,52 0 1 1 80,198 A36,36 0 1 0 80,105 Z" strokeWidth="1"/>
                 {/* Stars — 4-point cross style */}
@@ -361,10 +271,6 @@ export default function AboutVedicSaar() {
                 <path d="M116,203 Q123,188 113,184 Q110,196 116,203Z"   strokeWidth="0.9"/>
                 <path d="M68,197  Q64,182  74,180 Q75,192  68,197Z"     strokeWidth="0.8"/>
                 <path d="M132,197 Q136,182 126,180 Q125,192 132,197Z"   strokeWidth="0.8"/>
-                {/* Arch crown ornament */}
-                <path d="M88,36 Q100,26 112,36" strokeWidth="0.9"/>
-                <circle cx="100" cy="30" r="5" strokeWidth="0.9"/>
-                <circle cx="100" cy="30" r="2" fill="#3a2c1a" opacity="0.4"/>
               </svg>
             </div>
             <span className="text-[11px] tracking-[2px] uppercase text-[#a8865c] mb-3 block font-normal">Guidance</span>
@@ -383,12 +289,6 @@ export default function AboutVedicSaar() {
           <div className="border border-[#e8e2d8] bg-[#faf7f2] flex flex-col items-center justify-center px-10 py-14 text-center">
             <div className="mb-7">
               <svg viewBox="0 0 200 250" width="160" height="200" fill="none" stroke="#3a2c1a" strokeWidth="0.9">
-                {/* Gothic arch frame */}
-                <path d="M100,10 C68,10 22,55 22,108 L22,188 Q22,240 100,244 Q178,240 178,188 L178,108 C178,55 132,10 100,10 Z"/>
-                {/* Outer ring */}
-                <circle cx="100" cy="152" r="58" strokeWidth="0.8"/>
-                {/* Middle ring */}
-                <circle cx="100" cy="152" r="28" strokeWidth="0.7" opacity="0.55"/>
                 {/* Compass — N/S/E/W diamond points */}
                 <polygon points="100,94  108,144 100,152 92,144"  strokeWidth="0.9" fill="#3a2c1a" fillOpacity="0.12"/>
                 <polygon points="100,210 108,160 100,152 92,160"  strokeWidth="0.9"/>
@@ -410,10 +310,6 @@ export default function AboutVedicSaar() {
                 <circle cx="59"  cy="111" r="2.5" fill="#3a2c1a" opacity="0.38"/>
                 {/* Center jewel */}
                 <circle cx="100" cy="152" r="6" fill="#3a2c1a" fillOpacity="0.2" strokeWidth="0.8"/>
-                {/* Arch crown ornament */}
-                <path d="M88,36 Q100,26 112,36" strokeWidth="0.9"/>
-                <circle cx="100" cy="30" r="5" strokeWidth="0.9"/>
-                <circle cx="100" cy="30" r="2" fill="#3a2c1a" opacity="0.4"/>
               </svg>
             </div>
             <span className="text-[11px] tracking-[2px] uppercase text-[#a8865c] mb-3 block font-normal">Clarity</span>
@@ -442,20 +338,9 @@ export default function AboutVedicSaar() {
         <div className="max-w-[720px] mx-auto px-10 text-center w-full">
           <FU>
             <div className="mb-8">
-              <svg
-                className="w-16 mx-auto block"
-                viewBox="0 0 64 64"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                stroke="#a8865c"
-                strokeWidth="1"
-              >
-                <circle cx="32" cy="32" r="28"/>
-                <path d="M32 4 Q44 32 32 60 Q20 32 32 4Z"/>
-                <circle cx="32" cy="32" r="4" fill="#a8865c" opacity=".5"/>
-              </svg>
+             
             </div>
-            <p className="font-ibarra text-[40px] mt-[90px] max-[960px]:text-[20px] font-normal text-black leading-[1.6] not-italic">
+            <p className="font-ibarra text-[40px] mt-[140px] max-[960px]:text-[20px] font-normal text-black leading-[1.6] not-italic">
               ✦ Your stars are not your prison — they are your map. Let us help you read it. ✦
             </p>
             <div className="mt-10">
