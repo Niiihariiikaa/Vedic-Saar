@@ -102,6 +102,124 @@ html { scroll-behavior: smooth; overflow-x: hidden; }
   animation: floatYCrystal 7s ease-in-out infinite;
 }
 
+/* ── RESPONSIVE ── */
+
+/* Home hero: stack to single column on tablets/mobile */
+@media (max-width: 1024px) {
+  .home-hero {
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+    padding: 40px 0 !important;
+  }
+  .home-hero-left {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    text-align: center;
+    padding: 40px 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .home-hero-left h1 {
+    margin-left: 0 !important;
+    transform: none !important;
+    font-size: clamp(44px, 10vw, 72px) !important;
+  }
+  .home-hero-right {
+    display: none !important;
+  }
+  .hero-slider-wrap {
+    height: 480px !important;
+  }
+  .hero-capsule {
+    height: 440px !important;
+    border-radius: 220px 220px 0 0 !important;
+  }
+}
+@media (max-width: 640px) {
+  .hero-slider-wrap {
+    height: 380px !important;
+  }
+  .hero-capsule {
+    height: 340px !important;
+    border-radius: 170px 170px 0 0 !important;
+  }
+}
+
+/* Astrologer section: stack on mobile */
+@media (max-width: 1024px) {
+  .astrologer-row {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .astrologer-left {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 400px;
+  }
+  .astrologer-right {
+    padding: 40px 24px !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Global section padding on mobile */
+@media (max-width: 768px) {
+  /* 3-column grids → single column */
+  .mobile-col-1 {
+    grid-template-columns: 1fr !important;
+  }
+  /* Reduce heavy section padding */
+  .mobile-pad {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  /* CTA buttons — prevent overflow */
+  .cta-btn {
+    padding: 14px 28px !important;
+    font-size: 10px !important;
+  }
+  /* Hero decorative images (crystal, moon) — hide on mobile to prevent overflow */
+  .hero-decor {
+    display: none !important;
+  }
+  /* Hero section — clip overflow from decorative elements */
+  .hero-section {
+    overflow: hidden !important;
+  }
+  /* Constellation overlay — shrink and center on mobile */
+  .constellation-img {
+    width: min(260px, 75vw) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  /* Prevent button text from overflowing on narrow phones */
+  button {
+    white-space: normal !important;
+  }
+  /* Vaastu WhySection dark box — reduce inset on small screens */
+  .why-dark-box {
+    margin: 0 0 40px !important;
+    padding: 32px 20px !important;
+  }
+  /* Home hero decorative floats — hide on mobile to stop overflow */
+  .home-float-decor {
+    display: none !important;
+  }
+  /* Home about section images — cap border-radius so arches don't look extreme */
+  .home-about-img-left {
+    border-radius: 0 min(200px, 40vw) min(200px, 40vw) 0 !important;
+  }
+  .home-about-img-right {
+    border-radius: min(200px, 40vw) 0 0 0 !important;
+  }
+  /* Hero capsule — reduce border-radius on very small phones */
+  .hero-capsule {
+    border-radius: min(170px, 45vw) min(170px, 45vw) 0 0 !important;
+  }
+}
+
 /* ── FONTS ── */
 @font-face {
   font-family: 'Lathusca';

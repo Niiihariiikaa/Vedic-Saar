@@ -12,7 +12,8 @@ const SLIDES = [
 ]
 
 const SLIDER_CAPSULE_STYLE = {
-  width: '460px',
+  maxWidth: '460px',
+  width: '100%',
   height: '580px',
   borderRadius: '230px 230px 0 0',
 }
@@ -63,11 +64,11 @@ const HeroSlider = memo(({ saturnRef, crystalRef }) => {
 
   return (
     <div
-      className="relative flex justify-center items-end overflow-visible z-[1]"
+      className="relative flex justify-center items-end overflow-visible z-[1] hero-slider-wrap"
       style={{ height: '600px' }}
     >
       {/* Slider capsule */}
-      <div className="relative overflow-hidden bg-[#c8bfaa]" style={SLIDER_CAPSULE_STYLE}>
+      <div className="relative overflow-hidden bg-[#c8bfaa] hero-capsule" style={SLIDER_CAPSULE_STYLE}>
         {SLIDES.map((s, i) => {
           // Only render current + adjacent slides — massive repaint saving
           if (Math.abs(i - currentSlide) > 1) return null
@@ -92,7 +93,7 @@ const HeroSlider = memo(({ saturnRef, crystalRef }) => {
       {/* Saturn planet */}
       <div
         ref={saturnRef}
-        className="absolute pointer-events-none z-10"
+        className="absolute pointer-events-none z-10 home-float-decor"
         style={{ width: '140px', height: '170px', top: '20px', right: '-30px' }}
       >
         <img
@@ -107,7 +108,7 @@ const HeroSlider = memo(({ saturnRef, crystalRef }) => {
       {/* Crystal stone */}
       <div
         ref={crystalRef}
-        className="absolute pointer-events-none z-10"
+        className="absolute pointer-events-none z-10 home-float-decor"
         style={{ width: '170px', height: '150px', bottom: '0', left: '-80px' }}
       >
         <img
@@ -250,7 +251,7 @@ export default function Homepage() {
         {/* heroRef wraps both hero + about so visibility gate covers full parallax zone */}
         <div ref={heroRef}>
           <section
-            className="relative min-h-[600px] overflow-visible items-center grid bg-transparent"
+            className="relative min-h-[600px] overflow-visible items-center grid bg-transparent home-hero"
             style={heroGridStyle}
           >
             {/* Zodiac watermark */}
@@ -264,7 +265,7 @@ export default function Homepage() {
             />
 
             {/* ── LEFT ── */}
-            <div className="relative z-10 ml-5" style={{ marginRight: '-170px' }}>
+            <div className="relative z-10 ml-5 home-hero-left" style={{ marginRight: '-170px' }}>
               <span className="block text-base text-[#8a7a5a] mb-3 tracking-wide">
                 Vedic Astrology &amp; Cosmic Guidance
               </span>
@@ -308,7 +309,7 @@ export default function Homepage() {
 
             {/* ── RIGHT ── */}
             <div
-              className="relative z-10 overflow-visible"
+              className="relative z-10 overflow-visible home-hero-right"
               style={{ marginLeft: '-100px', padding: '60px', marginTop: '100px' }}
             >
               <div
@@ -351,15 +352,15 @@ export default function Homepage() {
 
           {/* ══════════════════════ SECTION 2 — ABOUT ══════════════════════ */}
           <section
-            className="py-20 grid grid-cols-3 gap-10 items-center relative"
+            className="py-20 grid grid-cols-1 md:grid-cols-3 gap-10 items-center relative"
             ref={sectionRef}
             style={sectionBgStyle}
           >
             {/* Left image */}
             <div className="relative">
               <div
-                className="overflow-hidden bg-[#c8bfaa]"
-                style={{ width: '500px', height: '480px', borderRadius: '0px 300px 300px 0px' }}
+                className="overflow-hidden bg-[#c8bfaa] home-about-img-left"
+                style={{ width: 'min(500px, 100%)', height: 'min(480px, 65vw)', borderRadius: '0px 300px 300px 0px' }}
               >
                 <img
                   src="/assets/section1.webp"
@@ -372,7 +373,7 @@ export default function Homepage() {
               {/* Beige crystal float */}
               <div
                 ref={crystal2Ref}
-                className="absolute pointer-events-none z-10"
+                className="absolute pointer-events-none z-10 home-float-decor"
                 style={{
                   left: '-40px',
                   top: '-150px',
@@ -432,8 +433,8 @@ export default function Homepage() {
             {/* Right image */}
             <div className="relative flex justify-end">
               <div
-                className="overflow-hidden bg-[#c8bfaa]"
-                style={{ width: '580px', height: '700px', borderRadius: '300px 0px 0px 0px' }}
+                className="overflow-hidden bg-[#c8bfaa] home-about-img-right"
+                style={{ width: 'min(580px, 100%)', height: 'min(700px, 80vw)', borderRadius: '300px 0px 0px 0px' }}
               >
                 <img
                   src="/assets/section2.webp"
@@ -446,7 +447,7 @@ export default function Homepage() {
               {/* Moon float */}
               <div
                 ref={moonRef}
-                className="absolute pointer-events-none z-10"
+                className="absolute pointer-events-none z-10 home-float-decor"
                 style={{
                   top: '-90px',
                   right: '10px',
@@ -457,6 +458,8 @@ export default function Homepage() {
                 }}
               />
             </div>
+
+            
           </section>
         </div>
 

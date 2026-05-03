@@ -227,7 +227,7 @@ const CSS = `
     padding: 18px 56px;
     background: #0d0a06;
     border: 2px dashed #ffffff;
-    
+
     color: #ffffff;
     font-family: 'Glacial Indifference', sans-serif;
     font-size: 11px;
@@ -350,6 +350,10 @@ const CSS = `
     15% { opacity: 0.12; }
     50% { transform: translateY(-50vh) scale(1.1); opacity: 0.18; }
     100% { transform: translateY(-110vh) scale(1.4); opacity: 0; }
+  }
+  @media (max-width: 768px) {
+    .mobile-col-1 { grid-template-columns: 1fr !important; }
+    section { padding-left: max(20px, 4vw) !important; padding-right: max(20px, 4vw) !important; }
   }
 `;
 
@@ -650,7 +654,7 @@ function HousesSection() {
           Hover to awaken each house
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
+        <div className="mobile-col-1" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
           {houses.map((h, i) => (
             <div key={i} className={`r d${(i % 3) + 1} hcard`}>
               <div className="hcard-orb" />
@@ -854,7 +858,7 @@ function PlanetsSection() {
         {/* END solar system */}
 
         {/* ── Detail cards ── */}
-        <div className="r d4" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginTop: 48 }}>
+        <div className="r d4 mobile-col-1" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginTop: 48 }}>
           {planets.map((p, i) => (
             <div
               key={i}
@@ -930,8 +934,13 @@ function NumerologySection() {
     setHov(bestDiff < 22 ? best : null);
   }
 
+  function handleFanTouch(e) {
+    const touch = e.touches[0];
+    if (touch) handleFanMove({ clientX: touch.clientX, clientY: touch.clientY });
+  }
+
   return (
-    <section ref={ref} style={{ position: "relative", overflow: "hidden", background: DARK, paddingBottom: 0 }} onMouseMove={handleFanMove} onMouseLeave={() => setHov(null)} className="grain">
+    <section ref={ref} style={{ position: "relative", overflow: "hidden", background: DARK, paddingBottom: 0 }} onMouseMove={handleFanMove} onMouseLeave={() => setHov(null)} onTouchMove={(e) => { e.preventDefault(); handleFanTouch(e); }} onTouchEnd={() => setHov(null)} className="grain">
       <WaveTop fill={DARK2} />
       <WaveBottom fill={DARK2} />
       <GlowyParticles count={55} />
@@ -977,8 +986,8 @@ function NumerologySection() {
                 : `rotate(${angle}deg) translateY(-${RADIUS}px)`,
               transition: "transform 0.55s cubic-bezier(.16,1,.3,1)",
               zIndex: isHov ? 30 : baseZ,
-              pointerEvents: "none",
-            }}>
+              pointerEvents: "auto",
+            }} onClick={() => setHov(hov === i ? null : i)}>
               <div style={{
                 width: "100%", height: "100%",
                 transformStyle: "preserve-3d",
@@ -1064,7 +1073,7 @@ function ProblemsSection() {
           Questions We Help<br /><em style={{ color: GOLD }}>You Answer</em>
         </h2>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72 }}>
+        <div className="mobile-col-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72 }}>
           <div className="r d1">
             <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
               <div style={{ width: 3, height: 28, background: GOLD, borderRadius: 2 }} />
@@ -1128,7 +1137,7 @@ function GuideSection() {
           Towards Love
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
+        <div className="mobile-col-1" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
           {guideItems.map((g, i) => (
             <div key={i} className={`r d${(i % 3) + 1} gitem`} style={{ padding: "32px 28px", background: "white", display: "flex", gap: 20, alignItems: "flex-start" }}>
               <span style={{ fontFamily: HEADING_FONT, fontSize: 26, color: GOLD, lineHeight: 1, flexShrink: 0, paddingTop: 2, fontWeight: 400 }}>{g.n}</span>
@@ -1162,7 +1171,7 @@ function CTASection() {
   return (
     <section ref={ref} style={{ backgroundImage: 'url("/assets/Testimonialsbg.png")', marginTop: -120, backgroundSize: "cover", backgroundPosition: "top center", padding: "130px 48px 150px", textAlign: "center", position: "relative", overflow: "hidden" }}>
       <div style={{ position: "relative", zIndex: 2, marginTop: 500 }}>
-        <div className="r" style={{ fontFamily: HEADING_FONT, fontStyle: "italic", fontSize: 16, color: "black", marginBottom: 52, letterSpacing: "0.03em" }}>
+        <div className="r" style={{ fontFamily: HEADING_FONT, fontStyle: "italic", fontSize: 16, color: CREAM, marginBottom: 52, letterSpacing: "0.03em" }}>
           ✦ &nbsp; Your person exists. Your chart shows you how to find them — and when. &nbsp; ✦
         </div>
 

@@ -185,7 +185,7 @@ export default function KnowYourAstrologer() {
       </div>
 
       {/* ── MAIN ROW ── */}
-      <div className="relative z-10 flex flex-1 items-center">
+      <div className="relative z-10 flex flex-1 items-center astrologer-row">
 
 <div
   ref={chartBgRef}
@@ -212,8 +212,8 @@ export default function KnowYourAstrologer() {
         {/* ── LEFT: sunburst + photo ── */}
         <div
           ref={photoRef}
-          className="relative flex-shrink-0 flex items-center justify-center"
-          style={{ width: '48%', minWidth: 420, height: '85vh' }}
+          className="relative flex-shrink-0 flex items-center justify-center astrologer-left"
+          style={{ width: '48%', minWidth: 0, height: '85vh' }}
         >
           {/* Sunburst — warm golden/beige rays */}
           <div
@@ -250,7 +250,7 @@ export default function KnowYourAstrologer() {
           <div
             className="relative rounded-full overflow-hidden z-10"
             style={{
-              width: 400, height: 400,
+              width: 'min(400px, 75vw)', height: 'min(400px, 75vw)',
               border: '3px solid rgba(180,190,200,0.35)',
               boxShadow: '0 8px 48px rgba(0,0,0,0.12)',
               background: '#d8dce0',
@@ -282,7 +282,7 @@ export default function KnowYourAstrologer() {
         {/* ── RIGHT: content ── */}
         <div
           ref={contentRef}
-          className="flex-1 py-16 pr-14 pl-4 max-w-2xl"
+          className="flex-1 py-16 pr-14 pl-4 max-w-2xl astrologer-right"
           style={{ opacity: 0 }}
         >
           {/* Badge */}

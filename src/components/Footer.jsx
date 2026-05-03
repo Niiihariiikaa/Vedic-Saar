@@ -1,30 +1,39 @@
+import { Link } from 'react-router-dom';
+import { useBooking } from './BookingContext';
 import Galaxy from './Galaxy';
 
 const footerLinks = {
   Services: [
-    'Vedic Astrology',
-    'Numerology',
-    'Vastu Shastra',
+    { label: 'Vedic Astrology', to: '/vedic-astrology' },
+    { label: 'Numerology', to: '/numerology' },
+    { label: 'Vastu Shastra', to: '/vaastu' },
   ],
   Explore: [
-    'About VedicSaar',
-    'Testimonials',
-    
+    { label: 'About VedicSaar', to: '/about' },
+    { label: 'Testimonials', to: '/' },
   ],
   Connect: [
-    'Book a Session',
-    'Contact Us',
-    'WhatsApp Consult',
-    'Instagram'
-    
+    { label: 'Book a Session', action: 'booking' },
+    { label: 'Contact Us', href: 'mailto:info@vedicsaar.com' },
+    { label: 'WhatsApp Consult', href: 'https://wa.me/919999999999' },
+    { label: 'Instagram', href: 'https://instagram.com/vedicsaar' },
   ],
 };
 
+const linkStyle = {
+  fontFamily: "'Glacial Indifference', serif",
+  fontSize: 15,
+  color: 'rgba(245,237,224,0.6)',
+  textDecoration: 'none',
+};
+
 export default function Footer() {
+  const { openBooking } = useBooking();
+
   return (
     <footer className="relative w-full overflow-hidden" style={{ minHeight: 560 }}>
 
-      {/* Galaxy background — fills entire footer */}
+      {/* Galaxy background */}
       <div className="absolute inset-0 z-0">
         <Galaxy
           mouseRepulsion
@@ -43,7 +52,6 @@ export default function Footer() {
         />
       </div>
 
-      {/* Dark overlay so text is readable */}
       <div className="absolute inset-0 z-[1] pointer-events-none" />
 
       {/* Content */}
@@ -54,19 +62,20 @@ export default function Footer() {
 
           {/* Brand column */}
           <div className="md:col-span-1">
-            {/* Logo */}
-            <p
-              className="mb-1"
-              style={{
-                fontFamily: "'Lathusca', sans-serif",
-                fontSize: 34,
-                fontWeight: 400,
-                letterSpacing: '-0.01em',
-                lineHeight: 1,
-              }}
-            >
-              <span style={{ color: '#f5ede0' }}>VEDIC</span><span style={{ color: '#c9a96e' }}>SAAR</span>
-            </p>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <p
+                className="mb-1"
+                style={{
+                  fontFamily: "'Lathusca', sans-serif",
+                  fontSize: 34,
+                  fontWeight: 400,
+                  letterSpacing: '-0.01em',
+                  lineHeight: 1,
+                }}
+              >
+                <span style={{ color: '#f5ede0' }}>VEDIC</span><span style={{ color: '#c9a96e' }}>SAAR</span>
+              </p>
+            </Link>
             <p
               className="mb-6"
               style={{
@@ -107,21 +116,36 @@ export default function Footer() {
               >
                 {title}
               </p>
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-3 list-none p-0 m-0">
                 {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="transition-colors duration-200 hover:text-[#b8860b]"
-                      style={{
-                        fontFamily: "'Glacial Indifference', serif",
-                        fontSize: 15,
-                        color: 'rgba(245,237,224,0.6)',
-                        textDecoration: 'none',
-                      }}
-                    >
-                      {link}
-                    </a>
+                  <li key={link.label}>
+                    {link.action === 'booking' ? (
+                      <button
+                        onClick={() => openBooking()}
+                        className="transition-colors duration-200 hover:text-[#b8860b] bg-transparent border-none p-0 cursor-pointer text-left"
+                        style={linkStyle}
+                      >
+                        {link.label}
+                      </button>
+                    ) : link.href ? (
+                      <a
+                        href={link.href}
+                        target={link.href.startsWith('mailto') ? undefined : '_blank'}
+                        rel="noopener noreferrer"
+                        className="transition-colors duration-200 hover:text-[#b8860b]"
+                        style={linkStyle}
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        to={link.to}
+                        className="transition-colors duration-200 hover:text-[#b8860b]"
+                        style={linkStyle}
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -158,7 +182,6 @@ export default function Footer() {
             </p>
           </div>
           <div className="flex items-stretch gap-0 flex-shrink-0">
-         
             <button
               style={{
                 background: 'black',

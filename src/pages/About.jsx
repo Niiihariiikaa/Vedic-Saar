@@ -347,7 +347,7 @@ export default function AboutVedicSaar() {
               <a
                 href="/contact"
                 className="inline-block text-white px-[34px] py-[13px] text-[10px] tracking-[2px] uppercase font-normal cursor-pointer bg-black transition-colors duration-200 no-underline hover:bg-transparent hover:text-black"
-                style={{ border: "2px dashed white" , borderRadius: "0px" }}
+                style={{ border: "2px dashed white", borderRadius: "0px" }}
               >
                 Book a Reading
               </a>

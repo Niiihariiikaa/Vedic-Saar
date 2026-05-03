@@ -249,7 +249,7 @@ export default function LalKitab() {
             </p>
 
             {/* ── Remedy Cards ── */}
-            <div style={{ display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:22,marginBottom:44 }}>
+            <div className="mobile-col-1" style={{ display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:22,marginBottom:44 }}>
               {remedies.map(r => (
                 <div
                   key={r.planet}

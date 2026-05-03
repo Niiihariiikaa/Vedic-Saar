@@ -241,7 +241,7 @@ const Testimonials = () => {
 
           {/* CTA */}
           <button
-            style={{ fontFamily: "'Glacial Indifference', sans-serif", background: 'black', color: 'white', border: '2px dashed white', borderRadius: 0, padding: '12px 32px', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', marginTop: 24, cursor: 'pointer' }}
+            style={{ fontFamily: "'Glacial Indifference', sans-serif", background: 'transparent', color: 'black', border: '1px dashed black', borderRadius: 0, padding: '12px 32px', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', marginTop: 24, cursor: 'pointer' }}
           >
             Read All Reviews
           </button>
@@ -249,7 +249,7 @@ const Testimonials = () => {
 
         {/* ── RIGHT: stacked cards ── */}
         <div className="flex-1 flex items-center justify-center">
-          <div style={{ width: 620, height: 380 }}>
+          <div style={{ width: 'min(620px, 92vw)', height: 380 }}>
             <Stack
               randomRotation={true}
               sensitivity={200}

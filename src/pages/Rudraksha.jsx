@@ -408,7 +408,7 @@ function RudraHero({ bead, onConsult }) {
             src={bead.img}
             alt={bead.name}
             style={{
-              width: 430, height: 200,
+              width: 'min(430px, 85vw)', height: 200,
               borderRadius: '50%',
               objectFit: 'cover',
               boxShadow: `0 12px 48px ${bead.color}28`,
@@ -458,15 +458,6 @@ function RudraHero({ bead, onConsult }) {
               }}
             >
               ✦ Consult Astrologer
-            </button>
-            <button
-              style={{
-                background: 'black', color: 'white', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11,
-                letterSpacing: '0.18em', textTransform: 'uppercase', padding: '13px 28px',
-                border: '2px dashed white', borderRadius: 0, cursor: 'pointer',
-              }}
-            >
-              ✦ Explore More
             </button>
           </div>
         </div>

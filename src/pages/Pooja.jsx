@@ -927,7 +927,7 @@ function Hero() {
         <p style={{ fontFamily: BODY_FONT, fontSize: BODY_SIZE, color: "rgba(245,240,232,0.5)", maxWidth: 400, margin: "0 auto 48px", lineHeight: 2, letterSpacing: 0.5 }}>
           When the planets are troubled, the sacred fire speaks for you.
         </p>
-        <button className="cta-btn" style={{ borderColor: GOLD, color: GOLD }}>
+        <button className="cta-btn">
           <span>Book a Pooja</span>
           <span style={{ fontSize: 15, lineHeight: 1 }}>→</span>
         </button>
@@ -1108,7 +1108,7 @@ function PoojasSection() {
           Offerings
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 24 }}>
+        <div className="poojas-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 24 }}>
           {poojas.map((p, i) => {
             return (
               <div key={i} className={`r d${(i % 3) + 1} pcard`}>
@@ -1326,7 +1326,7 @@ function ProblemsSection() {
           Challenges We Help<br /><em style={{ color: GOLD }}>You Resolve</em>
         </h2>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72 }}>
+        <div className="mobile-col-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72 }}>
           <div className="r d1">
             <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
               <div style={{ width: 3, height: 28, background: GOLD, borderRadius: 2 }} />
@@ -1397,7 +1397,7 @@ function CTASection() {
     <section ref={ref} style={{ backgroundImage: 'url("/assets/Testimonialsbg.png")', marginTop: -120, backgroundSize: "cover", backgroundPosition: "top center", padding: "130px 48px 150px", textAlign: "center", position: "relative", overflow: "hidden" }}>
       <div ref={moonRef} style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none" }} />
       <div style={{ position: "relative", zIndex: 2, marginTop: 500 }}>
-        <div className="r" style={{ fontFamily: HEADING_FONT, fontStyle: "italic", fontSize: 16, color: "black", marginBottom: 52, letterSpacing: "0.03em" }}>
+        <div className="r" style={{ fontFamily: HEADING_FONT, fontStyle: "italic", fontSize: 16, color: CREAM, marginBottom: 52, letterSpacing: "0.03em" }}>
           ✦ &nbsp; The sacred fire carries your intentions beyond the veil. &nbsp; ✦
         </div>
 

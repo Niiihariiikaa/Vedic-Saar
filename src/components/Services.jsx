@@ -207,12 +207,9 @@ export default function MysticalServices() {
                 >
                   {s.body}
                 </p>
-                <button
-                  className="ms-learn-after"
-                  style={{ fontFamily: "'Glacial Indifference', sans-serif", background: 'black', color: 'white', border: '2px dashed white', borderRadius: 0, padding: '10px 24px', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 8 }}
-                >
+                <span style={{ fontFamily: "'Glacial Indifference', sans-serif", color: '#1a1206', textDecoration: 'underline', fontSize: 11, letterSpacing: '0.28em', textTransform: 'uppercase', cursor: 'pointer' }}>
                   Learn More
-                </button>
+                </span>
               </div>
             </Link>
           ))}

@@ -173,6 +173,10 @@ const globalCss = `
   .tarot-card-slot.hovered {
     z-index: 30 !important;
   }
+  @media (max-width: 768px) {
+    .mobile-col-1 { grid-template-columns: 1fr !important; }
+    section { padding-left: max(20px, 4vw) !important; padding-right: max(20px, 4vw) !important; }
+  }
 `;
 
 /* ── Accordion ───────────────────────────────────────────────────────────────── */
@@ -205,17 +209,17 @@ function Hero() {
   }, []);
 
   return (
-    <section style={{
+    <section className="hero-section" style={{
       position: "relative", minHeight: "100vh",
       display: "flex", alignItems: "flex-start", justifyContent: "center",
       textAlign: "center", background: "white",
       backgroundImage: 'url("/assets/vedicbg.svg")', backgroundSize: "cover",
       overflow: "visible", padding: "160px 40px 80px",
     }}>
-      <div ref={crystalRef} style={{ position: "absolute", left: "-40px", bottom: "60px", width: 320, height: 420, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 40, opacity: 0.85 }}>
+      <div ref={crystalRef} className="hero-decor" style={{ position: "absolute", left: "-40px", bottom: "60px", width: 320, height: 420, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 40, opacity: 0.85 }}>
         <img src="/assets/beigecrystal.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
       </div>
-      <div ref={moonRef} style={{ position: "absolute", right: "-20px", top: "90px", width: 200, height: 300, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 1, opacity: 0.80 }}>
+      <div ref={moonRef} className="hero-decor" style={{ position: "absolute", right: "-20px", top: "90px", width: 200, height: 300, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 1, opacity: 0.80 }}>
         <img src="/assets/moon.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
       </div>
 
@@ -236,10 +240,10 @@ function Hero() {
         </p>
                   <button
               onClick={() => openBooking("Numerology")}
-              style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
-              Book Your Numerology Consultation →
+              style={{ ...dashedBtn(dark), border: "1px dashed " + dark }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = dark; e.currentTarget.style.boxShadow = "none"; }}>
+              Book Your Numerology Consultation
             </button>
       </div>
     </section>
@@ -250,7 +254,7 @@ function Hero() {
 function ConstellationOverlay() {
   return (
     <div style={{ position: "relative", height: "0px", zIndex: 20 }}>
-      <img src="/assets/costelation.png" alt="" loading="lazy" decoding="async" style={{ position: "absolute", top: "-120px", left: "70%", transform: "translateX(-50%)", width: "600px", opacity: 0.5, pointerEvents: "none" }} />
+      <img src="/assets/costelation.png" alt="" loading="lazy" decoding="async" className="constellation-img" style={{ position: "absolute", top: "-120px", left: "70%", transform: "translateX(-50%)", width: "600px", opacity: 0.5, pointerEvents: "none" }} />
     </div>
   );
 }
@@ -411,23 +415,11 @@ function WhatIsSection() {
         <div className="rv" style={{ marginTop: 44 }}>
           <button
             onClick={() => openBooking("Numerology")}
-            style={{
-              ...dashedBtn("#fff"),
-              background: dark,
-              border: "2px dashed #fff"
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.transform = "translateY(-3px)";
-              e.currentTarget.style.background = "#2e2620";
-              e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.transform = "none";
-              e.currentTarget.style.background = dark;
-              e.currentTarget.style.boxShadow = "none";
-            }}
+            style={{ ...dashedBtn(dark), border: "1px dashed " + dark }}
+            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = dark; e.currentTarget.style.boxShadow = "none"; }}
           >
-            Book Your Numerology Consultation →
+            Book Your Numerology Consultation
           </button>
         </div>
       </div>
@@ -809,7 +801,7 @@ function ImpactSection() {
           <span style={{ width: 28, height: 1, background: gold }} />
           <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: gold }}>Do You Recognise This?</span>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "end", marginBottom: 16 }}>
+        <div className="mobile-col-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "end", marginBottom: 16 }}>
           <h2 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: HEADING_SIZE, fontWeight: 400, color: dark, lineHeight: 1.1 }}>
             Signs You Need<br />a Consultation
           </h2>
@@ -853,7 +845,7 @@ function ApproachSection() {
       overflow: "visible", padding: "100px 72px", position: "relative",
       background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 55%, #f7efe2 100%)",
     }}>
-      <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 80, alignItems: "start", position: "relative", zIndex: 1 }}>
+      <div ref={ref} className="mobile-col-1" style={{ maxWidth: 1160, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 80, alignItems: "start", position: "relative", zIndex: 1 }}>
         <div>
           <div className="rv" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
             <span style={{ width: 28, height: 1, background: gold }} />
@@ -932,7 +924,7 @@ function WhoAndCTASection() {
       </div>
 
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", position: "relative", zIndex: 1 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: 80, marginBottom: 100, alignItems: "start" }}>
+        <div className="mobile-col-1" style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: 80, marginBottom: 100, alignItems: "start" }}>
           <div>
             <div className="rv" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
               <span style={{ width: 28, height: 1, background: gold }} />
@@ -980,7 +972,7 @@ function WhoAndCTASection() {
               style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
-              Book Your Numerology Consultation →
+              Book Your Numerology Consultation
             </button>
           </div>
         </div>

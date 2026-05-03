@@ -134,6 +134,10 @@ const globalCss = `
 
   .strip-row { display:flex; gap:48px; white-space:nowrap; align-items:center; padding:0 40px; will-change:transform; min-width:300vw; height:68px; }
   .strip-row span { font-family:'Ibarra Real Nova',serif; font-size:30px; }
+  @media (max-width: 768px) {
+    .mobile-col-1 { grid-template-columns: 1fr !important; }
+    section { padding-left: max(20px, 4vw) !important; padding-right: max(20px, 4vw) !important; }
+  }
 `;
 
 /* ── ACCORDION ────────────────────────────────────────────────────────────────── */
@@ -165,17 +169,17 @@ function Hero() {
     });
   }, []);
   return (
-    <section style={{
+    <section className="hero-section" style={{
       position: "relative", minHeight: "100vh",
       display: "flex", alignItems: "flex-start", justifyContent: "center",
       textAlign: "center", background: "white",
       backgroundImage: 'url("/assets/vedicbg.svg")', backgroundSize: "cover",
       overflow: "visible", padding: "160px 40px 80px",
     }}>
-      <div ref={crystalRef} style={{ position: "absolute", left: "-40px", bottom: "60px", width: 320, height: 420, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 40, opacity: 0.85 }}>
+      <div ref={crystalRef} className="hero-decor" style={{ position: "absolute", left: "-40px", bottom: "60px", width: 320, height: 420, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 40, opacity: 0.85 }}>
         <img src="/assets/beigecrystal.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", overflow: "visible" }} />
       </div>
-      <div ref={moonRef} style={{ position: "absolute", right: "-20px", top: "90px", width: 200, height: 300, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 1, opacity: 0.80 }}>
+      <div ref={moonRef} className="hero-decor" style={{ position: "absolute", right: "-20px", top: "90px", width: 200, height: 300, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 1, opacity: 0.80 }}>
         <img src="/assets/moon.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
       </div>
       <div style={{ position: "relative", zIndex: 2, maxWidth: 680, marginBottom: -180, transform: "translateY(-80px)" }}>
@@ -194,11 +198,10 @@ function Hero() {
         </p>
                    <button
                    onClick={() => openBooking("Vedic Astrology")}
-              
-              style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
-              Book Your Vedic Astrology Consultation →
+              style={{ ...dashedBtn(dark), border: "1px dashed " + dark }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = dark; e.currentTarget.style.boxShadow = "none"; }}>
+              Book Your Vedic Astrology Consultation
             </button>
       </div>
     </section>
@@ -209,7 +212,7 @@ function Hero() {
 function ConstellationOverlay() {
   return (
     <div style={{ position: "relative", height: "0px", zIndex: 20 }}>
-      <img src="/assets/costelation.png" alt="" loading="lazy" decoding="async" style={{ position: "absolute", top: "-120px", left: "70%", transform: "translateX(-50%)", width: "600px", opacity: 0.5, pointerEvents: "none" }} />
+      <img src="/assets/costelation.png" alt="" loading="lazy" decoding="async" className="constellation-img" style={{ position: "absolute", top: "-120px", left: "70%", transform: "translateX(-50%)", width: "600px", opacity: 0.5, pointerEvents: "none" }} />
     </div>
   );
 }
@@ -279,7 +282,7 @@ function WhatIsSection() {
       contain: "paint",
       background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 100%)",
     }}>
-      <div ref={bodyRef} style={{
+      <div ref={bodyRef} className="mobile-col-1" style={{
         maxWidth: 1200, marginTop: -100,
         display: "grid", gridTemplateColumns: "1fr 1.25fr",
         gap: 200, alignItems: "center", position: "relative", zIndex: 50,
@@ -321,10 +324,10 @@ function WhatIsSection() {
           <div className="rv" style={{ marginTop: 44, transitionDelay: "0.32s" }}>
              <button
               onClick={() => openBooking("Vedic Astrology")}
-              style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
-              Book Your Vedic Astrology Consultation →
+              style={{ ...dashedBtn(dark), border: "1px dashed " + dark }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = dark; e.currentTarget.style.boxShadow = "none"; }}>
+              Book Your Vedic Astrology Consultation
             </button>
           </div>
         </div>
@@ -366,7 +369,7 @@ function GainSection() {
             A Vedic Astrology consultation is not just about knowing the future — it's about empowerment.
           </p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 28 }}>
+        <div className="mobile-col-1" style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 28 }}>
           {gains.map((g, i) => (
             <div key={i} className="rv icon-card" style={{ textAlign: "center", transitionDelay: `${0.06 + i * 0.09}s`, padding: "0 8px" }}>
               <div className="arch"><g.icon size={40} strokeWidth={1.5} /></div>
@@ -418,7 +421,7 @@ function WhySection() {
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20, margin: "52px 0" }}>
+        <div className="mobile-col-1" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20, margin: "52px 0" }}>
           {questions.map((item, i) => (
             <div key={i} className="why-card card-3d" {...tilt} style={{
               background: "rgba(250,248,245,0.95)",
@@ -441,7 +444,7 @@ function WhySection() {
             <span style={{ width: 20, height: 1, background: "#9a8a80" }} />
             Vedic Astrology helps you
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div className="mobile-col-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             {benefits.map((b, i) => (
               <div key={i} className="rv benefit-row" style={{ transitionDelay: `${0.14 + i * 0.06}s` }}>
                 <span style={{ width: 6, height: 6, background: gold, borderRadius: "50%", flexShrink: 0, marginTop: 7 }} />
@@ -473,7 +476,7 @@ function ApproachSection() {
       padding: "100px 72px", position: "relative",
       background: "linear-gradient(180deg, #faf8f5 0%, #f5f0e8 55%, #f7efe2 100%)",
     }}>
-      <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 80, alignItems: "start", position: "relative", zIndex: 1 }}>
+      <div ref={ref} className="mobile-col-1" style={{ maxWidth: 1160, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 80, alignItems: "start", position: "relative", zIndex: 1 }}>
         <div>
           <div className="rv" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
             <span style={{ width: 28, height: 1, background: gold }} />
@@ -551,7 +554,7 @@ function WhoAndCTASection() {
       </div>
 
       <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", position: "relative", zIndex: 1 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: 80, marginBottom: 100, alignItems: "start", position: "relative" }}>
+        <div className="mobile-col-1" style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: 80, marginBottom: 100, alignItems: "start", position: "relative" }}>
           <div>
             <div className="rv" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
               <span style={{ width: 28, height: 1, background: gold }} />
@@ -598,7 +601,7 @@ function WhoAndCTASection() {
               style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
-              Book Your Vedic Astrology Consultation →
+              Book Your Vedic Astrology Consultation
             </button>
           </div>
         </div>

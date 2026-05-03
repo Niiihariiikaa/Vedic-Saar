@@ -138,6 +138,10 @@ const CSS = `
 
   @media (max-width:900px) { .planets-grid { grid-template-columns:repeat(2,1fr) !important; } }
   @media (max-width:580px) { .planets-grid { grid-template-columns:1fr !important; } }
+  @media (max-width: 768px) {
+    .mobile-col-1 { grid-template-columns: 1fr !important; }
+    section { padding-left: max(20px, 4vw) !important; padding-right: max(20px, 4vw) !important; }
+  }
 `;
 
 /* ════════════════════════════════════════════════════════════════ */
@@ -510,7 +514,7 @@ function HousesSection() {
         <p className="r d2" style={{ fontFamily:BODY_FONT,fontSize:10,color:"rgba(201,169,110,0.38)",textAlign:"center",letterSpacing:"0.22em",margin:"0 0 60px",textTransform:"uppercase" }}>
           Hover to awaken each house
         </p>
-        <div style={{ display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:20 }}>
+        <div className="mobile-col-1" style={{ display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:20 }}>
           {houses.map((h, i) => (
             <div key={i} className={`r d${(i % 3) + 1} hcard`}>
               <div className="hcard-orb" />
@@ -621,7 +625,7 @@ function PlanetsSection() {
             })}
           </div>
         </div>
-        <div className="r d4 planets-grid" style={{ display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16,marginTop:48 }}>
+        <div className="r d4 planets-grid mobile-col-1" style={{ display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16,marginTop:48 }}>
           {planets.map((p, i) => (
             <div key={i} style={{ padding:"22px 20px",background:W,border:"1px solid rgba(201,169,110,0.16)",borderRadius:2,display:"flex",gap:14,alignItems:"flex-start",transition:"border-color 0.3s,transform 0.3s,box-shadow 0.3s",cursor:"default" }}
               onMouseEnter={e => { e.currentTarget.style.borderColor="rgba(201,169,110,0.42)"; e.currentTarget.style.transform="translateY(-4px)"; e.currentTarget.style.boxShadow="0 10px 32px rgba(28,20,13,0.08)"; }}
@@ -750,7 +754,7 @@ function ProblemsSection() {
         <h2 className="r" style={{ fontFamily:HEADING_FONT,fontWeight:400,fontSize:HEADING_SIZE,color:DARK,textAlign:"center",margin:"0 0 64px",lineHeight:1.1 }}>
           Questions We Help<br /><em style={{ color:GOLD }}>You Answer</em>
         </h2>
-        <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:72 }}>
+        <div className="mobile-col-1" style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:72 }}>
           <div className="r d1">
             <div style={{ display:"flex",alignItems:"center",gap:14,marginBottom:28 }}>
               <div style={{ width:3,height:28,background:GOLD,borderRadius:2 }} />
@@ -806,7 +810,7 @@ function GuideSection() {
         <p className="r d1" style={{ fontFamily:HEADING_FONT,fontStyle:"italic",fontSize:26,color:GOLD,textAlign:"center",margin:"0 0 64px" }}>
           Through Your Legal Challenges
         </p>
-        <div style={{ display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:20 }}>
+        <div className="mobile-col-1" style={{ display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:20 }}>
           {guideItems.map((g, i) => (
             <div key={i} className={`r d${(i%3)+1} gitem`} style={{ padding:"32px 28px",background:"white",display:"flex",gap:20,alignItems:"flex-start" }}>
               <span style={{ fontFamily:HEADING_FONT,fontSize:26,color:GOLD,lineHeight:1,flexShrink:0,paddingTop:2,fontWeight:400 }}>{g.n}</span>
@@ -838,7 +842,7 @@ function CTASection() {
     <section ref={ref} style={{ backgroundImage:'url("/assets/Testimonialsbg.png")',marginTop:-120,backgroundSize:"cover",backgroundPosition:"top center",padding:"130px 48px 150px",textAlign:"center",position:"relative",overflow:"hidden" }}>
       <div ref={moonRef} style={{ position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",pointerEvents:"none" }} />
       <div style={{ position:"relative",zIndex:2,marginTop:500 }}>
-        <div className="r" style={{ fontFamily:HEADING_FONT,fontStyle:"italic",fontSize:16,color:"black",marginBottom:52,letterSpacing:"0.03em" }}>
+        <div className="r" style={{ fontFamily:HEADING_FONT,fontStyle:"italic",fontSize:16,color:CREAM,marginBottom:52,letterSpacing:"0.03em" }}>
           ✦ &nbsp; Fight smarter with cosmic strategy — truth always has a planetary champion. &nbsp; ✦
         </div>
         <h2 className="r d1" style={{ fontFamily:HEADING_FONT,fontWeight:400,fontSize:HEADING_SIZE,color:"black",margin:0,lineHeight:0.92,letterSpacing:"-0.02em" }}>

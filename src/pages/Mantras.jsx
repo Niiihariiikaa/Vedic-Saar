@@ -520,7 +520,6 @@ export default function MantrasPage() {
 
   return (
     <div style={{ minHeight: '100vh', backgroundImage: "url('/assets/Mantra-bg.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed', position: 'relative' }}>
-      <ParallaxImages />
 
       <div style={{ position: 'relative', zIndex: 3 }}>
 
