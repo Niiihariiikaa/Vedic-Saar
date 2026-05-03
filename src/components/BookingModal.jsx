@@ -51,6 +51,7 @@ export default function BookingModal({ isOpen, onClose, preselectedService = "" 
     phone: "",
     dob: "",
     tob: "",
+    pob: "",
     serviceType: preselectedService,
     otherDesc: "",
   });
@@ -64,7 +65,7 @@ export default function BookingModal({ isOpen, onClose, preselectedService = "" 
       document.body.style.overflow = "hidden";
       setStep(1);
       setError("");
-      setForm({ name: "", email: "", phone: "", dob: "", tob: "", serviceType: preselectedService, otherDesc: "" });
+      setForm({ name: "", email: "", phone: "", dob: "", tob: "", pob: "", serviceType: preselectedService, otherDesc: "" });
     } else {
       document.body.style.overflow = "";
     }
@@ -294,6 +295,11 @@ export default function BookingModal({ isOpen, onClose, preselectedService = "" 
                       <label className="bm-label">Time of Birth</label>
                       <input className="bm-input" name="tob" type="time" value={form.tob} onChange={handleChange} />
                     </div>
+                  </div>
+
+                  <div className="bm-field">
+                    <label className="bm-label">Place of Birth</label>
+                    <input className="bm-input" name="pob" value={form.pob} onChange={handleChange} placeholder="City, State, Country" autoComplete="off" />
                   </div>
 
                   <div className="bm-divider" />
