@@ -173,9 +173,13 @@ const globalCss = `
   .tarot-card-slot.hovered {
     z-index: 30 !important;
   }
+  .num-fan-desktop { display: block; }
+  .num-grid-mobile  { display: none; }
   @media (max-width: 768px) {
     .mobile-col-1 { grid-template-columns: 1fr !important; }
     section { padding-left: max(20px, 4vw) !important; padding-right: max(20px, 4vw) !important; }
+    .num-fan-desktop { display: none !important; }
+    .num-grid-mobile  { display: grid !important; }
   }
 `;
 
@@ -478,6 +482,8 @@ function NumberFlipSection() {
     }}
       onMouseMove={handleFanMove}
       onMouseLeave={() => setHov(null)}
+      onTouchMove={(e) => { e.preventDefault(); const t = e.touches[0]; if (t) handleFanMove({ clientX: t.clientX, clientY: t.clientY }); }}
+      onTouchEnd={() => setHov(null)}
     >
       <div style={{ maxWidth: 1160, margin: "0 auto", padding: "100px 72px 0", position: "relative", zIndex: 12 }}>
         <div style={{ textAlign: "center", marginBottom: 32 }}>
@@ -495,10 +501,10 @@ function NumberFlipSection() {
         </div>
       </div>
 
-      {/* ── TRUE ARC FAN ── */}
+      {/* ── TRUE ARC FAN (desktop) ── */}
       <div
         ref={fanRef}
-        className="rv"
+        className="rv num-fan-desktop"
         style={{
           top: -90,
           position: "relative",
@@ -540,8 +546,10 @@ function NumberFlipSection() {
                 transform: arcTransform,
                 transition: "transform 0.55s cubic-bezier(.22,1,.36,1)",
                 zIndex: zi,
-                pointerEvents: "none",   // container handles all mouse events
+                pointerEvents: "auto",
+                cursor: "pointer",
               }}
+              onClick={() => setHov(hov === i ? null : i)}
             >
               {/* Flip container — self-contained 3D context, isolated from arc transform */}
               <div style={{
@@ -637,8 +645,39 @@ function NumberFlipSection() {
         })}
       </div>
 
-      {/* Subtle hint text */}
-      <div style={{ textAlign: "center", padding: "28px 0 80px", position: "relative", zIndex: 1 }}>
+      {/* ── MOBILE GRID (hidden on desktop) ── */}
+      <div className="num-grid-mobile" style={{ gridTemplateColumns: "repeat(3, 1fr)", gap: 12, padding: "16px 16px 48px", position: "relative", zIndex: 1 }}>
+        {numbers.map((n, i) => {
+          const isHov = hov === i;
+          return (
+            <div key={i} onClick={() => setHov(hov === i ? null : i)} style={{ height: 220, cursor: "pointer", perspective: "600px" }}>
+              <div style={{ width: "100%", height: "100%", transformStyle: "preserve-3d", transform: isHov ? "rotateY(180deg)" : "rotateY(0deg)", transition: "transform 0.65s cubic-bezier(.22,1,.36,1)", position: "relative" }}>
+                {/* Front */}
+                <div style={{ position: "absolute", inset: 0, borderRadius: 8, overflow: "hidden", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", background: "#faf8f5", border: "1px solid rgba(201,169,110,0.5)", boxShadow: "0 4px 16px rgba(0,0,0,0.08)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ position: "absolute", inset: 6, border: "0.5px solid rgba(201,169,110,0.2)", borderRadius: 4 }} />
+                  {[["top","left"],["top","right"],["bottom","left"],["bottom","right"]].map(([v,h],ci) => (
+                    <span key={ci} style={{ position: "absolute", [v]: 10, [h]: 10, fontSize: 6, color: gold, opacity: 0.5 }}>✦</span>
+                  ))}
+                  <span style={{ position: "relative", zIndex: 1, fontFamily: "'Ibarra Real Nova',serif", fontSize: 60, color: gold, lineHeight: 1, opacity: 0.75 }}>{n.num}</span>
+                  <div style={{ width: 20, height: 1, background: `linear-gradient(90deg,transparent,${gold},transparent)`, margin: "8px 0" }} />
+                  <span style={{ position: "relative", zIndex: 1, fontFamily: "'Ibarra Real Nova',serif", fontSize: 9, color: dark, textAlign: "center", padding: "0 8px", lineHeight: 1.4, opacity: 0.8 }}>{n.name}</span>
+                  <span style={{ position: "absolute", bottom: 8, fontFamily: "'Glacial Indifference',sans-serif", fontSize: 6, color: gold, opacity: 0.45, letterSpacing: 1 }}>tap</span>
+                </div>
+                {/* Back */}
+                <div style={{ position: "absolute", inset: 0, borderRadius: 8, overflow: "hidden", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)", background: "linear-gradient(160deg,#1f1a14,#2a2018)", border: "1px solid rgba(201,169,110,0.3)", padding: "10px 10px", display: "flex", flexDirection: "column" }}>
+                  <span style={{ fontFamily: "'Ibarra Real Nova',serif", fontSize: 26, color: gold, lineHeight: 1, opacity: 0.6, marginBottom: 4 }}>{n.num}</span>
+                  <h3 style={{ fontFamily: "'Ibarra Real Nova',serif", fontSize: 11, fontWeight: 400, color: "#faf8f5", marginBottom: 5, lineHeight: 1.2 }}>{n.name}</h3>
+                  <div style={{ height: 1, background: "rgba(201,169,110,0.2)", marginBottom: 6 }} />
+                  <p style={{ fontFamily: "'Glacial Indifference',sans-serif", fontSize: 8, color: "rgba(250,248,245,0.75)", lineHeight: 1.6, flex: 1, overflow: "hidden" }}>{n.traits}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Subtle hint text — desktop only */}
+      <div className="num-fan-desktop" style={{ textAlign: "center", padding: "28px 0 80px", position: "relative", zIndex: 1 }}>
         <span style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: 3, color: "rgba(201,169,110,0.5)", textTransform: "uppercase" }}>
           ← hover any card →
         </span>

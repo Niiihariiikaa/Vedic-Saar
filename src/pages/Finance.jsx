@@ -311,9 +311,14 @@ const CSS = `
   @media (max-width: 580px) {
     .planets-grid { grid-template-columns: 1fr !important; }
   }
+  .ls-fan-desktop { display: block; }
+  .ls-grid-mobile  { display: none; }
+
   @media (max-width: 768px) {
     .mobile-col-1 { grid-template-columns: 1fr !important; }
     section { padding-left: max(20px, 4vw) !important; padding-right: max(20px, 4vw) !important; }
+    .ls-fan-desktop { display: none !important; }
+    .ls-grid-mobile  { display: grid !important; }
   }
 `;
 
@@ -919,7 +924,7 @@ function NumerologySection() {
       </div>
 
       {/* Fan */}
-      <div ref={fanRef} className="r d2" style={{ position: "relative", top: -160, width: "100%", height: 560, overflow: "visible" }}>
+      <div ref={fanRef} className="r d2 ls-fan-desktop" style={{ position: "relative", top: -160, width: "100%", height: 560, overflow: "visible" }}>
         <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "50%", height: 1, background: `linear-gradient(90deg, transparent, rgba(201,169,110,0.15), transparent)`, zIndex: 0 }} />
 
         {financeNumbers.map((n, i) => {
@@ -1002,7 +1007,37 @@ function NumerologySection() {
         })}
       </div>
 
-      <div style={{ textAlign: "center", padding: "28px 0 80px", position: "relative", zIndex: 1, marginTop: -100 }}>
+      {/* Mobile grid */}
+      <div className="ls-grid-mobile" style={{ gridTemplateColumns:"repeat(3,1fr)", gap:12, padding:"16px 16px 48px", position:"relative", zIndex:1 }}>
+        {financeNumbers.map((n, i) => {
+          const isHov = hov === i;
+          return (
+            <div key={i} onClick={() => setHov(hov === i ? null : i)} style={{ height:220, cursor:"pointer", perspective:"600px" }}>
+              <div style={{ width:"100%", height:"100%", transformStyle:"preserve-3d", transform:isHov?"rotateY(180deg)":"rotateY(0deg)", transition:"transform 0.65s cubic-bezier(.22,1,.36,1)", position:"relative" }}>
+                {/* Front */}
+                <div style={{ position:"absolute", inset:0, borderRadius:8, overflow:"hidden", backfaceVisibility:"hidden", WebkitBackfaceVisibility:"hidden", background:"linear-gradient(160deg,#ffffff,#faf6ef)", border:"1px solid rgba(201,169,110,0.32)", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center" }}>
+                  <span style={{ fontFamily:"'Ibarra Real Nova',serif", fontSize:60, color:GOLD, lineHeight:1, opacity:0.8 }}>{n.num}</span>
+                  <div style={{ width:20, height:1, background:`linear-gradient(90deg,transparent,${GOLD},transparent)`, margin:"8px 0" }} />
+                  <span style={{ fontFamily:"'Ibarra Real Nova',serif", fontStyle:"italic", fontSize:9, color:DARK, textAlign:"center", padding:"0 8px", lineHeight:1.4, opacity:0.8 }}>{n.title}</span>
+                  <span style={{ position:"absolute", bottom:8, fontFamily:"'Glacial Indifference',sans-serif", fontSize:6, color:GOLD, opacity:0.45, letterSpacing:1 }}>tap</span>
+                </div>
+                {/* Back */}
+                <div style={{ position:"absolute", inset:0, borderRadius:8, overflow:"hidden", backfaceVisibility:"hidden", WebkitBackfaceVisibility:"hidden", transform:"rotateY(180deg)", background:"linear-gradient(145deg,#ffffff,#faf6ef)", border:"1px solid rgba(201,169,110,0.55)", padding:"12px 10px", display:"flex", flexDirection:"column" }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", marginBottom:6 }}>
+                    <span style={{ fontFamily:"'Ibarra Real Nova',serif", fontSize:28, color:GOLD, lineHeight:1, opacity:0.5 }}>{n.num}</span>
+                  </div>
+                  <h3 style={{ fontFamily:"'Ibarra Real Nova',serif", fontStyle:"italic", fontSize:11, fontWeight:400, color:DARK, marginBottom:4, lineHeight:1.2 }}>{n.title}</h3>
+                  <div style={{ fontFamily:"'Glacial Indifference',sans-serif", fontSize:7, color:GOLD, letterSpacing:"0.2em", textTransform:"uppercase", opacity:0.5, marginBottom:6 }}>Ruled by {n.ruler}</div>
+                  <div style={{ height:1, background:"rgba(201,169,110,0.13)", marginBottom:8 }} />
+                  <p style={{ fontFamily:"'Glacial Indifference',sans-serif", fontSize:8, color:MUTED, lineHeight:1.7, flex:1, overflow:"hidden" }}>{n.desc}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="ls-fan-desktop" style={{ textAlign: "center", padding: "28px 0 80px", position: "relative", zIndex: 1, marginTop: -100 }}>
         <span style={{ fontFamily: BODY_FONT, fontSize: 9, letterSpacing: "0.3em", color: "rgba(201,169,110,0.28)", textTransform: "uppercase" }}>
           ← hover any card →
         </span>
