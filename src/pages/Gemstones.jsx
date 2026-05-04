@@ -385,7 +385,7 @@ function GemHero({ gem, onConsult }) {
               style={{
                 background: 'black', color: 'white', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11,
                 letterSpacing: '0.18em', textTransform: 'uppercase', padding: '13px 28px',
-                border: '2px dashed white', borderRadius: 0, cursor: 'pointer',
+                border: '2px dashed rgba(201,169,110,0.65)', borderRadius: 0, cursor: 'pointer',
               }}
             >
               ✦ Consult Astrologer
@@ -567,7 +567,7 @@ export default function Gemstones() {
             <button
               onClick={() => openBooking('Gemstone Consultation')}
               className="hover:bg-[#b8860b] transition-all duration-300"
-              style={{ background: '#1a1206', color: '#f5ede0', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11, border: '2px dashed white', letterSpacing: '0.2em', textTransform: 'uppercase', padding: '14px 36px', cursor: 'pointer' }}
+              style={{ background: '#1a1206', color: '#f5ede0', fontFamily: "'Glacial Indifference',sans-serif", fontSize: 11, border: '2px dashed rgba(201,169,110,0.65)', letterSpacing: '0.2em', textTransform: 'uppercase', padding: '14px 36px', cursor: 'pointer' }}
             >
               Get Gem Recommendation
             </button>

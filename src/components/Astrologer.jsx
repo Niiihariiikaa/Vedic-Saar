@@ -411,7 +411,7 @@ export default function KnowYourAstrologer() {
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 padding: '14px 32px',
-                border: '2px dashed white',
+                border: '2px dashed rgba(201,169,110,0.65)',
                 borderRadius: 0,
                 cursor: 'pointer',
               }}

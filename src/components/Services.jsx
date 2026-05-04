@@ -207,7 +207,7 @@ export default function MysticalServices() {
                 >
                   {s.body}
                 </p>
-                <span style={{ fontFamily: "'Glacial Indifference', sans-serif", color: '#1a1206', textDecoration: 'underline', fontSize: 11, letterSpacing: '0.28em', textTransform: 'uppercase', cursor: 'pointer' }}>
+                <span style={{ fontFamily: "'Glacial Indifference', sans-serif", color: '#1a1206', background: '#f5f0e8', border: '1px solid rgba(26,18,6,0.22)', fontSize: 11, letterSpacing: '0.28em', textTransform: 'uppercase', cursor: 'pointer', padding: '13px 36px', display: 'inline-block', transition: 'border-color 0.2s' }}>
                   Learn More
                 </span>
               </div>

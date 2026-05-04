@@ -298,7 +298,7 @@ export default function Homepage() {
               </p>
               <button
                 onClick={handleBooking}
-                style={{ fontFamily: "'Glacial Indifference', serif", background: 'black', color: 'white', border: '2px dashed white', borderRadius: 0, padding: '10px 24px', fontSize: 14, letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer', marginLeft: 24 }}
+                style={{ fontFamily: "'Glacial Indifference', serif", background: 'black', color: 'white', border: '2px dashed rgba(201,169,110,0.65)', borderRadius: 0, padding: '10px 24px', fontSize: 14, letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer', marginLeft: 24 }}
               >
                 Request a Consultation
               </button>

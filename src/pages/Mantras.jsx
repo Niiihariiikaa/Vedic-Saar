@@ -577,7 +577,7 @@ export default function MantrasPage() {
             <p style={{ fontFamily: "'Glacial Indifference', sans-serif", fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#b8860b', marginBottom: 10 }}>✦ Personalized Sadhana</p>
             <h3 style={{ fontFamily: "'Ibarra Real Nova', serif", fontSize: 28, fontWeight: 400, color: '#1a1206', marginBottom: 12, lineHeight: 1.2 }}>Which Mantra is <em style={{ color: '#b8860b' }}>Right for You?</em></h3>
             <p style={{ fontFamily: "'Glacial Indifference', serif", fontSize: 15, color: '#6b5a40', lineHeight: 1.75, marginBottom: 20 }}>Our Vedic astrologers will analyze your birth chart and prescribe the exact mantras, japa count, and timing aligned to your planetary placements.</p>
-            <button style={{ background: 'black', color: 'white', fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '14px 36px', border: '2px dashed white', borderRadius: 0, cursor: 'pointer' }}>Book Mantra Consultation</button>
+            <button style={{ background: 'black', color: 'white', fontFamily: "'Glacial Indifference', sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '14px 36px', border: '2px dashed rgba(201,169,110,0.65)', borderRadius: 0, cursor: 'pointer' }}>Book Mantra Consultation</button>
           </div>
         </div>
 

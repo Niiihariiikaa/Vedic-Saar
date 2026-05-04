@@ -542,7 +542,7 @@ function WhySection() {
         background: "linear-gradient(180deg, #0d0b08 0%, #1a1410 60%, #1e1912 100%)",
         borderRadius: 3,
         padding: "56px 52px",
-        border: "2px dashed white",
+        border: "2px dashed rgba(201,169,110,0.65)",
       }}>
 
         {/* Diamond divider */}
@@ -1120,7 +1120,7 @@ function WhoAndCTASection() {
             </p>
             <button
               onClick={() => openVaastuBooking()}
-              style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed #fff" }}
+              style={{ ...dashedBtn("#fff"), background: dark, border: "2px dashed rgba(201,169,110,0.65)" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.background = "#2e2620"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(0,0,0,0.3)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = dark; e.currentTarget.style.boxShadow = "none"; }}>
               Book Your Vaastu Consultation Now →

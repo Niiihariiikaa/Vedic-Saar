@@ -313,7 +313,7 @@ export default function LalKitab() {
             <div style={{ textAlign:"center", marginBottom:20 }}>
               <button
               onClick={() => openBooking()}
-                style={{ fontFamily:B,fontSize:10,letterSpacing:".22em",textTransform:"uppercase",padding:"16px 52px",background:"black",border:"2px dashed white",color:"white",borderRadius:0,cursor:"pointer",transition:"opacity .2s" }}
+                style={{ fontFamily:B,fontSize:10,letterSpacing:".22em",textTransform:"uppercase",padding:"16px 52px",background:"black",border:"2px dashed rgba(201,169,110,0.65)",color:"white",borderRadius:0,cursor:"pointer",transition:"opacity .2s" }}
                 onMouseEnter={e => e.currentTarget.style.opacity=".78"}
                 onMouseLeave={e => e.currentTarget.style.opacity="1"}
               >

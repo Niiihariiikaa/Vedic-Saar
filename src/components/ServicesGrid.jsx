@@ -481,28 +481,23 @@ export default function ServicesGrid() {
         .sg-learn {
           display: inline-flex;
           align-items: center;
-          gap: 10px;
           font-family: 'Glacial Indifference', sans-serif;
           font-size: 10px;
           font-weight: 500;
-          letter-spacing: 0.16em;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #c9a96e;
-          border: none;
-          background: transparent;
-          padding: 0;
+          color: #1a1206;
+          background: #f5f0e8;
+          border: 1px solid rgba(26,18,6,0.22);
+          padding: 13px 32px;
           cursor: pointer;
-          width: fit-content;
+          transition: background 0.2s, border-color 0.2s;
         }
-        .sg-learn-line {
-          display: block;
-          height: 1px;
-          width: 22px;
-          background: linear-gradient(to right, #c9a96e, rgba(201,169,110,0.4));
-          transition: width 280ms cubic-bezier(0.4,0,0.2,1);
+        .sg-learn:hover {
+          background: #ede7db;
+          border-color: rgba(26,18,6,0.4);
         }
-        .sg-learn:hover .sg-learn-line,
-        .sg-card-inner:hover .sg-learn .sg-learn-line { width: 44px; }
+        .sg-learn-line { display: none; }
 
         /* ── Decorative corner ornament ── */
         .sg-corner {

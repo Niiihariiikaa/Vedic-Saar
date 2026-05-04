@@ -191,7 +191,7 @@ export default function Footer() {
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 padding: '12px 24px',
-                border: '2px dashed white',
+                border: '2px dashed rgba(201,169,110,0.65)',
                 borderRadius: 0,
                 cursor: 'pointer',
               }}
