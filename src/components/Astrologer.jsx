@@ -126,7 +126,7 @@ export default function KnowYourAstrologer() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full flex flex-col z-40 overflow-visible"
+      className="relative w-full flex flex-col z-40 overflow-visible astrologer-section"
       style={{ background: '#faf8f5', minHeight: '100vh'}}
     >
       {/* ── MARQUEE STRIP top ── */}
@@ -161,7 +161,7 @@ export default function KnowYourAstrologer() {
       {/* ── BLUE ORB — top right, rotates + drifts down ── */}
 <div
   ref={blueOrbRef}
-  className="absolute pointer-events-none z-[9999]"
+  className="absolute pointer-events-none z-[9999] astrologer-orb"
   style={{ top: -190, right: -30, width: 190, height: 320 }}
 >
         <img
@@ -174,7 +174,7 @@ export default function KnowYourAstrologer() {
       {/* ── BROWN ORB — bottom left, moves right ── */}
 <div
   ref={brownOrbRef}
-  className="absolute pointer-events-none z-[9999]"
+  className="absolute pointer-events-none z-[9999] astrologer-orb"
   style={{ bottom: -60, left: -80, width: 300, height: 300 }}
 >
         <img
@@ -189,7 +189,7 @@ export default function KnowYourAstrologer() {
 
 <div
   ref={chartBgRef}
-  className="absolute pointer-events-none select-none"
+  className="absolute pointer-events-none select-none astrologer-zodiac"
   style={{
     left: '-8%',
     top: '50%',
@@ -218,7 +218,7 @@ export default function KnowYourAstrologer() {
           {/* Sunburst — warm golden/beige rays */}
           <div
             ref={sunburstRef}
-            className="absolute flex items-center justify-center pointer-events-none"
+            className="absolute flex items-center justify-center pointer-events-none astrologer-sunburst"
             style={{ width: 680, height: 680 }}
           >
             <svg viewBox="0 0 580 580" xmlns="http://www.w3.org/2000/svg"

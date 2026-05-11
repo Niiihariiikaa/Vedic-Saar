@@ -57,10 +57,10 @@ export default function AboutVedicSaar() {
       {/* ── HERO ── */}
       <section className="relative min-h-[360px] bg-[#f7f2ea] flex items-end justify-center overflow-hidden">
         <img src="/assets/costelation.png" alt="" aria-hidden="true"
-          className="absolute top-0 left-0 w-[320px] pointer-events-none select-none"
+          className="absolute top-0 left-0 w-[320px] pointer-events-none select-none about-hero-img"
           style={{ opacity: 0.5, zIndex: 1 }} />
         <img src="/assets/crescentmoon.png" alt="" aria-hidden="true"
-          className="absolute top-0 right-0 w-[260px] pointer-events-none select-none"
+          className="absolute top-0 right-0 w-[260px] pointer-events-none select-none about-hero-img"
           style={{ opacity: 0.5, zIndex: 1 }} />
         <div className="relative z-[3] text-center pb-10 w-full">
           <p className="text-[10px] tracking-[3px] uppercase text-[#a8865c] mb-4 font-normal">
@@ -82,13 +82,14 @@ export default function AboutVedicSaar() {
 
       {/* ── WHO WE ARE ── */}
       <section
-        className="bg-white pt-[90px] pb-20 z-2"
+        className="bg-white pt-[90px] pb-20 z-2 about-who-section"
         style={{ position: "relative", overflow: "visible" }}
       >
         <img
           src="/assets/wheel.png"
           alt=""
           aria-hidden="true"
+          className="about-wheel-decor"
           style={{
             position: "absolute",
             top: "55%", left: "20%",

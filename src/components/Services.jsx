@@ -119,7 +119,7 @@ export default function MysticalServices() {
         .ms-learn-after:hover::after { width: 44px; }
       `}</style>
 
-<section className="relative px-10 -mt-[200px] pt-[240px] pb-32 overflow-visible">
+<section className="relative px-10 -mt-[200px] pt-[240px] pb-32 overflow-visible mystical-section">
 
   {/* BACKGROUND LAYER */}
   <div

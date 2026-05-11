@@ -16,11 +16,16 @@ const SLIDER_CAPSULE_STYLE = {
   width: '100%',
   height: '580px',
   borderRadius: '230px 230px 0 0',
+  contain: 'paint',
+  transform: 'translateZ(0)',
+  backfaceVisibility: 'hidden',
 }
 
 const SLIDE_INNER_STYLE = {
   borderRadius: '180px 180px 0 0',
   overflow: 'hidden',
+  contain: 'paint',
+  transform: 'translateZ(0)',
 }
 
 // ─── Memoized Stat — never re-renders unless num/suffix/label change ──────────
@@ -69,31 +74,28 @@ const HeroSlider = memo(({ saturnRef, crystalRef }) => {
     >
       {/* Slider capsule */}
       <div className="relative overflow-hidden bg-[#c8bfaa] hero-capsule" style={SLIDER_CAPSULE_STYLE}>
-        {SLIDES.map((s, i) => {
-          // Only render current + adjacent slides — massive repaint saving
-          if (Math.abs(i - currentSlide) > 1) return null
-          return (
-            <div
-              key={i}
-              className={`slide-img ${i === currentSlide ? 'active' : ''}`}
-              style={SLIDE_INNER_STYLE}
-            >
-              <img
-                src={s.src}
-                alt={s.alt}
-                className="w-full h-full object-cover"
-                loading={i === currentSlide ? 'eager' : 'lazy'}
-                decoding="async"
-              />
-            </div>
-          )
-        })}
+        {SLIDES.map((s, i) => (
+          <div
+            key={i}
+            className={`slide-img ${i === currentSlide ? 'active' : ''}`}
+            style={SLIDE_INNER_STYLE}
+          >
+            <img
+              src={s.src}
+              alt={s.alt}
+              className="w-full h-full object-cover"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              fetchPriority={i === 0 ? 'high' : 'low'}
+            />
+          </div>
+        ))}
       </div>
 
       {/* Saturn planet */}
       <div
         ref={saturnRef}
-        className="absolute pointer-events-none z-10 home-float-decor"
+        className="absolute pointer-events-none z-10 home-hero-decor home-hero-planet"
         style={{ width: '140px', height: '170px', top: '20px', right: '-30px' }}
       >
         <img
@@ -108,7 +110,7 @@ const HeroSlider = memo(({ saturnRef, crystalRef }) => {
       {/* Crystal stone */}
       <div
         ref={crystalRef}
-        className="absolute pointer-events-none z-10 home-float-decor"
+        className="absolute pointer-events-none z-10 home-hero-decor home-hero-crystal"
         style={{ width: '170px', height: '150px', bottom: '0', left: '-80px' }}
       >
         <img
@@ -193,15 +195,21 @@ export default function Homepage() {
     const onScroll = () => {
       // Hard gate — don't even queue a frame if nothing is visible
       if (!isVisible.current) return
-      latestY.current = window.scrollY
+      // Quantize to 4px buckets — 75% fewer DOM writes, visually identical
+      latestY.current = Math.round(window.scrollY / 4) * 4
       if (!ticking) {
         rafParallax.current = requestAnimationFrame(update)
         ticking = true
       }
     }
 
-    // Set willChange only on mount, not per-frame
-    els.forEach(el => { if (el) el.style.willChange = 'transform' })
+    // willChange + initial GPU layer promotion on mount
+    els.forEach(el => {
+      if (el) {
+        el.style.willChange = 'transform'
+        el.style.transform = 'translateZ(0)'
+      }
+    })
 
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
@@ -239,6 +247,8 @@ export default function Homepage() {
     backgroundSize: '600px',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
+    contentVisibility: 'auto',
+    containIntrinsicSize: '0 700px',
   }), [])
 
   const handleBooking = useCallback(() => openBooking(), [openBooking])
@@ -259,7 +269,9 @@ export default function Homepage() {
               className="absolute inset-0 pointer-events-none"
               style={{
                 backgroundImage: "url('/assets/zodiac-ring.svg')",
-                backgroundSize: 'cover',
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
                 opacity: 0.07,
               }}
             />
@@ -352,12 +364,12 @@ export default function Homepage() {
 
           {/* ══════════════════════ SECTION 2 — ABOUT ══════════════════════ */}
           <section
-            className="py-20 grid grid-cols-1 md:grid-cols-3 gap-10 items-center relative"
+            className="py-20 grid grid-cols-1 md:grid-cols-3 gap-10 items-center relative home-about-grid"
             ref={sectionRef}
             style={sectionBgStyle}
           >
             {/* Left image */}
-            <div className="relative">
+            <div className="relative home-about-col-left">
               <div
                 className="overflow-hidden bg-[#c8bfaa] home-about-img-left"
                 style={{ width: 'min(500px, 100%)', height: 'min(480px, 65vw)', borderRadius: '0px 300px 300px 0px' }}
@@ -431,7 +443,7 @@ export default function Homepage() {
             </div>
 
             {/* Right image */}
-            <div className="relative flex justify-end">
+            <div className="relative flex justify-end home-about-right-wrap">
               <div
                 className="overflow-hidden bg-[#c8bfaa] home-about-img-right"
                 style={{ width: 'min(580px, 100%)', height: 'min(700px, 80vw)', borderRadius: '300px 0px 0px 0px' }}

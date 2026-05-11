@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 
 function SplashCursor({
   SIM_RESOLUTION = 128,
-  DYE_RESOLUTION = 1440,
-  CAPTURE_RESOLUTION = 512,
+  DYE_RESOLUTION = 512,
+  CAPTURE_RESOLUTION = 256,
   DENSITY_DISSIPATION = 3.5,
   VELOCITY_DISSIPATION = 2,
   PRESSURE = 0.1,
@@ -536,8 +536,10 @@ function SplashCursor({
     let lastUpdateTime = Date.now();
     let colorUpdateTimer = 0.0;
     let animFrameId;
+    let paused = false;
 
     function updateFrame() {
+      if (paused) return;
       const dt = calcDeltaTime();
       if (resizeCanvas()) initFramebuffers();
       updateColors(dt);
@@ -546,6 +548,18 @@ function SplashCursor({
       render(null);
       animFrameId = requestAnimationFrame(updateFrame);
     }
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        paused = true;
+        cancelAnimationFrame(animFrameId);
+      } else {
+        paused = false;
+        lastUpdateTime = Date.now();
+        updateFrame();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
 
     function calcDeltaTime() {
       let now = Date.now();
@@ -856,6 +870,7 @@ function SplashCursor({
 
     return () => {
       cancelAnimationFrame(animFrameId);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('touchstart', onTouchStart);

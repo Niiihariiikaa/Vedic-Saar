@@ -53,9 +53,14 @@ html { scroll-behavior: smooth; overflow-x: hidden; }
   position: absolute;
   inset: 0;
   opacity: 0;
+  will-change: opacity;
+  transform: translateZ(0);
   transition: opacity 0.8s ease;
 }
 .slide-img.active { opacity: 1; }
+
+/* Isolate slider stacking context — prevents repaint propagation to parent */
+.hero-slider-wrap { isolation: isolate; }
 
 /* ── STAT COUNTER FADE-UP ── */
 @keyframes fadeUp {
@@ -104,8 +109,8 @@ html { scroll-behavior: smooth; overflow-x: hidden; }
 
 /* ── RESPONSIVE ── */
 
-/* Home hero: stack to single column on tablets/mobile */
 @media (max-width: 1024px) {
+  /* Hero: single column */
   .home-hero {
     grid-template-columns: 1fr !important;
     min-height: auto !important;
@@ -125,104 +130,128 @@ html { scroll-behavior: smooth; overflow-x: hidden; }
     transform: none !important;
     font-size: clamp(44px, 10vw, 72px) !important;
   }
-  .home-hero-right {
-    display: none !important;
-  }
-  .hero-slider-wrap {
-    height: 480px !important;
-  }
+  .home-hero-left p      { margin-left: 0 !important; }
+  .home-hero-left button { margin-left: 0 !important; }
+  .home-hero-right       { display: none !important; }
+  .hero-slider-wrap      { height: 480px !important; }
   .hero-capsule {
     height: 440px !important;
     border-radius: 220px 220px 0 0 !important;
   }
-}
-@media (max-width: 640px) {
-  .hero-slider-wrap {
-    height: 380px !important;
-  }
-  .hero-capsule {
-    height: 340px !important;
-    border-radius: 170px 170px 0 0 !important;
-  }
-}
 
-/* Astrologer section: stack on mobile */
-@media (max-width: 1024px) {
-  .astrologer-row {
-    flex-direction: column !important;
+  /* Hero decorations: reposition to sit just outside the centered 460px capsule */
+  .home-hero-planet {
+    width: 100px !important;
+    height: 120px !important;
+    top: 20px !important;
+    right: max(10px, calc(50% - 340px)) !important;
+    left: auto !important;
+  }
+  .home-hero-crystal {
+    width: 120px !important;
+    height: 105px !important;
+    bottom: 20px !important;
+    left: max(10px, calc(50% - 360px)) !important;
+    right: auto !important;
+  }
+
+  /* About: 2-col at tablet — text left, right arch right; hide left arch */
+  .home-about-grid {
+    grid-template-columns: 1fr 1fr !important;
     align-items: center !important;
   }
-  .astrologer-left {
-    width: 100% !important;
-    min-width: 0 !important;
-    height: auto !important;
-    min-height: 400px;
+  .home-about-col-left { display: none !important; }
+  .home-about-img-right {
+    width: min(300px, 44vw) !important;
+    height: min(380px, 52vw) !important;
+    border-radius: min(150px, 22vw) 0 0 0 !important;
   }
-  .astrologer-right {
-    padding: 40px 24px !important;
-    max-width: 100% !important;
-  }
-}
 
-/* Global section padding on mobile */
-@media (max-width: 768px) {
-  /* 3-column grids → single column */
-  .mobile-col-1 {
-    grid-template-columns: 1fr !important;
+  /* About section decorative floats — hidden at tablet */
+  .home-float-decor { display: none !important; }
+
+  /* KnowYourAstrologer */
+  .astrologer-row    { flex-direction: column !important; align-items: center !important; }
+  .astrologer-left   { width: 100% !important; min-width: 0 !important; height: auto !important; min-height: 400px; }
+  .astrologer-right  { padding: 40px 24px !important; max-width: 100% !important; }
+  .astrologer-section { min-height: auto !important; overflow: hidden !important; }
+  .astrologer-zodiac  { display: none !important; }
+  .astrologer-orb     { display: none !important; }
+  .astrologer-sunburst {
+    width: min(420px, 85vw) !important;
+    height: min(420px, 85vw) !important;
   }
-  /* Reduce heavy section padding */
-  .mobile-pad {
+
+  /* MysticalServices: reset desktop-tuned negative margins + fix h2 internal spacing */
+  .mystical-section {
+    margin-top: -120px !important;
+    padding-top: 140px !important;
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
-  /* CTA buttons — prevent overflow */
-  .cta-btn {
-    padding: 14px 28px !important;
-    font-size: 10px !important;
+  .mystical-section h2 {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
-  /* Hero decorative images (crystal, moon) — hide on mobile to prevent overflow */
-  .hero-decor {
-    display: none !important;
+
+  /* ServicesGrid */
+  .sg-section { margin-top: -60px !important; }
+}
+
+@media (max-width: 640px) {
+  .hero-slider-wrap {
+    height: 320px !important;
+    display: flex;
+    justify-content: center;
   }
-  /* Hero section — clip overflow from decorative elements */
-  .hero-section {
-    overflow: hidden !important;
+  .hero-capsule {
+    max-width: min(280px, 72vw) !important;
+    height: 300px !important;
+    border-radius: min(140px, 36vw) min(140px, 36vw) 0 0 !important;
   }
-  /* Constellation overlay — shrink and center on mobile */
+  /* About: single column, hide both arch images, show only center text */
+  .home-about-grid   { grid-template-columns: 1fr !important; }
+  .home-about-col-left   { display: none !important; }
+  .home-about-right-wrap { display: none !important; }
+  /* Hero decorations hidden on mobile — visible at tablet via 1024px rules */
+  .home-hero-decor { display: none !important; }
+}
+
+/* Global mobile padding */
+@media (max-width: 768px) {
+  .mobile-col-1 { grid-template-columns: 1fr !important; }
+  .mobile-pad   { padding-left: 20px !important; padding-right: 20px !important; }
+  .cta-btn      { padding: 14px 28px !important; font-size: 10px !important; }
+  .hero-decor   { display: none !important; }
+  .hero-section { overflow: hidden !important; }
   .constellation-img {
     width: min(260px, 75vw) !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
   }
-  /* Prevent button text from overflowing on narrow phones */
-  button {
-    white-space: normal !important;
-  }
-  /* Vaastu WhySection dark box — reduce inset on small screens */
-  .why-dark-box {
-    margin: 0 0 40px !important;
-    padding: 32px 20px !important;
-  }
-  /* Home hero decorative floats — hide on mobile to stop overflow */
-  .home-float-decor {
-    display: none !important;
-  }
-  /* Home about section images — cap border-radius so arches don't look extreme */
-  .home-about-img-left {
-    border-radius: 0 min(200px, 40vw) min(200px, 40vw) 0 !important;
-  }
-  .home-about-img-right {
-    border-radius: min(200px, 40vw) 0 0 0 !important;
-  }
-  /* Hero capsule — reduce border-radius on very small phones */
-  .hero-capsule {
-    border-radius: min(170px, 45vw) min(170px, 45vw) 0 0 !important;
-  }
+  button { white-space: normal !important; }
+  .why-dark-box  { margin: 0 0 40px !important; padding: 32px 20px !important; }
+  .about-hero-img    { width: min(180px, 38vw) !important; }
+  .about-wheel-decor { display: none !important; }
+  .about-who-section { overflow: hidden !important; }
 }
 
 /* ── Global: black CTA buttons use gold dashed border ── */
 .cta-btn {
   border: 2px dashed rgba(201,169,110,0.65) !important;
+}
+
+/* ── REDUCED MOTION — pauses CSS animations for accessibility + weak devices ── */
+@media (prefers-reduced-motion: reduce) {
+  .flip-word,
+  .flip-big,
+  .flip-sm {
+    animation: none !important;
+  }
+  .moon-float,
+  .crystal-float {
+    animation: none !important;
+  }
 }
 
 /* ── FONTS ── */
