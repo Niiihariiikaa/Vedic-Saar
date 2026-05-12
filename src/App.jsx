@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
+import AstroChat from './components/AstroChat'
+import NumerologyWidget from './components/NumerologyWidget'
 import './index.css'
 
 // ── Eagerly loaded — visible on first paint ──────────────────────────────────
@@ -82,6 +84,8 @@ export default function App() {
         </Routes>
       </Suspense>
       <Footer />
+      <AstroChat />
+      <NumerologyWidget />
     </BrowserRouter>
   )
 }

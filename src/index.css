@@ -136,56 +136,68 @@ html { scroll-behavior: smooth; overflow-x: hidden; }
   .hero-slider-wrap      { height: 480px !important; }
   .hero-capsule {
     height: 440px !important;
+    width: min(370px, 80vw) !important;
     border-radius: 220px 220px 0 0 !important;
   }
 
-  /* Hero decorations: reposition to sit just outside the centered 460px capsule */
+  /*
+    Hero decorations — matched to desktop overlap geometry.
+    Formula: right: calc(50% - 240px) keeps the planet overlapping the capsule's
+    right edge by ~110px regardless of viewport width (same as desktop).
+    left: calc(50% - 280px) keeps the crystal 90px into the capsule's left edge.
+  */
   .home-hero-planet {
-    width: 100px !important;
-    height: 120px !important;
-    top: 20px !important;
-    right: max(10px, calc(50% - 340px)) !important;
+    width: 120px !important;
+    height: 145px !important;
+    top: 15px !important;
+    right: calc(50% - 240px) !important;
     left: auto !important;
   }
   .home-hero-crystal {
-    width: 120px !important;
-    height: 105px !important;
-    bottom: 20px !important;
-    left: max(10px, calc(50% - 360px)) !important;
+    width: 140px !important;
+    height: 125px !important;
+    bottom: 15px !important;
+    left: calc(50% - 280px) !important;
     right: auto !important;
   }
 
-  /* About: 2-col at tablet — text left, right arch right; hide left arch */
+  /* About: single col at tablet — hide both arch images, center text only */
   .home-about-grid {
-    grid-template-columns: 1fr 1fr !important;
+    grid-template-columns: 1fr !important;
     align-items: center !important;
   }
-  .home-about-col-left { display: none !important; }
-  .home-about-img-right {
-    width: min(300px, 44vw) !important;
-    height: min(380px, 52vw) !important;
-    border-radius: min(150px, 22vw) 0 0 0 !important;
-  }
+  .home-about-col-left   { display: none !important; }
+  .home-about-right-wrap { display: none !important; }
 
   /* About section decorative floats — hidden at tablet */
   .home-float-decor { display: none !important; }
 
   /* KnowYourAstrologer */
   .astrologer-row    { flex-direction: column !important; align-items: center !important; }
-  .astrologer-left   { width: 100% !important; min-width: 0 !important; height: auto !important; min-height: 400px; }
+  /*
+    min-height must fit the sunburst (up to 680px) so rays aren't clipped.
+    overflow-x:hidden prevents horizontal scroll; overflow-y must be visible so
+    the sunburst SVG (which overflows the photo container) remains fully rendered.
+  */
+  .astrologer-left   { width: 100% !important; min-width: 0 !important; height: auto !important; min-height: 700px; }
   .astrologer-right  { padding: 40px 24px !important; max-width: 100% !important; }
-  .astrologer-section { min-height: auto !important; overflow: hidden !important; }
+  .astrologer-section { min-height: auto !important; overflow-x: hidden !important; overflow-y: visible !important; }
   .astrologer-zodiac  { display: none !important; }
   .astrologer-orb     { display: none !important; }
+  /*
+    Desktop ratio: sunburst 680px / photo 400px = 1.7×.
+    min(680px, 95vw) preserves this ratio at all tablet/mobile widths so the
+    golden rays are equally prominent as on desktop.
+  */
   .astrologer-sunburst {
-    width: min(420px, 85vw) !important;
-    height: min(420px, 85vw) !important;
+    width: min(680px, 95vw) !important;
+    height: min(680px, 95vw) !important;
   }
 
   /* MysticalServices: reset desktop-tuned negative margins + fix h2 internal spacing */
   .mystical-section {
-    margin-top: -120px !important;
-    padding-top: 140px !important;
+    margin-top: -30px !important;
+    padding-top: 60px !important;
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
@@ -196,6 +208,12 @@ html { scroll-behavior: smooth; overflow-x: hidden; }
 
   /* ServicesGrid */
   .sg-section { margin-top: -60px !important; }
+  .sg-heading-wrap { margin-top: 100px !important; padding-top: 20px !important; }
+
+  /* Testimonials */
+  .testimonials-section { padding-left: 24px !important; padding-right: 24px !important; }
+  .testimonials-inner { flex-direction: column !important; gap: 48px !important; align-items: center !important; }
+  .testimonials-stack-wrap { width: min(520px, 90vw) !important; height: 340px !important; margin: 0 auto !important; }
 }
 
 @media (max-width: 640px) {
@@ -205,16 +223,31 @@ html { scroll-behavior: smooth; overflow-x: hidden; }
     justify-content: center;
   }
   .hero-capsule {
-    max-width: min(280px, 72vw) !important;
+    max-width: min(250px, 72vw) !important;
     height: 300px !important;
     border-radius: min(140px, 36vw) min(140px, 36vw) 0 0 !important;
   }
   /* About: single column, hide both arch images, show only center text */
-  .home-about-grid   { grid-template-columns: 1fr !important; }
+  .home-about-grid       { grid-template-columns: 1fr !important; }
   .home-about-col-left   { display: none !important; }
   .home-about-right-wrap { display: none !important; }
-  /* Hero decorations hidden on mobile — visible at tablet via 1024px rules */
-  .home-hero-decor { display: none !important; }
+
+  /* Planet & crystal — visible on mobile, sized/positioned for 280px capsule */
+  .home-hero-decor { display: block !important; }
+  .home-hero-planet {
+    width: 80px !important;
+    height: 95px !important;
+    top: 8px !important;
+    right: calc(50% - 155px) !important;
+    left: auto !important;
+  }
+  .home-hero-crystal {
+    width: 85px !important;
+    height: 75px !important;
+    bottom: 8px !important;
+    left: max(6px, calc(50% - 165px)) !important;
+    right: auto !important;
+  }
 }
 
 /* Global mobile padding */

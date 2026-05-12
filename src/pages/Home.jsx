@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, useMemo, memo } from 'react'
+import { useEffect, useRef, useState, useCallback, memo } from 'react'
 import CountUp from 'react-countup'
 import { useInView } from 'react-intersection-observer'
 import { useNavigate } from 'react-router-dom'
@@ -6,7 +6,7 @@ import { useBooking } from '../components/BookingContext'
 
 // ─── Constants outside component — never recreated ───────────────────────────
 const SLIDES = [
-  { src: '/assets/numerology.webp', alt: 'Numerology' },
+  { src: '/assets/numerology.webp',      alt: 'Numerology' },
   { src: '/assets/vedic.webp',      alt: 'Vedic Astrology' },
   { src: '/assets/vastu.webp',      alt: 'Vastu' },
 ]
@@ -26,6 +26,18 @@ const SLIDE_INNER_STYLE = {
   overflow: 'hidden',
   contain: 'paint',
   transform: 'translateZ(0)',
+}
+
+// Static style objects at module level — computed once, identity-stable forever
+const HERO_GRID_STYLE   = { gridTemplateColumns: '1.5fr 460px 1.5fr' }
+const HERO_BG_STYLE     = { fontFamily: "'Ibarra Real Nova', serif", backgroundImage: "url('/assets/bg.png')" }
+const SECTION_BG_STYLE  = {
+  backgroundImage: "url('/assets/secbg.png')",
+  backgroundSize: '600px',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center',
+  contentVisibility: 'auto',
+  containIntrinsicSize: '0 700px',
 }
 
 // ─── Memoized Stat — never re-renders unless num/suffix/label change ──────────
@@ -145,7 +157,6 @@ export default function Homepage() {
   const crystalRef  = useRef(null)
   const crystal2Ref = useRef(null)
   const moonRef     = useRef(null)
-  const sectionRef  = useRef(null)
   const heroRef     = useRef(null)
 
   const { openBooking } = useBooking()
@@ -220,49 +231,18 @@ export default function Homepage() {
     }
   }, [])
 
-  // ── Single IntersectionObserver for glow ────────────────────────────────────
-  const [glowing, setGlowing] = useState(false)
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setGlowing(true)
-          obs.disconnect()
-        }
-      },
-      { threshold: 0.3 }
-    )
-    if (sectionRef.current) obs.observe(sectionRef.current)
-    return () => obs.disconnect()
-  }, [])
-
-  // ── Stable style objects — defined once, not on every render ────────────────
-  const heroGridStyle = useMemo(() => ({ gridTemplateColumns: '1.5fr 460px 1.5fr' }), [])
-  const bgStyle       = useMemo(() => ({
-    fontFamily: "'Ibarra Real Nova', serif",
-    backgroundImage: "url('/assets/bg.png')",
-  }), [])
-  const sectionBgStyle = useMemo(() => ({
-    backgroundImage: "url('/assets/secbg.png')",
-    backgroundSize: '600px',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    contentVisibility: 'auto',
-    containIntrinsicSize: '0 700px',
-  }), [])
-
   const handleBooking = useCallback(() => openBooking(), [openBooking])
 
   return (
     <>
-      <div className="relative z-20 bg-cover bg-center bg-no-repeat" style={bgStyle}>
+      <div className="relative z-20 bg-cover bg-center bg-no-repeat" style={HERO_BG_STYLE}>
 
         {/* ══════════════════════ HERO ══════════════════════ */}
         {/* heroRef wraps both hero + about so visibility gate covers full parallax zone */}
         <div ref={heroRef}>
           <section
             className="relative min-h-[600px] overflow-visible items-center grid bg-transparent home-hero"
-            style={heroGridStyle}
+            style={HERO_GRID_STYLE}
           >
             {/* Zodiac watermark */}
             <div
@@ -365,8 +345,7 @@ export default function Homepage() {
           {/* ══════════════════════ SECTION 2 — ABOUT ══════════════════════ */}
           <section
             className="py-20 grid grid-cols-1 md:grid-cols-3 gap-10 items-center relative home-about-grid"
-            ref={sectionRef}
-            style={sectionBgStyle}
+            style={SECTION_BG_STYLE}
           >
             {/* Left image */}
             <div className="relative home-about-col-left">

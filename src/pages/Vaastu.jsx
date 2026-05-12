@@ -92,9 +92,19 @@ const globalCss = `
 
   .strip-row { display:flex; gap:48px; white-space:nowrap; align-items:center; padding:0 40px; will-change:transform; min-width:300vw; height:68px; }
   .strip-row span { font-family:'Ibarra Real Nova',serif; font-size:30px; }
+  @media (max-width: 1024px) {
+    .hero-section { background-position: top center !important; }
+    .vaastu-gains-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  }
   @media (max-width: 768px) {
     .mobile-col-1 { grid-template-columns: 1fr !important; }
     section { padding-left: max(20px, 4vw) !important; padding-right: max(20px, 4vw) !important; }
+    .hero-section { padding-top: 100px !important; background-position: top center !important; }
+    .hero-inner { transform: translateY(-20px) !important; margin-bottom: -60px !important; }
+    .vaastu-compass-col { display: none !important; }
+    .vaastu-gains-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .cta-inner-pad { padding: 60px 20px 60px !important; }
+    .vaastu-why-sep { display: none !important; }
   }
 `;
 
@@ -143,8 +153,8 @@ function Hero() {
         <img src="/assets/moon.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
       </div>
 
-      <div style={{ position: "relative", zIndex: 2, maxWidth: 700, marginBottom: -180, transform: "translateY(-80px)" }}>
-        <div style={{ fontFamily: "'Ibarra Real Nova', serif", fontWeight: 450, display: "inline-block", fontSize: 70, color: "black", padding: "6px 20px", marginBottom: 137, animation: "floatUp 0.8s ease forwards" }}>
+      <div className="hero-inner" style={{ position: "relative", zIndex: 2, maxWidth: 700, marginBottom: -180, transform: "translateY(-80px)" }}>
+        <div style={{ fontFamily: "'Ibarra Real Nova', serif", fontWeight: 450, display: "inline-block", fontSize: "clamp(32px, 9vw, 70px)", color: "black", padding: "6px 20px", marginBottom: "clamp(40px, 10vw, 137px)", animation: "floatUp 0.8s ease forwards" }}>
           Vaastu Shastra
         </div>
 
@@ -404,12 +414,12 @@ function WhatIsSection() {
 }}>
 
   {/* LEFT — compass */}
-  <div style={{
+  <div className="vaastu-compass-col" style={{
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-start",   // ✅ was center
+    justifyContent: "flex-start",
     position: "relative",
-    overflow: "visible",            // ✅ let it breathe
+    overflow: "visible",
   }}>
     <VaastuCompass />
   </div>
@@ -570,7 +580,7 @@ function WhySection() {
           </div>
 
           {/* Separator */}
-          <div style={{ position: "relative", background: "linear-gradient(to bottom, transparent, rgba(201,169,110,0.3) 25%, rgba(201,169,110,0.3) 75%, transparent)" }}>
+          <div className="vaastu-why-sep" style={{ position: "relative", background: "linear-gradient(to bottom, transparent, rgba(201,169,110,0.3) 25%, rgba(201,169,110,0.3) 75%, transparent)" }}>
             <div style={{
               position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
               width: 32, height: 32, background: boxBg,
@@ -724,6 +734,7 @@ function ElementsSection() {
   const sectionRef = useRef(null);
   const bgRef      = useRef(null);
   const [hov, setHov] = useState(null);
+  const [pScale, setPScale] = useState(1);
 
   // pentagon geometry
   const R = 190, D = 144, CW = 800, CH = 560, CX = CW / 2, CY = CH / 2;
@@ -739,8 +750,13 @@ function ElementsSection() {
   useEffect(() => {
     const s = sectionRef.current;
     if (!s) return;
+    const updateScale = () => setPScale(Math.min(1, s.offsetWidth / (CW + 40)));
+    updateScale();
     let sTop = s.getBoundingClientRect().top + window.scrollY;
-    const onResize = () => { sTop = s.getBoundingClientRect().top + window.scrollY; };
+    const onResize = () => {
+      sTop = s.getBoundingClientRect().top + window.scrollY;
+      updateScale();
+    };
     window.addEventListener("resize", onResize, { passive: true });
     const unsub = subscribeScroll((y) => {
       if (y + window.innerHeight < sTop || y > sTop + s.offsetHeight) return;
@@ -796,8 +812,17 @@ function ElementsSection() {
         </p>
       </div>
 
-      {/* Pentagon of circles */}
-      <div style={{ position: "relative", height: CH, maxWidth: CW, margin: "0 auto", zIndex: 2 }}>
+      {/* Pentagon of circles — JS-scaled to fit any viewport */}
+      <div style={{
+        width: "100%", display: "flex", justifyContent: "center",
+        overflow: "hidden", position: "relative", zIndex: 2,
+        height: CH * pScale,
+      }}>
+      <div className="vaastu-penta-vis" style={{
+        position: "relative", height: CH, width: CW, flexShrink: 0,
+        transform: pScale < 1 ? `scale(${pScale})` : undefined,
+        transformOrigin: "top center",
+      }}>
 
         {/* SVG: circumscribed circle + pentagon edges + spokes */}
         <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}
@@ -823,6 +848,7 @@ function ElementsSection() {
             <div key={i}
               onMouseEnter={() => setHov(i)}
               onMouseLeave={() => setHov(null)}
+              onClick={() => setHov(hov === i ? null : i)}
               style={{
                 position: "absolute",
                 left: x - D / 2,
@@ -837,7 +863,7 @@ function ElementsSection() {
                   ? `0 0 40px rgba(201,169,110,0.22), 0 0 80px rgba(201,169,110,0.08), inset 0 0 28px rgba(201,169,110,0.05)`
                   : "none",
                 display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                cursor: "default",
+                cursor: "pointer",
                 transition: "border-color 0.35s, background 0.35s, box-shadow 0.35s, transform 0.35s",
                 transform: isHov ? "scale(1.12)" : "scale(1)",
                 zIndex: isHov ? 10 : 1,
@@ -874,6 +900,7 @@ function ElementsSection() {
             </div>
           );
         })}
+      </div>
       </div>
 
       {/* Info panel — updates on hover */}
@@ -952,7 +979,7 @@ function GainSection() {
           </p>
         </div>
 
-        <div className="mobile-col-1" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 24 }}>
+        <div className="mobile-col-1 vaastu-gains-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 24 }}>
           {GAINS.map((g, i) => (
             <div key={i} className="rv" style={{
               padding: "40px 28px 36px",
@@ -1099,7 +1126,7 @@ function WhoAndCTASection() {
         </div>
 
         {/* CTA */}
-        <div className="rv" style={{
+        <div className="rv cta-inner-pad" style={{
           transitionDelay: "0.1s",
           display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
           textAlign: "center", minHeight: "70vh", padding: "240px 100px 160px",

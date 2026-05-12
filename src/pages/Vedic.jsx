@@ -134,9 +134,18 @@ const globalCss = `
 
   .strip-row { display:flex; gap:48px; white-space:nowrap; align-items:center; padding:0 40px; will-change:transform; min-width:300vw; height:68px; }
   .strip-row span { font-family:'Ibarra Real Nova',serif; font-size:30px; }
+  @media (max-width: 1024px) {
+    .hero-section { background-position: top center !important; }
+    .v-gains-grid { grid-template-columns: repeat(3, 1fr) !important; }
+  }
   @media (max-width: 768px) {
     .mobile-col-1 { grid-template-columns: 1fr !important; }
     section { padding-left: max(20px, 4vw) !important; padding-right: max(20px, 4vw) !important; }
+    .hero-section { padding-top: 100px !important; background-position: top center !important; }
+    .hero-inner { transform: translateY(-20px) !important; margin-bottom: -60px !important; }
+    .vedic-wheel-col { display: none !important; }
+    .v-gains-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .cta-inner-pad { padding: 60px 20px 60px !important; }
   }
 `;
 
@@ -182,8 +191,8 @@ function Hero() {
       <div ref={moonRef} className="hero-decor" style={{ position: "absolute", right: "-20px", top: "90px", width: 200, height: 300, transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", pointerEvents: "none", zIndex: 1, opacity: 0.80 }}>
         <img src="/assets/moon.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
       </div>
-      <div style={{ position: "relative", zIndex: 2, maxWidth: 680, marginBottom: -180, transform: "translateY(-80px)" }}>
-        <div style={{ fontFamily: "'Ibarra Real Nova', serif", fontWeight: 450, display: "inline-block", fontSize: 70, color: "black", padding: "6px 20px", marginBottom: 137, animation: "floatUp 0.8s ease forwards" }}>
+      <div className="hero-inner" style={{ position: "relative", zIndex: 2, maxWidth: 680, marginBottom: -180, transform: "translateY(-80px)" }}>
+        <div style={{ fontFamily: "'Ibarra Real Nova', serif", fontWeight: 450, display: "inline-block", fontSize: "clamp(32px, 9vw, 70px)", color: "black", padding: "6px 20px", marginBottom: "clamp(40px, 10vw, 137px)", animation: "floatUp 0.8s ease forwards" }}>
           Vedic Astrology
         </div>
         <h1 style={{ marginTop: 80, fontFamily: "'Ibarra Real Nova', serif", fontSize: HEADING_SIZE, fontWeight: 400, lineHeight: 1.15, color: "black", marginBottom: 40, animation: "floatUp 0.8s 0.2s ease both" }}>
@@ -285,9 +294,9 @@ function WhatIsSection() {
       <div ref={bodyRef} className="mobile-col-1" style={{
         maxWidth: 1200, marginTop: -100,
         display: "grid", gridTemplateColumns: "1fr 1.25fr",
-        gap: 200, alignItems: "center", position: "relative", zIndex: 50,
+        gap: 80, alignItems: "center", position: "relative", zIndex: 50,
       }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+        <div className="vedic-wheel-col" style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
           <img
             ref={wheelRef}
             src="/assets/wheel.png"
@@ -369,7 +378,7 @@ function GainSection() {
             A Vedic Astrology consultation is not just about knowing the future — it's about empowerment.
           </p>
         </div>
-        <div className="mobile-col-1" style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 28 }}>
+        <div className="mobile-col-1 v-gains-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 28 }}>
           {gains.map((g, i) => (
             <div key={i} className="rv icon-card" style={{ textAlign: "center", transitionDelay: `${0.06 + i * 0.09}s`, padding: "0 8px" }}>
               <div className="arch"><g.icon size={40} strokeWidth={1.5} /></div>
@@ -578,7 +587,7 @@ function WhoAndCTASection() {
         </div>
 
         {/* CTA */}
-        <div className="rv" style={{
+        <div className="rv cta-inner-pad" style={{
           transitionDelay: "0.1s",
           display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
           textAlign: "center", minHeight: "70vh", padding: "240px 100px 160px",

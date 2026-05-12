@@ -56,7 +56,7 @@ export default function Navbar() {
     <div style={{ fontFamily: "'Glacial Indifference', serif" }}>
 
       {/* ── TOP BAR WITH VIDEO ── */}
-      <div className="relative h-[38px] overflow-hidden flex items-center justify-between px-6 bg-[#0e0e0e]">
+      <div className="relative h-[18px] overflow-hidden flex items-center justify-between px-6 bg-[#0e0e0e]">
         <video
           autoPlay muted loop playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-100 pointer-events-none"
@@ -67,7 +67,7 @@ export default function Navbar() {
       </div>
 
       {/* ── MAIN NAV ── */}
-      <nav className="bg-white border-b border-[#b8870b72] border-dashed px-6 py-3 flex items-center justify-between" style={{ minHeight: '80px' }}>
+      <nav className="bg-white border-b border-[#b8870b72] border-dashed px-6 py-3 flex items-center justify-between" style={{ minHeight: '120px' }}>
 
         {/* Logo */}
         <Link to="/" className="flex items-center" style={{ textDecoration: 'none' }}>

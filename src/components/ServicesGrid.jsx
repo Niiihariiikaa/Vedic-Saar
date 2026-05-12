@@ -551,7 +551,7 @@ export default function ServicesGrid() {
         </div>
 
         {/* ── HEADING ── */}
-        <div className="relative z-10 text-center mt-[340px] pt-20 px-6">
+        <div className="relative z-10 text-center mt-[340px] pt-20 px-6 sg-heading-wrap">
           <p
             className="flex items-center justify-center gap-3 mb-4"
             style={{

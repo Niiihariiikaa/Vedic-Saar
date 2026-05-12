@@ -187,7 +187,7 @@ const TestimonialCard = ({ name, location, rating, text, service, initial }) => 
 const Testimonials = () => {
   return (
 <section
-  className="relative w-full overflow-hidden -mt-8 py-24 md:px-16 z-10"
+  className="relative w-full overflow-hidden -mt-8 py-24 md:px-16 z-10 testimonials-section"
   style={{
     backgroundImage: "url('/assets/Testimonialsbg.png')",
     backgroundSize: 'cover',
@@ -199,7 +199,7 @@ const Testimonials = () => {
       {/* dark overlay so text stays readable */}
       <div className="absolute inset-0" />
 
-      <div className="relative z-10 max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16 md:gap-24">
+      <div className="relative z-10 max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16 md:gap-24 testimonials-inner">
 
         {/* ── LEFT: text content ── */}
         <div className="flex-1 text-center md:text-left">
@@ -249,7 +249,7 @@ const Testimonials = () => {
 
         {/* ── RIGHT: stacked cards ── */}
         <div className="flex-1 flex items-center justify-center">
-          <div style={{ width: 'min(620px, 92vw)', height: 380 }}>
+          <div className="testimonials-stack-wrap" style={{ width: 'min(620px, 92vw)', height: 380 }}>
             <Stack
               randomRotation={true}
               sensitivity={200}

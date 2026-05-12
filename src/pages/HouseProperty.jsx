@@ -429,7 +429,7 @@ function Hero() {
   }, []);
   return (
     <section style={{ position:"relative",minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",background:"white" }}>
-      <div ref={bgRef} style={{ position:"absolute",inset:"-15%",backgroundImage:'url("/assets/solutionsbg.svg")',backgroundSize:"cover",backgroundPosition:"center",opacity:0.8,willChange:"transform",pointerEvents:"none" }} />
+      <div ref={bgRef} style={{ position:"absolute",inset:"-15%",backgroundImage:'url("https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&auto=format")',backgroundSize:"cover",backgroundPosition:"center",opacity:0.18,willChange:"transform",pointerEvents:"none" }} />
       <div style={{ position:"relative",zIndex:2,textAlign:"center",padding:"120px 40px 140px",animation:"hero-rise 1s cubic-bezier(.22,1,.36,1) forwards" }}>
         <div style={{ fontFamily:BODY_FONT,fontSize:10,letterSpacing:4,textTransform:"uppercase",color:"rgba(201,169,110,0.8)",marginBottom:28 }}>
           Vedic Saar · Sacred Services

@@ -3,6 +3,7 @@ import SplashCursor from "../components/SplashCursor";
 import CircularGallery from "../components/CircularGallery";
 import { useBooking } from "../components/BookingContext";
 
+
 /* ── Scroll Manager ─────────────────────────────────────────────────────────── */
 let _scrollY = 0;
 let _ticking = false;
@@ -175,11 +176,22 @@ const globalCss = `
   }
   .num-fan-desktop { display: block; }
   .num-grid-mobile  { display: none; }
+  @media (max-width: 1024px) {
+    .hero-section { background-position: top center !important; }
+    .hero-inner { transform: translateY(-20px) !important; margin-bottom: -60px !important; }
+    .num-fan-desktop { display: none !important; }
+    .num-grid-mobile { display: grid !important; }
+    .num-what-sec { padding: 80px 40px !important; }
+    .num-flip-header { padding: 60px 40px 0 !important; }
+  }
   @media (max-width: 768px) {
     .mobile-col-1 { grid-template-columns: 1fr !important; }
     section { padding-left: max(20px, 4vw) !important; padding-right: max(20px, 4vw) !important; }
     .num-fan-desktop { display: none !important; }
     .num-grid-mobile  { display: grid !important; }
+    .hero-section { padding-top: 100px !important; background-position: top center !important; }
+    .hero-inner { transform: translateY(-20px) !important; margin-bottom: -60px !important; }
+    .cta-inner-pad { padding: 60px 20px 60px !important; }
   }
 `;
 
@@ -227,8 +239,8 @@ function Hero() {
         <img src="/assets/moon.png" alt="" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
       </div>
 
-      <div style={{ position: "relative", zIndex: 2, maxWidth: 700, marginBottom: -180, transform: "translateY(-80px)" }}>
-        <div style={{ fontFamily: "'Ibarra Real Nova', serif", fontWeight: 450, display: "inline-block", fontSize: 70, color: "black", padding: "6px 20px", marginBottom: 137, animation: "floatUp 0.8s ease forwards" }}>
+      <div className="hero-inner" style={{ position: "relative", zIndex: 2, maxWidth: 700, marginBottom: -180, transform: "translateY(-80px)" }}>
+        <div style={{ fontFamily: "'Ibarra Real Nova', serif", fontWeight: 450, display: "inline-block", fontSize: "clamp(32px, 9vw, 70px)", color: "black", padding: "6px 20px", marginBottom: "clamp(40px, 10vw, 137px)", animation: "floatUp 0.8s ease forwards" }}>
           Numerology
         </div>
 
@@ -305,6 +317,7 @@ function WhatIsSection() {
   return (
     <section
       ref={sectionRef}
+      className="num-what-sec"
       style={{
         padding: "140px 80px",
         overflow: "hidden",
@@ -485,7 +498,7 @@ function NumberFlipSection() {
       onTouchMove={(e) => { e.preventDefault(); const t = e.touches[0]; if (t) handleFanMove({ clientX: t.clientX, clientY: t.clientY }); }}
       onTouchEnd={() => setHov(null)}
     >
-      <div style={{ maxWidth: 1160, margin: "0 auto", padding: "100px 72px 0", position: "relative", zIndex: 12 }}>
+      <div className="num-flip-header" style={{ maxWidth: 1160, margin: "0 auto", padding: "100px 72px 0", position: "relative", zIndex: 12 }}>
         <div style={{ textAlign: "center", marginBottom: 32 }}>
           <div className="rv" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 16 }}>
             <span style={{ width: 28, height: 1, background: gold }} />
@@ -605,6 +618,8 @@ function NumberFlipSection() {
                   <div style={{ position: "relative", zIndex: 1, width: 32, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "14px 0" }} />
 
                   <span style={{ position: "relative", zIndex: 1, fontFamily: "'Ibarra Real Nova',serif", fontSize: 12.5, color: dark, textAlign: "center", letterSpacing: "0.03em", padding: "0 16px", lineHeight: 1.4, opacity: 0.8 }}>{n.name}</span>
+
+                  <span style={{ position: "absolute", bottom: 14, fontFamily: "'Glacial Indifference',sans-serif", fontSize: 6.5, color: gold, opacity: 0.45, letterSpacing: 1.5 }}>hover to flip</span>
                 </div>
 
                 {/* BACK — revealed cosmic info */}
@@ -987,7 +1002,7 @@ function WhoAndCTASection() {
         </div>
 
         {/* CTA */}
-        <div className="rv" style={{
+        <div className="rv cta-inner-pad" style={{
           transitionDelay: "0.1s",
           display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
           textAlign: "center", minHeight: "70vh", padding: "240px 100px 160px",
@@ -1020,6 +1035,245 @@ function WhoAndCTASection() {
   );
 }
 
+/* ── KNOW YOUR NUMBER ────────────────────────────────────────────────────────── */
+function reduceNum(n) {
+  while (n > 9) n = String(n).split('').reduce((a, c) => a + Number(c), 0);
+  return n;
+}
+
+const NUM_DATA = {
+  1:  { birthTitle:'The Pioneer',       birthDesc:'Natural leader with an independent spirit. You carry an innate drive to initiate and innovate, rarely content to follow another\'s path.',         destinyTitle:'The Pioneer Path',         destinyDesc:'Your life purpose is to stand alone, lead boldly, and carve new trails. Independence and originality are your karmic assignments.' },
+  2:  { birthTitle:'The Peacemaker',    birthDesc:'Sensitive, intuitive, and deeply cooperative. Your strength lies in diplomacy and your ability to sense what others feel before they speak.',       destinyTitle:'The Diplomat\'s Path',     destinyDesc:'You are here to foster peace, build partnerships, and master patience. Your soul lesson is trust and cooperation.' },
+  3:  { birthTitle:'The Creator',       birthDesc:'Expressive, optimistic, and charming. Words and art flow through you naturally — your joy is contagious and your imagination boundless.',           destinyTitle:'The Creative Path',        destinyDesc:'Self-expression and joy are your dharma. Your karmic purpose is to uplift others through communication, art, and authentic voice.' },
+  4:  { birthTitle:'The Builder',       birthDesc:'Disciplined, reliable, and methodical. You lay foundations others stand on, driven by a need to create lasting, tangible results.',                destinyTitle:'The Builder\'s Path',      destinyDesc:'You came to build systems, structures, and stability. Discipline and persistence are the karmic tools of your soul\'s journey.' },
+  5:  { birthTitle:'The Explorer',      birthDesc:'Versatile, restless, and freedom-loving. Change doesn\'t unsettle you — it energises you; routine feels like a cage.',                           destinyTitle:'The Freedom Path',         destinyDesc:'Your soul chose a life of change, travel, and expansion. The lesson is to find freedom within, not just around you.' },
+  6:  { birthTitle:'The Nurturer',      birthDesc:'Responsible, compassionate, and harmony-seeking. You are the one people lean on, carrying an instinctive need to care and protect.',              destinyTitle:'The Caregiver\'s Path',    destinyDesc:'Responsibility, love, and service define your karmic journey. You are here to nurture, heal, and create beautiful harmony.' },
+  7:  { birthTitle:'The Seeker',        birthDesc:'Analytical, introspective, and spiritual. Beneath your quiet surface runs a deep river of questions about life, truth, and the unseen.',          destinyTitle:'The Spiritual Path',       destinyDesc:'Wisdom, solitude, and inner mastery are your destiny. Your soul came to understand the mysteries beneath the surface of life.' },
+  8:  { birthTitle:'The Achiever',      birthDesc:'Ambitious, powerful, and results-driven. Material mastery comes naturally to you; you understand the language of effort and reward.',              destinyTitle:'The Executive\'s Path',    destinyDesc:'Power, abundance, and achievement are your karmic curriculum. You are here to master both the material and spiritual worlds.' },
+  9:  { birthTitle:'The Humanitarian',  birthDesc:'Idealistic, empathetic, and wise. You carry a soul-level understanding that life is larger than any one person\'s story.',                        destinyTitle:'The Humanitarian Path',    destinyDesc:'Your destiny is to serve humanity and embody compassion. You are a soul completing a long and magnificent journey.' },
+};
+
+function KnowYourNumberSection() {
+  const [dob, setDob]       = useState('');
+  const [result, setResult] = useState(null);
+  const [error, setError]   = useState('');
+  const resultRef           = useRef(null);
+  const ref                 = useRef(null);
+  useReveal(ref);
+
+  function getBirthNumber(dateStr) {
+    const day = parseInt(dateStr.split('-')[2], 10);
+    return reduceNum(day);
+  }
+  function getDestinyNumber(dateStr) {
+    const sum = dateStr.replace(/-/g, '').split('').reduce((a, c) => a + Number(c), 0);
+    return reduceNum(sum);
+  }
+
+  function calculate() {
+    if (!dob) { setError('Please enter your date of birth.'); return; }
+    setError('');
+    const birthNum   = getBirthNumber(dob);
+    const destinyNum = getDestinyNumber(dob);
+    const bd = NUM_DATA[birthNum]   || NUM_DATA[9];
+    const dd = NUM_DATA[destinyNum] || NUM_DATA[9];
+    setResult({ birthNum, destinyNum, birthTitle: bd.birthTitle, birthDesc: bd.birthDesc, destinyTitle: dd.destinyTitle, destinyDesc: dd.destinyDesc });
+    setTimeout(() => resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 80);
+  }
+
+  /* Card — cream front + dark back flip, same as NumberFlip cards */
+  function NumCard({ label, num, title, desc, delay = 0 }) {
+    const [flipped, setFlipped] = useState(false);
+    return (
+      <div
+        style={{ width: 210, height: 420, flexShrink: 0, perspective: '1000px', cursor: 'pointer', animation: `numCardIn 0.55s cubic-bezier(.22,1,.36,1) both`, animationDelay: `${delay}s` }}
+        onMouseEnter={() => setFlipped(true)}
+        onMouseLeave={() => setFlipped(false)}
+        onClick={() => setFlipped(f => !f)}
+      >
+        <div style={{
+          width: '100%', height: '100%',
+          transformStyle: 'preserve-3d',
+          transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+          transition: 'transform 0.65s cubic-bezier(.22,1,.36,1)',
+          position: 'relative',
+        }}>
+
+          {/* ── FRONT — cream card ── */}
+          <div style={{
+            position: 'absolute', inset: 0, borderRadius: 12, overflow: 'hidden',
+            backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
+            background: '#faf8f5',
+            border: '1px solid rgba(201,169,110,0.5)',
+            boxShadow: flipped
+              ? '0 24px 60px rgba(0,0,0,0.18), 0 0 0 1px rgba(201,169,110,0.3)'
+              : '0 14px 50px rgba(0,0,0,0.11)',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <div style={{ position:'absolute', inset:8,  border:'1px solid rgba(201,169,110,0.25)', borderRadius:6, pointerEvents:'none' }} />
+            <div style={{ position:'absolute', inset:11, border:'0.5px solid rgba(201,169,110,0.12)', borderRadius:4, pointerEvents:'none' }} />
+            {[['top','left'],['top','right'],['bottom','left'],['bottom','right']].map(([v,h],i) => (
+              <span key={i} style={{ position:'absolute', [v]:14, [h]:14, fontSize:7, color:gold, opacity:0.6, lineHeight:1 }}>✦</span>
+            ))}
+            <img src="/assets/wheel.png" alt="" aria-hidden decoding="async" style={{
+              position:'absolute', width:'130%', height:'130%',
+              top:'50%', left:'50%', transform:'translate(-50%,-50%)',
+              objectFit:'contain', opacity:0.08, pointerEvents:'none', mixBlendMode:'multiply',
+            }} />
+
+            <span style={{ position:'relative', zIndex:1, fontFamily:"'Glacial Indifference',sans-serif", fontSize:7.5, letterSpacing:3, textTransform:'uppercase', color:gold, opacity:0.7, marginBottom:20 }}>{label}</span>
+
+            <span style={{ position:'relative', zIndex:1, fontFamily:"'Ibarra Real Nova',serif", fontSize:96, color:gold, lineHeight:1, opacity:0.75, textShadow:'0 2px 8px rgba(201,169,110,0.18)' }}>{num}</span>
+
+            <div style={{ position:'relative', zIndex:1, width:32, height:1, background:`linear-gradient(90deg,transparent,${gold},transparent)`, margin:'16px 0' }} />
+
+            <span style={{ position:'relative', zIndex:1, fontFamily:"'Ibarra Real Nova',serif", fontSize:13, color:dark, textAlign:'center', letterSpacing:'0.03em', opacity:0.8, lineHeight:1.4 }}>{title}</span>
+
+            <span style={{ position:'absolute', bottom:14, fontFamily:"'Glacial Indifference',sans-serif", fontSize:6.5, color:gold, opacity:0.45, letterSpacing:1.5 }}>hover to reveal</span>
+          </div>
+
+          {/* ── BACK — dark card with description ── */}
+          <div style={{
+            position: 'absolute', inset: 0, borderRadius: 12, overflow: 'hidden',
+            backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)',
+            background: 'linear-gradient(160deg, #1f1a14 0%, #2a2018 50%, #1a1410 100%)',
+            border: '1px solid rgba(201,169,110,0.3)',
+            boxShadow: '0 24px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(201,169,110,0.1)',
+            padding: '22px 18px',
+            display: 'flex', flexDirection: 'column',
+          }}>
+            <div style={{ position:'absolute', inset:8, border:'1px solid rgba(201,169,110,0.12)', borderRadius:6 }} />
+            {[['top','left'],['top','right'],['bottom','left'],['bottom','right']].map(([v,h],i) => (
+              <span key={i} style={{ position:'absolute', [v]:14, [h]:14, fontSize:7, color:gold, opacity:0.3, lineHeight:1 }}>✦</span>
+            ))}
+
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:10, position:'relative', zIndex:1 }}>
+              <span style={{ fontFamily:"'Ibarra Real Nova',serif", fontSize:40, color:gold, lineHeight:1, opacity:0.6 }}>{num}</span>
+              <span style={{ fontSize:7, color:gold, opacity:0.3, marginTop:6 }}>✦</span>
+            </div>
+
+            <span style={{ position:'relative', zIndex:1, fontFamily:"'Glacial Indifference',sans-serif", fontSize:7.5, letterSpacing:2.5, textTransform:'uppercase', color:'rgba(201,169,110,0.55)', marginBottom:8 }}>{label}</span>
+
+            <h3 style={{ position:'relative', zIndex:1, fontFamily:"'Ibarra Real Nova',serif", fontSize:16, fontWeight:400, color:'#faf8f5', marginBottom:8, lineHeight:1.2, fontStyle:'italic' }}>{title}</h3>
+
+            <div style={{ position:'relative', zIndex:1, height:1, background:'rgba(201,169,110,0.2)', marginBottom:12 }} />
+
+            <p style={{ position:'relative', zIndex:1, fontFamily:"'Glacial Indifference',sans-serif", fontSize:12, color:'rgba(250,248,245,0.75)', lineHeight:1.75, flex:1 }}>{desc}</p>
+
+            <div style={{ position:'relative', zIndex:1, display:'flex', justifyContent:'center', marginTop:12 }}>
+              <span style={{ fontSize:7, color:gold, opacity:0.3, letterSpacing:4 }}>✦ ✦ ✦</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <section ref={ref} style={{
+      position: 'relative', overflow: 'hidden',
+      background: 'linear-gradient(180deg, #faf8f5 0%, #f5f0e8 50%, #fdf8f0 100%)',
+      padding: '100px 40px 110px',
+    }}>
+      <style>{`
+        @keyframes numCardIn {
+          from { opacity:0; transform:translateY(24px) scale(0.97); }
+          to   { opacity:1; transform:translateY(0) scale(1); }
+        }
+        .num-dob-input:focus { outline:none; border-color:rgba(201,169,110,0.7) !important; box-shadow:0 0 0 3px rgba(201,169,110,0.08) !important; }
+        .num-calc-btn:hover:not(:disabled) { background:rgba(201,169,110,0.14) !important; }
+        .num-calc-btn:disabled { opacity:0.4; cursor:not-allowed; }
+      `}</style>
+
+      <div style={{ maxWidth: 860, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+
+        {/* Section heading — same pattern as NumberFlipSection */}
+        <div className="rv" style={{ textAlign: 'center', marginBottom: 52 }}>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:14, marginBottom:16 }}>
+            <span style={{ width:28, height:1, background:gold }} />
+            <span style={{ fontFamily:"'Glacial Indifference',sans-serif", fontSize:11, letterSpacing:3, textTransform:'uppercase', color:gold }}>Vedic Numerology</span>
+            <span style={{ width:28, height:1, background:gold }} />
+          </div>
+          <h2 style={{ fontFamily:"'Ibarra Real Nova',serif", fontSize:HEADING_SIZE, fontWeight:400, color:dark, lineHeight:1.1, marginBottom:14 }}>
+            Know Your <em style={{ color:gold, fontStyle:'italic' }}>Numbers</em>
+          </h2>
+          <p style={{ fontFamily:"'Glacial Indifference',sans-serif", fontSize:20, color:'#7a6e68', maxWidth:480, margin:'0 auto', lineHeight:1.8 }}>
+            Enter your date of birth to reveal your Birth Number and Destiny Number.
+          </p>
+        </div>
+
+        {/* Input box — dark panel, consistent with card aesthetic */}
+        <div className="rv" style={{
+          maxWidth: 540, margin: '0 auto 52px',
+          background: 'linear-gradient(160deg, #1f1a14 0%, #2a2018 50%, #1a1410 100%)',
+          border: '1px solid rgba(201,169,110,0.3)',
+          borderRadius: 14,
+          boxShadow: '0 16px 48px rgba(0,0,0,0.18)',
+          padding: '36px 32px 32px',
+          position: 'relative', overflow: 'hidden',
+          transitionDelay: '0.08s',
+        }}>
+          <div style={{ position:'absolute', inset:8, border:'1px solid rgba(201,169,110,0.1)', borderRadius:8, pointerEvents:'none' }} />
+          {[['top','left'],['top','right'],['bottom','left'],['bottom','right']].map(([v,h],i) => (
+            <span key={i} style={{ position:'absolute', [v]:14, [h]:14, fontSize:7, color:gold, opacity:0.3 }}>✦</span>
+          ))}
+
+          <p style={{ position:'relative', zIndex:1, fontFamily:"'Glacial Indifference',sans-serif", fontSize:10, letterSpacing:3, textTransform:'uppercase', color:'rgba(201,169,110,0.55)', textAlign:'center', marginBottom:22 }}>Date of Birth</p>
+
+          <div style={{ position:'relative', zIndex:1, display:'flex', gap:12, flexWrap:'wrap', justifyContent:'center' }}>
+            <input
+              type="date"
+              className="num-dob-input"
+              value={dob}
+              onChange={e => setDob(e.target.value)}
+              max={new Date().toISOString().split('T')[0]}
+              style={{
+                flex:'1 1 180px', padding:'13px 18px',
+                background:'rgba(255,255,255,0.05)',
+                border:'1px solid rgba(201,169,110,0.22)',
+                borderRadius:8, color:'#f5ede0',
+                fontFamily:"'Glacial Indifference',sans-serif",
+                fontSize:14, letterSpacing:0.5,
+                colorScheme:'dark', transition:'border-color 0.2s, box-shadow 0.2s',
+              }}
+            />
+            <button
+              className="num-calc-btn"
+              onClick={calculate}
+              disabled={!dob}
+              style={{
+                padding:'13px 32px',
+                background:'rgba(201,169,110,0.08)',
+                border:'1px dashed rgba(201,169,110,0.5)',
+                borderRadius:8, color:gold,
+                fontFamily:"'Glacial Indifference',sans-serif",
+                fontSize:11, letterSpacing:2.5,
+                textTransform:'uppercase', cursor:'pointer',
+                transition:'background 0.2s', whiteSpace:'nowrap',
+              }}
+            >
+              Reveal
+            </button>
+          </div>
+          {error && <p style={{ position:'relative', zIndex:1, fontFamily:"'Glacial Indifference',sans-serif", fontSize:12, color:'rgba(240,120,100,0.85)', textAlign:'center', marginTop:12 }}>{error}</p>}
+        </div>
+
+        {/* Result cards — same style as NumberFlip card backs */}
+        {result && (
+          <div ref={resultRef} style={{ display:'flex', gap:24, flexWrap:'wrap', justifyContent:'center' }}>
+            <NumCard label="Birth Number · Moolank"   num={result.birthNum}   title={result.birthTitle}   desc={result.birthDesc}   delay={0} />
+            <NumCard label="Destiny Number · Life Path" num={result.destinyNum} title={result.destinyTitle} desc={result.destinyDesc} delay={0.12} />
+          </div>
+        )}
+
+
+      </div>
+    </section>
+  );
+}
+
 /* ── ROOT ────────────────────────────────────────────────────────────────────── */
 export default function NumerologyPage() {
   return (
@@ -1042,7 +1296,7 @@ export default function NumerologyPage() {
         <WhatIsSection />
         <SlidingStrip />
         <NumberFlipSection />
-        
+        <KnowYourNumberSection />
         <ApproachSection />
         <WhoAndCTASection />
       </div>

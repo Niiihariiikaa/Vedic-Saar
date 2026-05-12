@@ -283,7 +283,6 @@ export default function KnowYourAstrologer() {
         <div
           ref={contentRef}
           className="flex-1 py-16 pr-14 pl-4 max-w-2xl astrologer-right"
-          style={{ opacity: 0 }}
         >
           {/* Badge */}
           <span
